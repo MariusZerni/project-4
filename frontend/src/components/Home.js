@@ -33,7 +33,7 @@ class Home extends React.Component {
         
       </div>
        <div className="home-content">
-         <div className="how-it-works">
+         <div className="how-it-works color">
            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, iste?</h2>
            <div className="columns">
              <div className="column-one">

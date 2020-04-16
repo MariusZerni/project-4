@@ -35,6 +35,7 @@ class ClientsListView(ListCreateAPIView):
   serializer_class = ClientSerializer
 
   def get(self, request):
+    print("clients")
     clients = Client.objects.all()
     serializer = PopulateClientSerializer(clients, many=True)
     return Response(serializer.data)
