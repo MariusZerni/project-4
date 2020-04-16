@@ -1,0 +1,100 @@
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.4;
+}
+
+
+//=========== HOME PAGE
+.home-container {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  
+}
+
+.login-logout-register {
+  width: 350px;
+  margin: 20px 20px 0 0;
+  position: absolute;
+  display: flex;
+  
+
+  .home-links {
+    
+    display: flex;
+    padding: 10px 20px;
+    margin: 5px;
+    color: black;
+    background: var(--overlay-color); 
+    border-radius: 5px;
+    
+    .link {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+    }
+  }
+}
+
+
+.home-content {
+  height: 60vw;
+  display: flex;
+  justify-content: center;
+  // padding-bottom: 10vh;
+
+  &.color {
+    background: var(--overlay-color); 
+  }
+
+  .brief-description {
+    width: 60%;
+    height: 300px;
+    margin-top: 200px;
+    // background: var(--overlay-color);
+
+    h2 {
+      margin-top: 1rem;
+      color: white;
+    }
+    
+    p {
+      margin-top: 2rem;
+      color: white;
+    }
+  }
+}
+
+.how-it-works {
+  width: 80%;
+  height: 300px;
+  padding-top: 30px;
+  background: var(--overlay-color);
+  // display: flex;
+  justify-content: center;
+
+  .columns {
+    display: flex;
+  }
+
+  .column-one,
+  .column-two {
+    margin-top: 30px;
+    padding: 0 40px;
+    
+  }
+}
+
+
+
+
+
+
