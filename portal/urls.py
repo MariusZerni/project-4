@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ClientsListView, ClientDetailView, SkillsListView, SkillDetailView, MentorProfilesListView, MentorProfileDetailView, MenteeProfilesListView, MenteeProfileDetailView, RolesListView, RoleDetailView, MentorsRelationshipListView, MentorRelationshipDetailView
+from .views import ClientsListView, ClientDetailView, SkillsListView, SkillDetailView, MentorProfilesListView, MentorProfileDetailView, MenteeProfilesListView, MenteeProfileDetailView, RolesListView, RoleDetailView, MentorsRelationshipListView, MentorRelationshipDetailView, TopVotesListView
 
 
 
@@ -11,6 +11,8 @@ urlpatterns = [
   path('menteeprofiles', MenteeProfilesListView.as_view()),
   path('roles', RolesListView.as_view()),
   path('mentorrelationship', MentorsRelationshipListView.as_view()),
+  path('topvotes', TopVotesListView),
+
 
   path('clients/<int:pk>/', ClientDetailView.as_view()),
   path('skills/<int:pk>/', SkillDetailView.as_view()),

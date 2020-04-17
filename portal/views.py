@@ -2,9 +2,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
+import json
+
+from django.http import HttpResponse
+
 
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission
+
+from django.db.models import Sum
 
 from .models import Client
 from .serializers import ClientSerializer, PopulateClientSerializer
@@ -18,6 +24,8 @@ from .models import Role
 from .serializers import RoleSerializer
 from .models import MentorRelationship
 from .serializers import MentorRelationshipSerializer
+
+
 
 
 class IsOwnerOrReadOnly(BasePermission):
@@ -66,6 +74,15 @@ class MentorsRelationshipListView(ListCreateAPIView):
   serializer_class = MentorRelationshipSerializer
 
 
+def TopVotesListView(request):
+
+    rels=(MentorRelationship.objects.values('from_mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5]).values('from_mentor','topVotes')
+ 
+    data=json.dumps(list(rels))
+  
+    return HttpResponse(data, content_type='application/json')
+
+
 # Detailed View
 class ClientDetailView(RetrieveUpdateDestroyAPIView):
   queryset = Client.objects.all()
@@ -110,3 +127,10 @@ class RoleDetailView(RetrieveUpdateDestroyAPIView):
 class MentorRelationshipDetailView(RetrieveUpdateDestroyAPIView):
   queryset = MentorRelationship.objects.all()
   serializer_class = MentorRelationshipSerializer
+
+  def get(self, request, pk):
+    queryset = MentorRelationship.objects.filter(from_mentor=pk)
+    
+    serializer = MentorRelationshipDetailSerializer(queryset, many=True)
+
+    return Response(serializer.data)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import F, Sum,Max, Count
 
 # Create your models here.
 
@@ -46,7 +47,22 @@ class Client(models.Model):
 
   @property
   def mentees(self):
-    return self.mentor_relationship.values_list('from_mentor', flat=True)
+    # return self.mentor_relationship.values_list('from_mentor', flat=True)
+    return MentorRelationship.objects.filter(from_mentor=self.id).values_list('to_mentee', flat=True)
+
+
+  @property
+  def votes(self):
+    c = MentorRelationship.objects.filter(from_mentor=self.id).aggregate(sumVotes=Sum('votes'))
+    return c.get('sumVotes')
+
+
+  @property
+  def topVotes(self):
+    relationships= MentorRelationship.objects.values('from_mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:2] 
+    return relationships
+
+
 
 class MentorRelationship(models.Model):
  
@@ -55,7 +71,12 @@ class MentorRelationship(models.Model):
 
   votes = models.IntegerField(blank=True, null=True)
   
-
+  @property
+  def votesCount(self):
+    c = MentorRelationship.objects.filter(from_mentor=self.from_mentor).aggregate(sumVotes=Sum('votes'))
+    return c.get("sumVotes")
+  
+ 
     
   class Meta:
     unique_together = ('from_mentor', 'to_mentee')
