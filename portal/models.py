@@ -21,11 +21,6 @@ class Skill(models.Model):
 
 
 class Client(models.Model):
-  # name = models.CharField(max_length=40)
-  # email = models.CharField(max_length=100)
-  # username = models.CharField(max_length=50)
-  # password = models.CharField(max_length=100)
-
   user = models.ForeignKey(User, related_name='clients', on_delete=models.CASCADE)
 
   role = models.ManyToManyField(Role, related_name='users', blank=True)
@@ -58,6 +53,9 @@ class MentorRelationship(models.Model):
   from_mentor = models.ForeignKey(Client, related_name='from_mentor', on_delete=models.CASCADE)
   to_mentee = models.ForeignKey(Client, related_name='to_mentee', on_delete=models.CASCADE)
 
+  votes = models.IntegerField(blank=True, null=True)
+  
+
     
   class Meta:
     unique_together = ('from_mentor', 'to_mentee')
@@ -68,7 +66,6 @@ class MentorProfile(models.Model):
   shortDescription = models.CharField(max_length=150)
   fullDescription = models.CharField(max_length=3000)
   client = models.ForeignKey(Client, related_name='mentor_profile', on_delete=models.CASCADE)
-
 
 
 class MenteeProfile(models.Model):

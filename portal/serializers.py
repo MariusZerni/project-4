@@ -21,13 +21,13 @@ class ClientSerializer(serializers.ModelSerializer):
 class MentorRelationshipSerializer(serializers.ModelSerializer):
   class Meta:
     model = MentorRelationship
-    fields = ('id', 'mentor', 'mentee')
+    fields = ('id', 'mentor', 'mentee','votes')
 
 
 class MentorProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = MentorProfile
-    fields = ('photo', 'shortDescription', 'fullDescription')
+    fields = ('photo', 'shortDescription', 'fullDescription', 'totalVotes', 'totalUsersVotes')
 
 
 class MenteeProfileSerializer(serializers.ModelSerializer):

@@ -1,3 +1,9 @@
+:root {
+  --overlay-color: rgba(13, 110, 139, 0.75);
+  --primary-color: rgba(18, 79, 90, 0.692);
+  --secondary-color: rgba(177, 179, 180, 0.575);
+  --menu-speed: 0.75s;
+}
 
 
 * {
@@ -26,15 +32,15 @@ body {
   position: absolute;
   display: flex;
   
+  
 
   .home-links {
-    
-    display: flex;
     padding: 10px 20px;
     margin: 5px;
     color: black;
     background: var(--overlay-color); 
     border-radius: 5px;
+    box-shadow: 3px 3px 5px 3px rgba(36, 36, 36, 0.637);
     
     .link {
       text-decoration: none;
@@ -51,7 +57,7 @@ body {
   justify-content: center;
   // padding-bottom: 10vh;
 
-  &.color {
+  &.color-one {
     background: var(--overlay-color); 
   }
 
@@ -64,6 +70,7 @@ body {
     h2 {
       margin-top: 1rem;
       color: white;
+      text-align: start;
     }
     
     p {
@@ -73,13 +80,20 @@ body {
   }
 }
 
+
+.color-two {
+  background: var(--secondary-color);
+}
+
 .how-it-works {
   width: 80%;
   height: 300px;
-  padding-top: 30px;
-  background: var(--overlay-color);
-  // display: flex;
+  padding-top: 80px;
   justify-content: center;
+
+  h2 {
+    text-align: start;
+  }
 
   .columns {
     display: flex;
@@ -94,7 +108,30 @@ body {
 }
 
 
+//========= FOOTER
 
+footer {
+  height: 150px;
+  border-top: 1px solid black;
+  background: var(--primary-color); 
+
+  h3 {
+    padding: 30px 200px;
+    color: white;
+  }
+ 
+
+  
+}
+// footer::before {
+//   content : "";
+//   position: absolute;
+//   left: 0;
+//   bottom  : 0;
+//   height  : 0;
+//   width   : 50%;  /* or 100px */
+//   border-top: 1px solid black;
+// }
 
 
 

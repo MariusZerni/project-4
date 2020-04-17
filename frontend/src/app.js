@@ -5,18 +5,24 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import '../src/styles/sidebar.scss'
 import '../src/styles/styles.scss'
-// import '../src/styles/style.css'
+import '../src/styles/register.scss'
 
 
 import Home from '../src/components/Home'
+import Register from '../src/components/Register'
+// import SideBar from '../src/components/SideBar'
 
 const App = () => {
   return <BrowserRouter>
+    
     <Switch>
-      <Route path="/" component={Home} />
+      
+      <Route exact path="/" component={Home} />
+      <Route path="/register-login" component={Register} />
       
       
     </Switch>
+    
   </BrowserRouter>
 }
 

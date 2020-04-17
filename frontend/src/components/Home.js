@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 import SideBar from '../components/SideBar'
+import Footer from '../components/Footer'
 
 class Home extends React.Component {
   constructor() {
@@ -15,11 +16,11 @@ class Home extends React.Component {
       <div className="home-container">
         <SideBar />
         <div className="login-logout-register">
-          <div className="home-links"><Link className="link" to="register">Register</Link></div>
-          <div className="home-links"><Link className="link" to="login">Log In</Link></div>
-          <div className="home-links"><Link className="link" to="logout">Log Out</Link></div>
+          <div className="home-links"><Link className="link" to="/register-login?current=register">Register</Link></div>
+          <div className="home-links"><Link className="link" to="/register-login?current=login">Log In</Link></div>
+          <div className="home-links"><Link className="link" to="/logout">Log Out</Link></div>
         </div>
-        <div className="home-content color">
+        <div className="home-content color-one">
           <div className="brief-description">
             <h2>Brief description <br/>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
@@ -32,9 +33,9 @@ class Home extends React.Component {
        
         
       </div>
-       <div className="home-content">
-         <div className="how-it-works color">
-           <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, iste?</h2>
+       <div className="home-content color-two">
+         <div className="how-it-works">
+           <h2>How it Works <br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, iste?</h2>
            <div className="columns">
              <div className="column-one">
                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita, eveniet.</p>
@@ -45,6 +46,7 @@ class Home extends React.Component {
            </div>
          </div>
        </div>
+       <Footer />
      </>
     )
   }
