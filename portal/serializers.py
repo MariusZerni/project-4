@@ -15,18 +15,18 @@ class SkillSerializer(serializers.ModelSerializer):
 class ClientSerializer(serializers.ModelSerializer):
   class Meta:
     model = Client
-    fields = ('id', 'role', 'mentor_skills', 'mentee_skills', 'user')
+    fields = ('id', 'role', 'mentor_skills', 'user')
 
 
 class MentorRelationshipSerializer(serializers.ModelSerializer):
   class Meta:
     model = MentorRelationship
-    fields = ('id', 'from_mentor', 'to_mentee','votes','votesCount')
+    fields = ('id', 'mentor', 'mentee','votes','votesCount')
 
 class MentorRelationshipDetailSerializer(serializers.ModelSerializer):
   class Meta:
     model = MentorRelationship
-    fields =  ('to_mentees','votesCount')
+    fields =  ('mentees','votesCount')
 
 
 class MentorProfileSerializer(serializers.ModelSerializer):
@@ -53,15 +53,15 @@ class PopulateClientSerializer(serializers.ModelSerializer):
 
   role_names = serializers.ReadOnlyField()
   mentor_skills_names = serializers.ReadOnlyField()
-  mentee_skills_names = serializers.ReadOnlyField()
-  mentees = serializers.ReadOnlyField()
+  # mentee_skills_names = serializers.ReadOnlyField()
+  # mentees = serializers.ReadOnlyField()
 
   votes = serializers.ReadOnlyField()
   # topVotes = serializers.ReadOnlyField()
   
 
   
-  mentor_profile = MentorProfileSerializer(many=True, read_only=True)
+  mentor_profile = MentorProfileSerializer(read_only=True)
   # mentee_profile = MenteeProfileSerializer(many=True, read_only=True)
 
   # mentor_profile = serializers.RelatedField(read_only=True)
@@ -69,7 +69,7 @@ class PopulateClientSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Client
-    fields = ('id', 'role_names','mentor_skills_names', 'mentee_skills_names', 'mentor_profile', 'mentee_profile', 'mentees','votes')
+    fields = ('id', 'role_names','mentor_skills_names', 'mentor_profile', 'mentees','votes')
 
     # fields = ('id', 'role_names','mentor_skills_names', 'mentee_skills_names', 'mentor_relationship', 'user')
 

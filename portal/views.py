@@ -78,7 +78,7 @@ class MentorsRelationshipListView(ListCreateAPIView):
 
 def TopVotesListView(request):
 
-    rels=(MentorRelationship.objects.values('from_mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5]).values('from_mentor','topVotes')
+    rels=(MentorRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5]).values('mentor','topVotes')
  
     data=json.dumps(list(rels))
   
@@ -93,6 +93,7 @@ class ClientDetailView(RetrieveUpdateDestroyAPIView):
 
   def get(self, request, pk):
     client = Client.objects.get(pk=pk)
+    # todo check client not null
     self.check_object_permissions(request, client)
     serializer = PopulateClientSerializer(client)
 
@@ -131,7 +132,7 @@ class MentorRelationshipDetailView(RetrieveUpdateDestroyAPIView):
   serializer_class = MentorRelationshipSerializer
 
   def get(self, request, pk):
-    queryset = MentorRelationship.objects.filter(from_mentor=pk)
+    queryset = MentorRelationship.objects.filter(mentor=pk)
     
     serializer = MentorRelationshipDetailSerializer(queryset, many=True)
 

@@ -21,14 +21,16 @@ class Skill(models.Model):
 
 
 
+
 class Client(models.Model):
   user = models.ForeignKey(User, related_name='clients', on_delete=models.CASCADE)
 
   role = models.ManyToManyField(Role, related_name='users', blank=True)
   mentor_skills = models.ManyToManyField(Skill, related_name='mentor_skills', blank=True)
-  mentee_skills = models.ManyToManyField(Skill, related_name='mentee_skills',blank=True)
+  # mentee_skills = models.ManyToManyField(Skill, related_name='mentee_skills',blank=True)
 
   mentor_relationship = models.ManyToManyField('self', through='MentorRelationship', symmetrical=False)
+  # mentor_profile = models.OneToOneField(MentorProfile, related_name='mentor_profile', on_delete=models.CASCADE)
 
   def __str__(self):
     return self.user.username
@@ -48,45 +50,47 @@ class Client(models.Model):
   @property
   def mentees(self):
     # return self.mentor_relationship.values_list('from_mentor', flat=True)
-    return MentorRelationship.objects.filter(from_mentor=self.id).values_list('to_mentee', flat=True)
+    return MentorRelationship.objects.filter(mentor=self.id).values_list('mentee', flat=True)
 
 
   @property
   def votes(self):
-    c = MentorRelationship.objects.filter(from_mentor=self.id).aggregate(sumVotes=Sum('votes'))
+    c = MentorRelationship.objects.filter(mentor=self.id).aggregate(sumVotes=Sum('votes'))
     return c.get('sumVotes')
 
 
   @property
   def topVotes(self):
-    relationships= MentorRelationship.objects.values('from_mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:2] 
+    relationships= MentorRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:2] 
     return relationships
-
-
-
-class MentorRelationship(models.Model):
- 
-  from_mentor = models.ForeignKey(Client, related_name='from_mentor', on_delete=models.CASCADE)
-  to_mentee = models.ForeignKey(Client, related_name='to_mentee', on_delete=models.CASCADE)
-
-  votes = models.IntegerField(blank=True, null=True)
-  
-  @property
-  def votesCount(self):
-    c = MentorRelationship.objects.filter(from_mentor=self.from_mentor).aggregate(sumVotes=Sum('votes'))
-    return c.get("sumVotes")
-  
- 
-    
-  class Meta:
-    unique_together = ('from_mentor', 'to_mentee')
-
 
 class MentorProfile(models.Model):
   photo = models.ImageField(upload_to='profile_photo', blank=True)
   shortDescription = models.CharField(max_length=150)
   fullDescription = models.CharField(max_length=3000)
-  client = models.ForeignKey(Client, related_name='mentor_profile', on_delete=models.CASCADE)
+  client = models.OneToOneField(Client, related_name='mentor_profile', on_delete=models.CASCADE)
+
+
+
+class MentorRelationship(models.Model):
+ 
+  mentor = models.ForeignKey(Client, related_name='mentor', on_delete=models.CASCADE)
+  mentee = models.ForeignKey(Client, related_name='mentee', on_delete=models.CASCADE)
+
+  votes = models.IntegerField(blank=True, null=True)
+  
+  @property
+  def votesCount(self):
+    c = MentorRelationship.objects.filter(mentor=self.mentor).aggregate(sumVotes=Sum('votes'))
+    return c.get("sumVotes")
+  
+ 
+    
+  class Meta:
+    unique_together = ('mentor', 'mentee')
+
+
+
 
 
 # class MenteeProfile(models.Model):
