@@ -18,7 +18,7 @@ class Home extends React.Component {
         <div className="login-logout-register">
           <div className="home-links"><Link className="link" to="/register-login?current=register">Register</Link></div>
           <div className="home-links"><Link className="link" to="/register-login?current=login">Log In</Link></div>
-          <div className="home-links"><Link className="link" to="/logout">Log Out</Link></div>
+          <div className="home-links"><Link className="link" to="/">Log Out</Link></div>
         </div>
         <div className="home-content color-one">
           <div className="brief-description">
@@ -45,6 +45,65 @@ class Home extends React.Component {
              </div>
            </div>
          </div>
+       </div>
+
+       <div id="home-content" className="color-three">
+         <h2>Top Rated</h2>
+         <section className="section">
+           <div className="mentor-container">
+             <div className="photo-rated">
+               <div className="photo">Photo</div>
+               <div className="rated">Top Rated</div>
+             </div>
+             <figure className="effect-marley">
+               <h4 id="h2">Sweet Marley</h4>
+               <p>Marley tried to convince her but she was not interested.</p>
+             </figure>
+           </div>
+           <div className="mentor-container">
+             <div className="photo-rated">
+               <div className="photo">Photo</div>
+               <div className="rated">Top Rated</div>
+             </div>
+             <figure className="effect-marley">
+               <h4 id="h2">Sweet Marley</h4>
+               <p>Marley tried to convince her but she was not interested.</p>
+             </figure>
+           </div>
+           <div className="mentor-container">
+             <div className="photo-rated">
+               <div className="photo">Photo</div>
+               <div className="rated">Top Rated</div>
+             </div>
+             <figure className="effect-marley">
+               <h4 id="h2">Sweet Marley</h4>
+               <p>Marley tried to convince her but she was not interested.</p>
+             </figure>
+           </div>
+          
+         </section>
+         <section className="section">
+           <div className="mentor-container">
+             <div className="photo-rated">
+               <div className="photo">photo</div>
+               <div className="rated">top rated</div>
+             </div>
+             <figure className="effect-marley">
+               <h4 id="h2">Sweet Marley</h4>
+               <p>Marley tried to convince her but she was not interested.</p>
+             </figure>
+           </div>
+           <div className="mentor-container">
+             <div className="photo-rated">
+               <div className="photo">photo</div>
+               <div className="rated">top rated</div>
+             </div>
+             <figure className="effect-marley">
+               <h4 id="h2">Sweet Marley</h4>
+               <p>Marley tried to convince her but she was not interested.</p>
+             </figure>
+           </div>
+         </section>
        </div>
        <Footer />
      </>

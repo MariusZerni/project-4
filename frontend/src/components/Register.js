@@ -48,8 +48,8 @@ class Register extends React.Component {
       .post('/api/register', this.state.register)
       .then( () => this.setState({ isLoginActive: !this.state.isLoginActive }))
       .catch(err => { 
-        console.log('error')
-        console.log(err.response.data)
+        // console.log('error')
+        // console.log(err.response.data)
         this.setState({ errors: err.response.data })
       })
   }
@@ -65,7 +65,8 @@ class Register extends React.Component {
         this.props.history.push('/mentors')
       })
       .catch(err => {
-        this.setState({ error: err.response.logIn.message })
+        console.log(err.response.data)
+        this.setState({ errors: err.response.data })
       })
   }
 
@@ -75,16 +76,19 @@ class Register extends React.Component {
 
   handleClick(e) {
     e.preventDefault()
-    this.setState({ isLoginActive: !this.state.isLoginActive })
+    this.setState({ isLoginActive: !this.state.isLoginActive, errors: {} })
   }
 
   componentDidMount(){
     const params = queryString.parse(this.props.location.search)
-    console.log(params.current)
+    // console.log(params.current)
     this.setState({ isLoginActive: params.current === 'register' ? false : true })
   }
 
   render() {
+    const { errors } = this.state
+    console.log('errors')
+    console.log(errors.email)
     const { isLoginActive } = this.state
     return <div className="body">
       <div className={`container ${!isLoginActive ? 'right-panel-active' : ''}`} id="container">
@@ -93,17 +97,34 @@ class Register extends React.Component {
             <h1>Create Account</h1>
             <input onChange={event => this.handleChangeRegister(event)}
               type="text" name="first_name" placeholder="Name" />
-            <input onChange={event => this.handleChangeRegister(event)}
-              type="text" name="last_name" placeholder="Last Name" />
+            {errors.first_name && (
+              <small className="error-message-m">
+                {errors.first_name}
+              </small>)}
             <input onChange={event => this.handleChangeRegister(event)}
               type="text" name="username" placeholder="Username" />
+            {errors.username && (
+              <small className="error-message-m">
+                {errors.username[0]}
+              </small>)}
             <input onChange={event => this.handleChangeRegister(event)}
               type="email" name="email" placeholder="Email" />
+            {errors.email && (
+              <small className="error-message-m">
+                {errors.email[0]}
+              </small>)}
             <input onChange={event => this.handleChangeRegister(event)}
               type="password" name="password" placeholder="Password" />
+            {errors.password && (
+              <small className="error-message-m">
+                {errors.password[0]}
+              </small>)}
             <input onChange={event => this.handleChangeRegister(event)}
               type="password" name="password_confirmation" placeholder="Password Confirmation" />
-            
+            {errors.password_confirmation && (
+              <small className="error-message-m">
+                {errors.password_confirmation[0]}
+              </small>)}
             <button>Sign Up</button>
           </form>
         </div>
@@ -112,8 +133,16 @@ class Register extends React.Component {
             <h1 >Sign in</h1>
             <input onChange={event => this.handleChangeLogIn(event)}
               type="email" name="email" placeholder="Email" />
+            {/* {errors.email && (
+              <small className="error-message-m">
+                {errors.email}
+              </small>)} */}
             <input onChange={event => this.handleChangeLogIn(event)}
               type="password" name="password" placeholder="Password" />
+            {errors.message && (
+              <small className="error-message-m">
+                {errors.message}
+              </small>)}
             <a href="#">Forgot your password?</a>
             <button  >Sign In</button>
           </form>

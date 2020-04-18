@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     password_confirmation = serializers.CharField(write_only=True)
 
     first_name = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(write_only=True)
+    # last_name = serializers.CharField(write_only=True)
 
 
     def validate(self, data):
@@ -31,4 +31,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation','first_name','last_name')
+        fields = ('username', 'email', 'password', 'password_confirmation','first_name')
