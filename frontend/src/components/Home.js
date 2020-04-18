@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 
 import SideBar from '../components/SideBar'
@@ -8,10 +9,70 @@ import Footer from '../components/Footer'
 class Home extends React.Component {
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      topRated: []
+    }
   }
 
+
+  fetchClients(clientIds) {
+    clientIds.forEach((id) => {
+      axios
+        .get(`api/portal/clients/${id}`)
+        .then(res => {
+    
+
+          this.setState({ topRated: [...this.state.topRated, res.data] })
+        })
+        .catch(error => console.error(error))
+    })
+
+  }
+
+
+
+  fetchTopRated() {
+    axios
+      .get('api/portal/topvotes')
+      .then(res => {
+
+        const clientIds = res.data.map((elem) => {
+          console.log(elem.from_mentor)
+          return elem.from_mentor
+        })
+
+        this.fetchClients(clientIds)
+
+        // console.log(clientIds)
+      })
+      .catch(error => console.error(error))
+  }
+
+
+
+
+  componentDidMount() {
+    this.fetchTopRated()
+  }
+  
+
+
+
+
+
   render() {
+    if (!this.state.topRated[0]) {
+      return null
+    }
+    // console.log('cc')
+
+    // const client = this.state.topRated[0]
+
+    // if (client.mentor_profile){
+    //   console.log(client.mentor_profile[0])
+    // }
+    console.log(this.state.topRated[0])
+    const { topRated } = this.state
     return (<>
       <div className="home-container">
         <SideBar />
@@ -52,8 +113,9 @@ class Home extends React.Component {
          <section className="section">
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo">Photo</div>
-               <div className="rated">Top Rated</div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[0].mentor_profile[0].photo)})` }} heigth='150px' >
+               </div>
+               <div className="rated"></div>
              </div>
              <figure className="effect-marley">
                <h4 id="h2">Sweet Marley</h4>

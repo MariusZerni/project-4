@@ -89,11 +89,11 @@ class MentorProfile(models.Model):
   client = models.ForeignKey(Client, related_name='mentor_profile', on_delete=models.CASCADE)
 
 
-class MenteeProfile(models.Model):
-  photo = models.CharField(max_length=500)
-  shortDescription = models.CharField(max_length=150)
-  fullDescription = models.CharField(max_length=3000)
-  client = models.ForeignKey(Client, related_name='mentee_profile', on_delete=models.CASCADE)
+# class MenteeProfile(models.Model):
+#   photo = models.CharField(max_length=500)
+#   shortDescription = models.CharField(max_length=150)
+#   fullDescription = models.CharField(max_length=3000)
+#   client = models.ForeignKey(Client, related_name='mentee_profile', on_delete=models.CASCADE)
 
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Role, Skill, Client, MentorProfile, MenteeProfile, MentorRelationship
+from .models import Role, Skill, Client, MentorProfile, MentorRelationship
 
 class RoleSerializer(serializers.ModelSerializer):
   class Meta: 
@@ -38,10 +38,10 @@ class MentorProfileSerializer(serializers.ModelSerializer):
 
 
 
-class MenteeProfileSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = MenteeProfile
-    fields = ('photo', 'shortDescription', 'fullDescription')
+# class MenteeProfileSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = MenteeProfile
+#     fields = ('photo', 'shortDescription', 'fullDescription')
 
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,7 +62,7 @@ class PopulateClientSerializer(serializers.ModelSerializer):
 
   
   mentor_profile = MentorProfileSerializer(many=True, read_only=True)
-  mentee_profile = MenteeProfileSerializer(many=True, read_only=True)
+  # mentee_profile = MenteeProfileSerializer(many=True, read_only=True)
 
   # mentor_profile = serializers.RelatedField(read_only=True)
   # mentee_profile = serializers.RelatedField(read_only=True)

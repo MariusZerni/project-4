@@ -145,13 +145,15 @@ body {
           color: white;
 
           .photo {
-            text-align: center;
-            line-height: 150px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            // text-align: center;
+            // line-height: 150px;
             width: 150px;
             height: 150px;
             margin: 40px 10px 10px 10px;
             border-radius: 50%;
-            background-color: burlywood;
+            // background-color: burlywood;
             border: 2px solid white;
 
             .rated {

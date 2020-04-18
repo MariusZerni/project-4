@@ -16,8 +16,6 @@ from .models import Skill
 from .serializers import SkillSerializer
 from .models import MentorProfile
 from .serializers import MentorProfileSerializer
-from .models import MenteeProfile
-from .serializers import MenteeProfileSerializer
 from .models import Role
 from .serializers import RoleSerializer
 from .models import MentorRelationship
@@ -63,9 +61,9 @@ class MentorProfilesListView(ListCreateAPIView):
   #   return self.create(request, *args, **kwargs)
 
 
-class MenteeProfilesListView(ListCreateAPIView):
-  queryset = MenteeProfile.objects.all()
-  serializer_class = MenteeProfileSerializer
+# class MenteeProfilesListView(ListCreateAPIView):
+#   queryset = MenteeProfile.objects.all()
+#   serializer_class = MenteeProfileSerializer
 
 
 class RolesListView(ListCreateAPIView):
@@ -118,9 +116,9 @@ class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
     return Response(serializer.data)
 
 
-class MenteeProfileDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = MenteeProfile.objects.all()
-  serializer_class = MenteeProfileSerializer
+# class MenteeProfileDetailView(RetrieveUpdateDestroyAPIView):
+#   queryset = MenteeProfile.objects.all()
+#   serializer_class = MenteeProfileSerializer
 
 
 class RoleDetailView(RetrieveUpdateDestroyAPIView):
