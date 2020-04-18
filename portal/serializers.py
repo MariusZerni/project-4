@@ -30,15 +30,23 @@ class MentorRelationshipDetailSerializer(serializers.ModelSerializer):
 
 
 class MentorProfileSerializer(serializers.ModelSerializer):
+
   class Meta:
     model = MentorProfile
-    fields = ('photo', 'shortDescription', 'fullDescription')
+    fields = '__all__'
+
+
 
 
 class MenteeProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = MenteeProfile
     fields = ('photo', 'shortDescription', 'fullDescription')
+
+class FileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MentorProfile
+        fields = "__all__"
 
 
 class PopulateClientSerializer(serializers.ModelSerializer):
@@ -49,7 +57,7 @@ class PopulateClientSerializer(serializers.ModelSerializer):
   mentees = serializers.ReadOnlyField()
 
   votes = serializers.ReadOnlyField()
-  topVotes = serializers.ReadOnlyField()
+  # topVotes = serializers.ReadOnlyField()
   
 
   

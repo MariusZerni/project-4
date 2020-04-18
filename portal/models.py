@@ -83,7 +83,7 @@ class MentorRelationship(models.Model):
 
 
 class MentorProfile(models.Model):
-  photo = models.CharField(max_length=500)
+  photo = models.ImageField(upload_to='profile_photo', blank=True)
   shortDescription = models.CharField(max_length=150)
   fullDescription = models.CharField(max_length=3000)
   client = models.ForeignKey(Client, related_name='mentor_profile', on_delete=models.CASCADE)

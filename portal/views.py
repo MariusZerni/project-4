@@ -2,16 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
-import json
-
-from django.http import HttpResponse
-
-
+from rest_framework.parsers import FileUploadParser
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 
-from django.db.models import Sum
+import json
 
+from django.http import HttpResponse
+from django.db.models import Sum
 from .models import Client
 from .serializers import ClientSerializer, PopulateClientSerializer
 from .models import Skill
@@ -23,7 +21,7 @@ from .serializers import MenteeProfileSerializer
 from .models import Role
 from .serializers import RoleSerializer
 from .models import MentorRelationship
-from .serializers import MentorRelationshipSerializer
+from .serializers import MentorRelationshipSerializer, FileSerializer
 
 
 
@@ -57,6 +55,12 @@ class SkillsListView(ListCreateAPIView):
 class MentorProfilesListView(ListCreateAPIView):
   queryset = MentorProfile.objects.all()
   serializer_class = MentorProfileSerializer
+
+  # def post(self, request, *args, **kwargs):
+  #   print(request.data)
+  #   # print(request.data.__getitem__("client"))
+  #   # request.data.__setitem__("client", request.data.__getitem__("client_id"))
+  #   return self.create(request, *args, **kwargs)
 
 
 class MenteeProfilesListView(ListCreateAPIView):
@@ -134,3 +138,17 @@ class MentorRelationshipDetailView(RetrieveUpdateDestroyAPIView):
     serializer = MentorRelationshipDetailSerializer(queryset, many=True)
 
     return Response(serializer.data)
+
+
+class FileUploadView(APIView):
+    parser_class = (FileUploadParser,)
+
+    def post(self, request, *args, **kwargs):
+
+      file_serializer = FileSerializer(data=request.data)
+
+      if file_serializer.is_valid():
+          file_serializer.save()
+          return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+      else:
+          return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
