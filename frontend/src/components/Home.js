@@ -19,7 +19,7 @@ class Home extends React.Component {
   fetchClients(clientIds) {
     clientIds.forEach((id) => {
       axios
-        .get(`api/portal/clients/${id}`)
+        .get(`api/portal/users/${id}`)
         .then(res => {
           console.log('res')
           console.log(res)
@@ -131,7 +131,7 @@ class Home extends React.Component {
          <section className="section">
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[0].mentor_profile.photo)})` }} heigth='150px' >
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[0].user_mentor_profile.photo)})` }} heigth='150px' >
                </div>
                <div className="rated"></div>
              </div>
@@ -142,7 +142,7 @@ class Home extends React.Component {
            </div>
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[1].mentor_profile.photo)})` }} ></div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[1].user_mentor_profile.photo)})` }} ></div>
                <div className="rated">Top Rated</div>
              </div>
              <figure className="effect-marley">
@@ -152,7 +152,7 @@ class Home extends React.Component {
            </div>
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[2].mentor_profile.photo)})` }} ></div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[2].user_mentor_profile.photo)})` }} ></div>
                <div className="rated">Top Rated</div>
              </div>
              <figure className="effect-marley">
@@ -165,7 +165,7 @@ class Home extends React.Component {
          <section className="section">
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[3].mentor_profile.photo)})` }} ></div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[3].user_mentor_profile.photo)})` }} ></div>
                <div className="rated">top rated</div>
              </div>
              <figure className="effect-marley">
@@ -175,7 +175,7 @@ class Home extends React.Component {
            </div>
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[4].mentor_profile.photo)})` }} ></div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[4].user_mentor_profile.photo)})` }} ></div>
                <div className="rated">top rated</div>
              </div>
              <figure className="effect-marley">
