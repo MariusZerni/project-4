@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import F, Sum,Max, Count
 import django
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 # Create your models here.
 
@@ -83,6 +84,41 @@ class UserRelationship(models.Model):
     class Meta:
       unique_together = (('mentor', 'mentee',))
 
+
+class CommentType(models.Model):
+
+  comment_type = models.CharField(max_length=30)
+
+  def __str__(self):
+    return self.comment_type
+
+
+class CommentThread(models.Model):
+  commentType = models.ForeignKey(CommentType, related_name='comment_commentType', on_delete=models.CASCADE) 
+  startDate = models.DateTimeField(default=timezone.now)
+  subject = models.CharField(max_length=150)
+
+  def __str__(self):
+    return self.subject
+
+
+
+
+class Comment(models.Model):
+  fromUser = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+  toUser = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+  commentThread = models.ForeignKey(CommentThread, related_name='comment_thread', on_delete=models.CASCADE) 
+  comment = models.CharField(max_length=300)
+  
+  date = models.DateTimeField(default=timezone.now)
+
+  def __str__(self):
+    return 'from: ' + self.fromUser.username + ' to ' + self.toUser.username +": "+ self.commentThread.subject
+
+
+
+
+
 # class Client(models.Model):
 #   user = models.ForeignKey(User, related_name='clients', on_delete=models.CASCADE)
 
@@ -130,7 +166,11 @@ class MentorProfile(models.Model):
   shortDescription = models.CharField(max_length=150)
   fullDescription = models.CharField(max_length=3000)
   # client = models.OneToOneField(Client, related_name='mentor_profile', on_delete=models.CASCADE)
-  user = models.OneToOneField(Person, related_name='user_mentor_profile', on_delete=models.CASCADE)
+  user = models.OneToOneField(Person, related_name='user_profile', on_delete=models.CASCADE)
+
+  def __str__(self):
+    return self.user.username
+
 
 
 

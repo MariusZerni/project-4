@@ -1,11 +1,14 @@
 from django.contrib import admin
-from .models import Role, Skill, MentorProfile, User_Role, User_Skill, UserRelationship
+from .models import Role, Skill, MentorProfile, User_Role, User_Skill, UserRelationship, Comment, CommentType, CommentThread
 
 
 admin.site.register(Role)
 admin.site.register(Skill)
 # admin.site.register(Client)
 admin.site.register(MentorProfile)
+admin.site.register(Comment)
+admin.site.register(CommentType)
+admin.site.register(CommentThread)
 
 # admin.site.register(MentorRelationship)
 

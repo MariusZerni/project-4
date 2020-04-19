@@ -16,10 +16,11 @@ from .models import Skill
 from .serializers import SkillSerializer
 from .models import MentorProfile
 from .serializers import MentorProfileSerializer
-from .models import Role, Person
+from .models import Role, Person, Comment
 from .serializers import RoleSerializer
 from .models import UserRelationship
-from .serializers import FileSerializer, PopulateUserSerializer
+from .serializers import PopulateUserSerializer
+from .serializers import CommentsSerializer
 
 
 
@@ -53,6 +54,36 @@ class UsersListView(ListCreateAPIView):
     users = Person.objects.all()
     serializer = PopulateUserSerializer(users, many=True)
     return Response(serializer.data)
+
+class CommentsListView(ListCreateAPIView):
+  queryset = Comment.objects.all()
+  serializer_class = CommentsSerializer
+
+  def get(self, request):
+    fromUser = request.GET.get('fromUser','')
+
+    if (fromUser):
+      queryset = Comment.objects.filter(fromUser=fromUser)
+    else:
+      queryset = Comment.objects.all()
+    
+    serializer = CommentsSerializer(queryset, many=True)
+
+    return Response(serializer.data)
+    
+  
+
+class CommentDetailView(RetrieveUpdateDestroyAPIView):
+  queryset = Comment.objects.all()
+  serializer_class = CommentsSerializer
+
+  def get(self, request, pk):
+    queryset = Comment.objects.filter(pk=pk)
+    
+    serializer = CommentsSerializer(queryset, many=True)
+
+    return Response(serializer.data)
+  
     
 
 class SkillsListView(ListCreateAPIView):
@@ -122,7 +153,7 @@ class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
   serializer_class = MentorProfileSerializer
 
   def get(self, request, pk):
-    queryset = MentorProfile.objects.filter(client=pk)
+    queryset = MentorProfile.objects.filter(user=pk)
     
     serializer = MentorProfileSerializer(queryset, many=True)
 
@@ -147,15 +178,15 @@ class RoleDetailView(RetrieveUpdateDestroyAPIView):
 #     return Response(serializer.data)
 
 
-class FileUploadView(APIView):
-    parser_class = (FileUploadParser,)
+# class FileUploadView(APIView):
+#     parser_class = (FileUploadParser,)
 
-    def post(self, request, *args, **kwargs):
+#     def post(self, request, *args, **kwargs):
 
-      file_serializer = FileSerializer(data=request.data)
+#       file_serializer = FileSerializer(data=request.data)
 
-      if file_serializer.is_valid():
-          file_serializer.save()
-          return Response(file_serializer.data, status=status.HTTP_201_CREATED)
-      else:
-          return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#       if file_serializer.is_valid():
+#           file_serializer.save()
+#           return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+#       else:
+#           return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

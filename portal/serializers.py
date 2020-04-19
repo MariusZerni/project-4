@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Role, Skill, MentorProfile, Person
+from .models import Role, Skill, MentorProfile, Person, Comment, CommentThread
 
 class RoleSerializer(serializers.ModelSerializer):
   class Meta: 
@@ -31,16 +31,33 @@ class SkillSerializer(serializers.ModelSerializer):
 
 class MentorProfileSerializer(serializers.ModelSerializer):
 
+  photo = serializers.SerializerMethodField()
+
   class Meta:
     model = MentorProfile
     fields = '__all__'
 
+  def get_photo(self, obj):
+        if obj.photo:
+            return obj.photo.url
 
 
-class FileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MentorProfile
-        fields = "__all__"
+class CommentsSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Comment
+    fields = '__all__'
+
+class CommentThreadSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = CommentThread
+    fields = '__all__'
+
+
+
+# class FileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = MentorProfile
+#         fields = "__all__"
 
 
 # class PopulateClientSerializer(serializers.ModelSerializer):
@@ -65,11 +82,11 @@ class PopulateUserSerializer(serializers.ModelSerializer):
   mentees = serializers.ReadOnlyField()
   
   votes = serializers.ReadOnlyField()
-  user_mentor_profile = MentorProfileSerializer(read_only=True)
+  user_profile = MentorProfileSerializer(read_only=True)
   
   class Meta:
     model = Person
-    fields = ('id', 'roles','skills','mentees','votes','user_mentor_profile')
+    fields = ('id', 'roles','skills','mentees','votes','user_profile')
 
 
 
