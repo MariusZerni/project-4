@@ -25,10 +25,10 @@ class SideBar extends React.Component {
                   <Link className='link' to="mentors">Mentors</Link>
                 </li>
                 <li>
-                  <Link className='link' to="register">Register</Link>
+                  <Link className='link' to="register-login">Register</Link>
                 </li>
                 <li>
-                  <Link className='link' to="login">Log In</Link>
+                  <Link className='link' to="register-login">Log In</Link>
                 </li>
               </ul>
             </div>

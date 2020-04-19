@@ -61,7 +61,7 @@ class Client(models.Model):
 
   @property
   def topVotes(self):
-    relationships= MentorRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:2] 
+    relationships= MentorRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5] 
     return relationships
 
 class MentorProfile(models.Model):

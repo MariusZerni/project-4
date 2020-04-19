@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import auth from '../lib/auth'
 
 
 import SideBar from '../components/SideBar'
@@ -20,9 +21,12 @@ class Home extends React.Component {
       axios
         .get(`api/portal/clients/${id}`)
         .then(res => {
-    
+          console.log('res')
+          console.log(res)
 
           this.setState({ topRated: [...this.state.topRated, res.data] })
+
+          console.log(this.state)
         })
         .catch(error => console.error(error))
     })
@@ -37,13 +41,12 @@ class Home extends React.Component {
       .then(res => {
 
         const clientIds = res.data.map((elem) => {
-          console.log(elem.from_mentor)
-          return elem.from_mentor
+          console.log(elem.mentor)
+          return elem.mentor
         })
 
         this.fetchClients(clientIds)
 
-        // console.log(clientIds)
       })
       .catch(error => console.error(error))
   }
@@ -54,32 +57,47 @@ class Home extends React.Component {
   componentDidMount() {
     this.fetchTopRated()
   }
+
+  handleLogout() {
+    auth.logout()
+  }
   
 
-
-
-
-
   render() {
-    if (!this.state.topRated[0]) {
+    // return null
+
+    if (!this.state.topRated || this.state.topRated.length !== 5) {
       return null
     }
-    // console.log('cc')
-
-    // const client = this.state.topRated[0]
-
-    // if (client.mentor_profile){
-    //   console.log(client.mentor_profile[0])
-    // }
-    console.log(this.state.topRated[0])
+   
+    console.log(this.state.topRated)
     const { topRated } = this.state
+    const isLoggedIn = auth.isLoggedIn()
+
+    console.log(topRated)
     return (<>
       <div className="home-container">
         <SideBar />
         <div className="login-logout-register">
-          <div className="home-links"><Link className="link" to="/register-login?current=register">Register</Link></div>
-          <div className="home-links"><Link className="link" to="/register-login?current=login">Log In</Link></div>
-          <div className="home-links"><Link className="link" to="/">Log Out</Link></div>
+          {!isLoggedIn && (
+            <div className="home-links">
+              <Link className="link" to="/register-login?current=register">Register</Link>
+            </div>
+          )}
+          {!isLoggedIn && (
+            <div className="home-links">
+              <Link className="link" to="/register-login?current=login">Log In</Link>
+            </div>
+          )}
+          {isLoggedIn && (
+            <div className="home-links">
+            
+              <Link 
+                onClick={() => this.handleLogout()}
+                className="link" to="/">Log Out</Link>
+            
+            </div>
+          )}
         </div>
         <div className="home-content color-one">
           <div className="brief-description">
@@ -113,7 +131,7 @@ class Home extends React.Component {
          <section className="section">
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[0].mentor_profile[0].photo)})` }} heigth='150px' >
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[0].mentor_profile.photo)})` }} heigth='150px' >
                </div>
                <div className="rated"></div>
              </div>
@@ -124,7 +142,7 @@ class Home extends React.Component {
            </div>
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo">Photo</div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[1].mentor_profile.photo)})` }} ></div>
                <div className="rated">Top Rated</div>
              </div>
              <figure className="effect-marley">
@@ -134,7 +152,7 @@ class Home extends React.Component {
            </div>
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo">Photo</div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[2].mentor_profile.photo)})` }} ></div>
                <div className="rated">Top Rated</div>
              </div>
              <figure className="effect-marley">
@@ -147,7 +165,7 @@ class Home extends React.Component {
          <section className="section">
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo">photo</div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[3].mentor_profile.photo)})` }} ></div>
                <div className="rated">top rated</div>
              </div>
              <figure className="effect-marley">
@@ -157,7 +175,7 @@ class Home extends React.Component {
            </div>
            <div className="mentor-container">
              <div className="photo-rated">
-               <div className="photo">photo</div>
+               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[4].mentor_profile.photo)})` }} ></div>
                <div className="rated">top rated</div>
              </div>
              <figure className="effect-marley">

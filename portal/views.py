@@ -9,7 +9,7 @@ from rest_framework.permissions import BasePermission
 import json
 
 from django.http import HttpResponse
-from django.db.models import Sum
+from django.db.models import Avg
 from .models import Client
 from .serializers import ClientSerializer, PopulateClientSerializer
 from .models import Skill
@@ -78,7 +78,7 @@ class MentorsRelationshipListView(ListCreateAPIView):
 
 def TopVotesListView(request):
 
-    rels=(MentorRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5]).values('mentor','topVotes')
+    rels=(MentorRelationship.objects.values('mentor').annotate(topVotes=Avg("votes")).order_by("-topVotes")[:5]).values('mentor','topVotes')
  
     data=json.dumps(list(rels))
   
