@@ -10,16 +10,16 @@ import json
 
 from django.http import HttpResponse
 from django.db.models import Avg
-from .models import Client
-from .serializers import ClientSerializer, PopulateClientSerializer
+# from .models import Client
+# from .serializers import ClientSerializer, PopulateClientSerializer
 from .models import Skill
 from .serializers import SkillSerializer
 from .models import MentorProfile
 from .serializers import MentorProfileSerializer
-from .models import Role
+from .models import Role, Person
 from .serializers import RoleSerializer
-from .models import MentorRelationship
-from .serializers import MentorRelationshipSerializer, FileSerializer
+from .models import UserRelationship
+from .serializers import FileSerializer, PopulateUserSerializer
 
 
 
@@ -34,16 +34,26 @@ class IsOwnerOrReadOnly(BasePermission):
 
 # Create your views here.
 # List Views
-class ClientsListView(ListCreateAPIView):
-  queryset = Client.objects.all()
-  serializer_class = ClientSerializer
+# class ClientsListView(ListCreateAPIView):
+#   queryset = Client.objects.all()
+#   serializer_class = PopulateUserSerializer
+
+#   def get(self, request):
+#     print("clients")
+#     clients = Client.objects.all()
+#     serializer = PopulateClientSerializer(clients, many=True)
+#     return Response(serializer.data)
+
+class UsersListView(ListCreateAPIView):
+  queryset = Person.objects.all()
+  serializer_class = PopulateUserSerializer
 
   def get(self, request):
-    print("clients")
-    clients = Client.objects.all()
-    serializer = PopulateClientSerializer(clients, many=True)
+    print("users")
+    users = Person.objects.all()
+    serializer = PopulateUserSerializer(users, many=True)
     return Response(serializer.data)
-  
+    
 
 class SkillsListView(ListCreateAPIView):
   queryset = Skill.objects.all()
@@ -54,31 +64,20 @@ class MentorProfilesListView(ListCreateAPIView):
   queryset = MentorProfile.objects.all()
   serializer_class = MentorProfileSerializer
 
-  # def post(self, request, *args, **kwargs):
-  #   print(request.data)
-  #   # print(request.data.__getitem__("client"))
-  #   # request.data.__setitem__("client", request.data.__getitem__("client_id"))
-  #   return self.create(request, *args, **kwargs)
-
-
-# class MenteeProfilesListView(ListCreateAPIView):
-#   queryset = MenteeProfile.objects.all()
-#   serializer_class = MenteeProfileSerializer
-
 
 class RolesListView(ListCreateAPIView):
   queryset = Role.objects.all()
   serializer_class = RoleSerializer
 
 
-class MentorsRelationshipListView(ListCreateAPIView):
-  queryset = MentorRelationship.objects.all()
-  serializer_class = MentorRelationshipSerializer
+# class MentorsRelationshipListView(ListCreateAPIView):
+#   queryset = MentorRelationship.objects.all()
+#   serializer_class = MentorRelationshipSerializer
 
 
 def TopVotesListView(request):
 
-    rels=(MentorRelationship.objects.values('mentor').annotate(topVotes=Avg("votes")).order_by("-topVotes")[:5]).values('mentor','topVotes')
+    rels=(UserRelationship.objects.values('mentor').annotate(topVotes=Avg("votes")).order_by("-topVotes")[:5]).values('mentor','topVotes')
  
     data=json.dumps(list(rels))
   
@@ -86,16 +85,29 @@ def TopVotesListView(request):
 
 
 # Detailed View
-class ClientDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = Client.objects.all()
-  serializer_class = ClientSerializer
-  permission_classes = (IsOwnerOrReadOnly, )
+# class ClientDetailView(RetrieveUpdateDestroyAPIView):
+#   queryset = Client.objects.all()
+#   serializer_class = PopulateClientSerializer
+#   permission_classes = (IsOwnerOrReadOnly, )
+
+#   def get(self, request, pk):
+#     client = Client.objects.get(pk=pk)
+#     # todo check client not null
+#     self.check_object_permissions(request, client)
+#     serializer = PopulateClientSerializer(client)
+
+#     return Response(serializer.data)
+
+class UserDetailView(RetrieveUpdateDestroyAPIView):
+  queryset = Person.objects.all()
+  serializer_class = PopulateUserSerializer
+  # permission_classes = (IsOwnerOrReadOnly, )
 
   def get(self, request, pk):
-    client = Client.objects.get(pk=pk)
+    person = Person.objects.get(pk=pk)
     # todo check client not null
-    self.check_object_permissions(request, client)
-    serializer = PopulateClientSerializer(client)
+    self.check_object_permissions(request, person)
+    serializer = PopulateUserSerializer(person)
 
     return Response(serializer.data)
 
@@ -117,26 +129,22 @@ class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
     return Response(serializer.data)
 
 
-# class MenteeProfileDetailView(RetrieveUpdateDestroyAPIView):
-#   queryset = MenteeProfile.objects.all()
-#   serializer_class = MenteeProfileSerializer
-
 
 class RoleDetailView(RetrieveUpdateDestroyAPIView):
   queryset = Role.objects.all()
   serializer_class = RoleSerializer
 
 
-class MentorRelationshipDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = MentorRelationship.objects.all()
-  serializer_class = MentorRelationshipSerializer
+# class MentorRelationshipDetailView(RetrieveUpdateDestroyAPIView):
+#   queryset = MentorRelationship.objects.all()
+#   serializer_class = MentorRelationshipSerializer
 
-  def get(self, request, pk):
-    queryset = MentorRelationship.objects.filter(mentor=pk)
+#   def get(self, request, pk):
+#     queryset = MentorRelationship.objects.filter(mentor=pk)
     
-    serializer = MentorRelationshipDetailSerializer(queryset, many=True)
+#     serializer = MentorRelationshipDetailSerializer(queryset, many=True)
 
-    return Response(serializer.data)
+#     return Response(serializer.data)
 
 
 class FileUploadView(APIView):
