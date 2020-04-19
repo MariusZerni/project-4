@@ -31,6 +31,10 @@ class Person(User):
   def mentees(self):
     return UserRelationship.objects.filter(mentor=self.id).values_list('mentee', flat=True)
 
+  @property
+  def mentors(self):
+    return UserRelationship.objects.filter(mentee=self.id).values_list('mentor', flat=True)
+
 
   @property
   def votes(self):

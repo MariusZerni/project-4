@@ -14,11 +14,13 @@ import Mentors from '../src/components/Mentors'
 // import SideBar from '../src/components/SideBar'
 
 const App = () => {
+  
   return <BrowserRouter>
     
     <Switch>
       
       <Route exact path="/" component={Home} />
+      <Route exact path="/home" component={Home} />
       <Route path="/register-login" component={Register} />
       <Route path="/mentors" component={Mentors} />
       

@@ -5,8 +5,8 @@ import queryString from 'query-string'
 
 
 class Register extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       register: {
@@ -21,6 +21,7 @@ class Register extends React.Component {
         name: '',
         password: ''
       },
+      user: '',
       errors: {},
       isRegistered: false,
       isLoginActive: true
@@ -61,8 +62,15 @@ class Register extends React.Component {
       .post('/api/login', this.state.logIn)
       .then(res => {
         const token = res.data.token
-        auth.setToken(token)
-        this.props.history.push('/mentors')
+        const userId = res.data.user
+        
+        auth.setToken(token, userId)
+
+
+
+        console.log(token)
+      
+        this.props.history.push({ pathname: '/mentors', state: res.data.user })
       })
       .catch(err => {
         console.log(err.response.data)

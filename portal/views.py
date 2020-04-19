@@ -6,6 +6,10 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 
+from django.db.models import F
+
+
+
 import json
 
 from django.http import HttpResponse
@@ -19,7 +23,7 @@ from .serializers import MentorProfileSerializer
 from .models import Role, Person, Comment
 from .serializers import RoleSerializer
 from .models import UserRelationship
-from .serializers import PopulateUserSerializer
+from .serializers import PopulateUserSerializer, UserRelationshipSerializer
 from .serializers import CommentsSerializer
 
 
@@ -101,19 +105,20 @@ class RolesListView(ListCreateAPIView):
   serializer_class = RoleSerializer
 
 
-# class MentorsRelationshipListView(ListCreateAPIView):
-#   queryset = MentorRelationship.objects.all()
-#   serializer_class = MentorRelationshipSerializer
+class UserRelationshipListView(ListCreateAPIView):
+  queryset = UserRelationship.objects.all()
+  serializer_class = UserRelationshipSerializer
 
 
 def TopVotesListView(request):
 
-    rels=(UserRelationship.objects.values('mentor').annotate(topVotes=Avg("votes")).order_by("-topVotes")[:5]).values('mentor','topVotes')
+    rels=(UserRelationship.objects.values('mentor').annotate(topVotes=Avg("votes")).order_by("-topVotes")[:5]).annotate(name=F('mentor__first_name'), photo=F('mentor__user_profile__photo'), shortDescription=F('mentor__user_profile__shortDescription')).values('mentor','name','photo','shortDescription','topVotes')
  
     data=json.dumps(list(rels))
   
     return HttpResponse(data, content_type='application/json')
 
+# {'id': 'mentor','first_name':'mentor__first_name','photo':'mentor__user_profile__photo','shortDescription':'mentor__user_profile__shortDescription'  }
 
 # Detailed View
 # class ClientDetailView(RetrieveUpdateDestroyAPIView):

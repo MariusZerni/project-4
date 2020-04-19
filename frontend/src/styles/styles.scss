@@ -253,7 +253,7 @@ body {
         0 10px 10px rgba(0,0,0,0.22);
     // position: relative;
     // overflow: hidden;
-    width: 900px;
+    max-width: 900px;
     // max-width: 100%;
     min-height: 480px;
     margin-bottom: 80px;
@@ -288,20 +288,42 @@ body {
         display: flex;
         flex-direction: column;
 
-      h3 {
-        margin-top: 80px;
-        
-      }
+        button {
+          align-self: center;
+          margin-bottom: 20px;
+          width: 35%;
+        }
 
-      p {
-        flex-grow: 1;
-      }
+        h3 {
+          margin-top: 40px;
+          // padding-bottom: 20px;
+          
+        }
 
-      h4 {
-        padding-bottom: 60px;
-        color: rgb(4, 247, 17);
+        p {
+          flex-grow: 1;
+        }
+
+        .skill {
+          height: 100px;
+          display: flex;
+          align-items: center;
+          // padding: 10px;
+
+
+          h4 {
+            font-size: 1.3em;
+          }
+
+          h5 {
+            padding: 5px;
+            font-size: 1.1em;
+            color: rgb(4, 247, 17);
+          }
+        }
+
+      
       }
-    }
   }
 }
 

@@ -16,22 +16,21 @@ class Home extends React.Component {
   }
 
 
-  fetchClients(clientIds) {
-    clientIds.forEach((id) => {
-      axios
-        .get(`api/portal/users/${id}`)
-        .then(res => {
-          // console.log('res')
-          // console.log(res)
+  // fetchClients(clientIds) {
+  //   clientIds.forEach((id) => {
+  //     axios
+  //       .get(`api/portal/users/${id}`)
+  //       .then(res => {
+  //         console.log(res)
 
-          this.setState({ topRated: [...this.state.topRated, res.data] })
+  //         this.setState({ topRated: [...this.state.topRated, res.data] })
 
-          // console.log(this.state)
-        })
-        .catch(error => console.error(error))
-    })
+  //         // console.log(this.state)
+  //       })
+  //       .catch(error => console.error(error))
+  //   })
 
-  }
+  // }
 
 
 
@@ -39,13 +38,13 @@ class Home extends React.Component {
     axios
       .get('api/portal/topvotes')
       .then(res => {
+        this.setState({ topRated: res.data })
+        // const clientIds = res.data.map((elem) => {
+        //   // console.log(elem.mentor)
+        //   return elem.mentor
+        // })
 
-        const clientIds = res.data.map((elem) => {
-          // console.log(elem.mentor)
-          return elem.mentor
-        })
-
-        this.fetchClients(clientIds)
+        // this.fetchClients(clientIds)
 
       })
       .catch(error => console.error(error))
@@ -66,15 +65,15 @@ class Home extends React.Component {
   render() {
     // return null
 
-    if (!this.state.topRated || this.state.topRated.length !== 5) {
+    if (!this.state.topRated || this.state.topRated.length === 0) {
       return null
     }
    
-    // console.log(this.state.topRated)
+    console.log(this.state.topRated)
     const { topRated } = this.state
     const isLoggedIn = auth.isLoggedIn()
 
-    console.log(topRated)
+    // console.log(topRated)
     return (<>
       <div className="home-container">
         <SideBar />
@@ -129,18 +128,23 @@ class Home extends React.Component {
        <div id="home-content" className="color-three">
          <h2>Top Rated</h2>
          <section className="section">
-           <div className="mentor-container">
-             <div className="photo-rated">
-               <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[0].user_profile.photo)})` }} heigth='150px' >
+           
+
+           {topRated.map((element,i) => {
+
+             return <div key={i} className="mentor-container">
+               <div className="photo-rated">
+                 <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000/' + (element.photo)})` }} heigth='150px' >
+                 </div>
+                 <div className="rated">Top Rated</div>
                </div>
-               <div className="rated"></div>
+               <figure className="effect-marley">
+                 <h4 id="h2">Sweet Marley</h4>
+                 <p>Marley tried to convince her but she was not interested.</p>
+               </figure>
              </div>
-             <figure className="effect-marley">
-               <h4 id="h2">Sweet Marley</h4>
-               <p>Marley tried to convince her but she was not interested.</p>
-             </figure>
-           </div>
-           <div className="mentor-container">
+           })}
+           {/* <div className="mentor-container">
              <div className="photo-rated">
                <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[1].user_profile.photo)})` }} ></div>
                <div className="rated">Top Rated</div>
@@ -159,10 +163,10 @@ class Home extends React.Component {
                <h4 id="h2">Sweet Marley</h4>
                <p>Marley tried to convince her but she was not interested.</p>
              </figure>
-           </div>
+           </div> */}
           
          </section>
-         <section className="section">
+         {/* <section className="section">
            <div className="mentor-container">
              <div className="photo-rated">
                <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (topRated[3].user_profile.photo)})` }} ></div>
@@ -183,7 +187,7 @@ class Home extends React.Component {
                <p>Marley tried to convince her but she was not interested.</p>
              </figure>
            </div>
-         </section>
+         </section> */}
        </div>
        <Footer />
      </>

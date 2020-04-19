@@ -22,6 +22,7 @@ module.exports = {
   devServer: {
     contentBase: 'src',
     hot: true,
+    inline: true,
     open: true,
     port: 8000,
     watchContentBase: true,

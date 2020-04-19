@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Role, Skill, MentorProfile, Person, Comment, CommentThread
+from .models import Role, Skill, MentorProfile, Person, Comment, CommentThread, UserRelationship
 
 class RoleSerializer(serializers.ModelSerializer):
   class Meta: 
@@ -18,10 +18,10 @@ class SkillSerializer(serializers.ModelSerializer):
 #     fields = ('id', 'role', 'mentor_skills', 'user')
 
 
-# class MentorRelationshipSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = MentorRelationship
-#     fields = ('id', 'mentor', 'mentee','votes','votesCount')
+class UserRelationshipSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = UserRelationship
+    fields = '__all__'
 
 # class MentorRelationshipDetailSerializer(serializers.ModelSerializer):
 #   class Meta:
@@ -80,13 +80,14 @@ class PopulateUserSerializer(serializers.ModelSerializer):
   roles = serializers.ReadOnlyField()
   skills = serializers.ReadOnlyField()
   mentees = serializers.ReadOnlyField()
+  mentors = serializers.ReadOnlyField()
   
   votes = serializers.ReadOnlyField()
   user_profile = MentorProfileSerializer(read_only=True)
   
   class Meta:
     model = Person
-    fields = ('id', 'roles','skills','mentees','votes','user_profile')
+    fields = ('id', 'first_name', 'roles','skills','mentees','mentors','votes','user_profile')
 
 
 
