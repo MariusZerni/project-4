@@ -153,6 +153,19 @@ class CommentThreadView(ListCreateAPIView):
   serializer_class = CommentThreadSerializer
   # permission_classes = (IsOwnerOrReadOnly, )
 
+class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
+  queryset = CommentThread.objects.all()
+  serializer_class = CommentThreadSerializer
+  # permission_classes = (IsOwnerOrReadOnly, )
+
+  def get(self, request, pk):
+    print('ola')
+    thread = CommentThread.objects.get(pk=pk)
+    # todo check client not null
+    # self.check_object_permissions(request, thread)
+    serializer = CommentThreadSerializer(thread)
+
+    return Response(serializer.data)
 
 
 class SkillDetailView(RetrieveUpdateDestroyAPIView):

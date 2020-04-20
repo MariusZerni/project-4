@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SkillsListView, SkillDetailView, MentorProfilesListView, MentorProfileDetailView, RolesListView, RoleDetailView, TopVotesListView, UsersListView, UserDetailView, CommentDetailView, CommentsListView, UserRelationshipListView, CommentThreadView
+from .views import SkillsListView, SkillDetailView, MentorProfilesListView, MentorProfileDetailView, RolesListView, RoleDetailView, TopVotesListView, UsersListView, UserDetailView, CommentDetailView, CommentsListView, UserRelationshipListView, CommentThreadView, CommentThreadDetailView
 
 
 
@@ -22,6 +22,8 @@ urlpatterns = [
   path('userrelationship', UserRelationshipListView.as_view()),
   path('topvotes', TopVotesListView),
   path('commentthread', CommentThreadView.as_view()),
+  path('commentthread/<int:pk>/', CommentThreadDetailView.as_view()),
+
 
 
 

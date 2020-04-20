@@ -13,7 +13,7 @@ import Register from '../src/components/Register'
 import Mentors from '../src/components/Mentors'
 import GetHelp from '../src/components/GetHelp'
 import SideBar from '../src/components/SideBar'
-import Threads from '../src/components/Threads'
+import ReplyToThread from '../src/components/ReplyToThread'
 // import SideBar from '../src/components/SideBar'
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
       <Route exact path="/" component={Home} />
       <Route path="/mentors" component={Mentors} />
       <Route exact path="/gethelp" component={GetHelp} />
-      <Route exact path="/treads" component={Threads} />
+      <Route exact path="/thread" component={ReplyToThread} />
       <Route path="/register-login" component={Register} />
       
       
