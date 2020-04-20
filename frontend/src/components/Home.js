@@ -4,7 +4,7 @@ import axios from 'axios'
 import auth from '../lib/auth'
 
 
-import SideBar from '../components/SideBar'
+// import SideBar from '../components/SideBar'
 import Footer from '../components/Footer'
 
 class Home extends React.Component {
@@ -76,7 +76,7 @@ class Home extends React.Component {
     // console.log(topRated)
     return (<>
       <div className="home-container">
-        <SideBar />
+        {/* <SideBar /> */}
         <div className="login-logout-register">
           {!isLoggedIn && (
             <div className="home-links">

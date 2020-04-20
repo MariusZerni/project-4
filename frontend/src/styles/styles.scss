@@ -1,8 +1,8 @@
 :root {
   --overlay-color: rgba(13, 110, 139, 0.75);
   --primary-color: rgba(18, 79, 90, 0.692);
-  --secondary-color: rgba(177, 179, 180, 0.575);
-  --mentors-background-color: rgba(119, 121, 122, 0.575);
+  --secondary-color: rgba(172, 172, 172, 0.575);
+  --mentors-background-color: rgba(173, 173, 169, 0.733);
   --menu-speed: 0.75s;
 }
 
@@ -43,7 +43,17 @@ body {
     color: black;
     background: var(--overlay-color); 
     border-radius: 5px;
-    box-shadow: 3px 3px 5px 3px rgba(36, 36, 36, 0.637);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+        0 10px 10px rgba(0,0,0,0.22);
+
+        &:active {
+          transform: scale(0.95);
+        }
+        
+        &:focus {
+          outline: none;
+        }
+    
     
     .link {
       text-decoration: none;
@@ -52,6 +62,8 @@ body {
     }
   }
 }
+
+
 
 
 .home-content {
@@ -110,8 +122,12 @@ body {
 }
 
 #home-content {
-  width: 100%;
-  height: 100%;
+  // display: flex;
+  // margin: 0 auto;
+  
+  // overflow: hidden;
+  // width: 60%;
+  // height: 100%;
 
   &.color-three {
     background: var(--overlay-color); 
@@ -127,15 +143,20 @@ body {
       display: flex;
       justify-content: center;
       padding-bottom: 30px;
+      flex-wrap: wrap;
+      
 
       .mentor-container {
         display: flex;
         width: 350px;
         height: 400px;
+        border-radius: 10px;
         // background-color: blanchedalmond;
         margin: 30px 10px;
         background: var(--mentors-background-color);
         border: 1px solid grey;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+        0 10px 10px rgba(0,0,0,0.22);
         
 
         .photo-rated {
@@ -237,12 +258,9 @@ body {
   align-items: center;
   flex-direction: column;
   background: var(--secondary-color); 
-  
 
-  &:first-child {
-    // background-color: yellow;
-    padding-top: 200px;
-  }
+  padding-top: 200px;
+  
 
 
   .content-mentor {
@@ -291,7 +309,16 @@ body {
         button {
           align-self: center;
           margin-bottom: 20px;
-          width: 35%;
+          // width: 35%;
+          cursor: pointer;
+        }
+
+        button:active {
+          transform: scale(0.95);
+        }
+        
+        button:focus {
+          outline: none;
         }
 
         h3 {
@@ -330,7 +357,90 @@ body {
 
 
 
+//======================= COMENTS
 
+.main-container {
+  // padding-left: 10%;
+  
+  
+  
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 30vh;
+    background-color: var(--overlay-color);
+
+    .ask-question, #question {
+      margin: 0 150px -20px 0;
+      background-color: var(--overlay-color);
+      border-radius: 20px;
+
+       
+      
+    }
+
+    
+  }
+
+
+  .main-section {
+    padding-bottom: 150px;
+    padding-left: 15%;
+    padding-top: 50px;
+    background-color: var(--secondary-color);
+  }
+
+
+
+  .section-comment {
+    background-color: #fff;
+	  border-radius: 10px;
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+			0 10px 10px rgba(0,0,0,0.22);
+	  position: relative;
+	  overflow: hidden;
+	  width: 768px;
+	  max-width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 50px;
+
+
+    .subject-section {
+      padding: 20px 0 0 30px
+    }
+
+    .reply-border {
+      align-self: center;
+      height: 1px;
+      width: 95%;
+      margin-top: 15px;
+      background-color: grey;
+    }
+
+    .reply-date-section {
+      padding: 20px;
+      // color: blue;
+      display: flex;
+      justify-content: space-between;
+
+
+      p {
+        color: rgba(21, 170, 240, 0.849);
+        margin: 0;
+      }
+
+      .date-section {
+        padding-right: 50px;
+      }
+    }
+  
+  }
+}
 
 
 

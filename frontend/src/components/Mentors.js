@@ -7,8 +7,9 @@ class Mentors extends React.Component {
   constructor() {
     super()
     this.state = {
-      user: '',
-      mentors: []
+
+      mentors: [],
+      newlyRegisteredMentees: []
     }
   }
 
@@ -26,10 +27,12 @@ class Mentors extends React.Component {
     console.log('userid: ' + auth.getUserId())
     console.log({ mentor: mentorId, mentee: auth.getUserId() })
     axios
-      .post('api/portal/userrelationship', { mentor: mentorId, mentee: this.state.user })
+      .post('api/portal/userrelationship', { mentor: mentorId, mentee: auth.getUserId() })
       .then((response) => {
+        this.fetchMentors()
         console.log(response)
-      }, (error) => {
+      }) 
+      .catch((error) => {
         console.log(error)
       })
 
@@ -41,8 +44,6 @@ class Mentors extends React.Component {
     this.fetchMentors()
 
     console.log(this.props)
-
-    this.setState({ user: this.props.location.state })
     
 
   }
@@ -53,12 +54,14 @@ class Mentors extends React.Component {
     }
 
     const currentUserId = auth.getUserId()
-    return (
+    return (<>
+    
       <div className="container-mentors">
-        <SideBar />
+        
         {this.state.mentors.filter(mentor => {
-          console.log(mentor.mentees.includes(currentUserId))
-          return mentor.id !== auth.currentUserId && !mentor.mentees.includes(currentUserId)
+          
+          return mentor.id !== currentUserId 
+          // && !mentor.mentees.includes(currentUserId)
         })
           .map((mentor) => {
             return <div key={mentor.id} className="content-mentor">
@@ -87,12 +90,18 @@ class Mentors extends React.Component {
                     return  <h5 key={i} >{skill}</h5>
                   })}
                 </div>
-                <button onClick={() => this.postMentorRelationship(mentor.id)} >Become a mentee</button>
+                { !mentor.mentees.includes(currentUserId)  && 
+                <button onClick={() => this.postMentorRelationship(mentor.id)} > Register as a mentee</button>}
+
+                { mentor.mentees.includes(currentUserId)  && 
+                <button > Joined </button>}
               </div>
             </div>
           })}
 
       </div>
+      {/* <SideBar /> */}
+      </>
     )
   }
 }

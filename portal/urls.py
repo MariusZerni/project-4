@@ -7,7 +7,7 @@ urlpatterns = [
 
   path('', UsersListView.as_view()),
   path('users', UsersListView.as_view()),
-  path('comment', CommentsListView.as_view()),
+  path('comments', CommentsListView.as_view()),
   path('users/<int:pk>/', UserDetailView.as_view()),
   path('comment/<int:pk>/', CommentDetailView.as_view()),
 
