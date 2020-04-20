@@ -22,9 +22,9 @@ from .models import MentorProfile
 from .serializers import MentorProfileSerializer
 from .models import Role, Person, Comment
 from .serializers import RoleSerializer
-from .models import UserRelationship
+from .models import UserRelationship, CommentThread
 from .serializers import PopulateUserSerializer, UserRelationshipSerializer
-from .serializers import CommentsSerializer
+from .serializers import CommentsSerializer,CommentThreadSerializer
 
 
 
@@ -146,6 +146,13 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     serializer = PopulateUserSerializer(person)
 
     return Response(serializer.data)
+
+
+class CommentThreadView(ListCreateAPIView):
+  queryset = CommentThread.objects.all()
+  serializer_class = CommentThreadSerializer
+  # permission_classes = (IsOwnerOrReadOnly, )
+
 
 
 class SkillDetailView(RetrieveUpdateDestroyAPIView):

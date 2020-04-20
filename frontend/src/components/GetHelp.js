@@ -1,24 +1,47 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { Editor } from '@tinymce/tinymce-react'
+
+// import tinymce from 'tinymce'
+// import 'tinymce/themes/modern'
+// import 'tinymce/plugins/wordcount'
+// import 'tinymce/plugins/table'
+
+
+
 
 
 class GetHelp extends React.Component {
   constructor() {
     super()
     this.state = {
-
+      content: ''
     }
+    this.handleEditorChange = this.handleEditorChange.bind(this)
   }
 
-
+  componentDidMount(){
+    
+  }
+  
+  handleEditorChange(content, editor) {
+    console.log('tes')
+    this.setState({ content })
+  }
 
 
 
 
   render() {
 
-    return <div className="main-container">
+    // const { commentText } = this.state
+
+    console.log(this.state.content)
+
+
+    return <>
+    <div className="main-container">
       <section className="header">
         <div className="ask-question">
           <button id="question ">Ask Question</button> </div>
@@ -56,8 +79,31 @@ class GetHelp extends React.Component {
           </div>
         </section>
       </div>
+      
     </div>
+    <form>
+      <Editor
+        apiKey="8hj12ov6utkverot2eh2mkkcs06rrt03n0x4ez55s2m6z1fd"
+        plugins="wordcount"
+        // initialValue={commentText}
+        // init={{ plugins: 'link image code',
+        //   toolbar: 'undo redo | bold italic| alignleft aligncenter alignright | code' }}
+        // name='text'
+        // onChange={this.handleEditorChange}
+        value={this.state.content}
+        onEditorChange={this.handleEditorChange}/>
 
+      <div >
+        <button type="submit">Comment</button>
+      </div>
+      
+    </form>
+    <br/>
+
+    <div height="100px">
+      nscbbc
+    </div>
+  </>
   }
 }
 

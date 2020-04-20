@@ -99,8 +99,9 @@ class CommentType(models.Model):
 
 class CommentThread(models.Model):
   commentType = models.ForeignKey(CommentType, related_name='comment_commentType', on_delete=models.CASCADE) 
+  initialComment=models.CharField(max_length=300)
   startDate = models.DateTimeField(default=timezone.now)
-  subject = models.CharField(max_length=150)
+  subject = models.CharField(max_length=150, blank=True)
 
   def __str__(self):
     return self.subject
