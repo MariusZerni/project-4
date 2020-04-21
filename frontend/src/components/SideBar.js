@@ -27,6 +27,7 @@ class SideBar extends React.Component {
                 <li>
                   <Link className='link' to="gethelp">Get Help</Link>
                 </li>
+                <li><Link className='link' to="mentorprofile">Mentor Profile</Link></li>
                 <li>
                   <Link className='link' to="register-login">Register</Link>
                 </li>

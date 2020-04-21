@@ -54,10 +54,10 @@ class CommentThreadSerializer(serializers.ModelSerializer):
 
 
 
-# class FileSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = MentorProfile
-#         fields = "__all__"
+class FileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MentorProfile
+        fields = "__all__"
 
 
 # class PopulateClientSerializer(serializers.ModelSerializer):

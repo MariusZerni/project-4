@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "exports-loader": "^0.7.0",
     "imports-loader": "^0.8.0",
     "webpack": "^4.42.1",
@@ -27,6 +28,7 @@
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.2.0",
     "node-modules": "^1.0.1",
     "node-sass": "^4.11.0",
@@ -36,6 +38,7 @@
     "react-router-dom": "^5.1.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.4",
-    "tinymce": "^5.2.1"
+    "tinymce": "^5.2.1",
+    "url-loader": "^4.1.0"
   }
 }

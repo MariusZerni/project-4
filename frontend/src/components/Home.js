@@ -67,6 +67,9 @@ class Home extends React.Component {
     <div className="home-container">
       {/* <SideBar /> */}
       <div className="login-logout-register">
+        <div className="home-links">
+          <Link className="link" to="/profile">Create profile</Link>
+        </div>
         {!isLoggedIn && (
           <div className="home-links">
             <Link className="link" to="/register-login?current=register">Register</Link>
@@ -113,7 +116,7 @@ class Home extends React.Component {
            </div>
          </div>
        </div>
-       <Footer />
+       
        </>
   }
   
@@ -129,14 +132,15 @@ class Home extends React.Component {
     const { topRated } = this.state
     
 
-    // console.log(topRated)
+    console.log(topRated)
     return (<>
      
-      {this.staticContent()}
       
-
+      
+     {this.staticContent()}
        <div id="home-content" className="color-three">
          <h2>Top Rated</h2>
+         
          <section className="section">
            
 
@@ -156,8 +160,9 @@ class Home extends React.Component {
            })}
            
          </section>
+         
        </div>
-       
+       <Footer />
      </>
     )
   }

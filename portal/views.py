@@ -7,6 +7,7 @@ from rest_framework import permissions
 from rest_framework.permissions import BasePermission
 
 from django.db.models import F
+from rest_framework import status
 
 
 
@@ -24,7 +25,7 @@ from .models import Role, Person, Comment
 from .serializers import RoleSerializer
 from .models import UserRelationship, CommentThread
 from .serializers import PopulateUserSerializer, UserRelationshipSerializer
-from .serializers import CommentsSerializer,CommentThreadSerializer
+from .serializers import CommentsSerializer,CommentThreadSerializer, FileSerializer
 
 
 
@@ -37,17 +38,6 @@ class IsOwnerOrReadOnly(BasePermission):
     return request.user == obj.user
 
 
-# Create your views here.
-# List Views
-# class ClientsListView(ListCreateAPIView):
-#   queryset = Client.objects.all()
-#   serializer_class = PopulateUserSerializer
-
-#   def get(self, request):
-#     print("clients")
-#     clients = Client.objects.all()
-#     serializer = PopulateClientSerializer(clients, many=True)
-#     return Response(serializer.data)
 
 class UsersListView(ListCreateAPIView):
   queryset = Person.objects.all()
@@ -99,6 +89,18 @@ class MentorProfilesListView(ListCreateAPIView):
   queryset = MentorProfile.objects.all()
   serializer_class = MentorProfileSerializer
 
+  # parser_class = (FileUploadParser,)
+
+  def post(self, request, *args, **kwargs):
+
+    file_serializer = FileSerializer(data=request.data)
+
+    if file_serializer.is_valid():
+        file_serializer.save()
+        return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class RolesListView(ListCreateAPIView):
   queryset = Role.objects.all()
@@ -118,21 +120,6 @@ def TopVotesListView(request):
   
     return HttpResponse(data, content_type='application/json')
 
-# {'id': 'mentor','first_name':'mentor__first_name','photo':'mentor__user_profile__photo','shortDescription':'mentor__user_profile__shortDescription'  }
-
-# Detailed View
-# class ClientDetailView(RetrieveUpdateDestroyAPIView):
-#   queryset = Client.objects.all()
-#   serializer_class = PopulateClientSerializer
-#   permission_classes = (IsOwnerOrReadOnly, )
-
-#   def get(self, request, pk):
-#     client = Client.objects.get(pk=pk)
-#     # todo check client not null
-#     self.check_object_permissions(request, client)
-#     serializer = PopulateClientSerializer(client)
-
-#     return Response(serializer.data)
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
   queryset = Person.objects.all()
@@ -149,7 +136,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class CommentThreadView(ListCreateAPIView):
-  queryset = CommentThread.objects.all()
+  queryset = CommentThread.objects.all().order_by('-startDate')
   serializer_class = CommentThreadSerializer
   # permission_classes = (IsOwnerOrReadOnly, )
 
@@ -191,27 +178,16 @@ class RoleDetailView(RetrieveUpdateDestroyAPIView):
   serializer_class = RoleSerializer
 
 
-# class MentorRelationshipDetailView(RetrieveUpdateDestroyAPIView):
-#   queryset = MentorRelationship.objects.all()
-#   serializer_class = MentorRelationshipSerializer
 
-#   def get(self, request, pk):
-#     queryset = MentorRelationship.objects.filter(mentor=pk)
-    
-#     serializer = MentorRelationshipDetailSerializer(queryset, many=True)
+class FileUploadView(APIView):
+    parser_class = (FileUploadParser,)
 
-#     return Response(serializer.data)
+    def post(self, request, *args, **kwargs):
 
+      file_serializer = FileSerializer(data=request.data)
 
-# class FileUploadView(APIView):
-#     parser_class = (FileUploadParser,)
-
-#     def post(self, request, *args, **kwargs):
-
-#       file_serializer = FileSerializer(data=request.data)
-
-#       if file_serializer.is_valid():
-#           file_serializer.save()
-#           return Response(file_serializer.data, status=status.HTTP_201_CREATED)
-#       else:
-#           return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      if file_serializer.is_valid():
+          file_serializer.save()
+          return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+      else:
+          return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

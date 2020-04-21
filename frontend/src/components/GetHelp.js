@@ -3,13 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Editor } from '@tinymce/tinymce-react'
 import auth from '../lib/auth'
-
-// import tinymce from 'tinymce'
-// import 'tinymce/themes/modern'
-// import 'tinymce/plugins/wordcount'
-// import 'tinymce/plugins/table'
-
-
+import util from '../lib/util'
 
 
 
@@ -20,23 +14,12 @@ class GetHelp extends React.Component {
       content: '',
       comments: ''
     }
+    this.mainContainerRef = React.createRef()
     this.handleEditorChange = this.handleEditorChange.bind(this)
   }
 
 
-  postingComment() {
-    // console.log({ comment: this.state.content , fromUser: auth.getUserId(), commentThread: 1 })
-    axios
-    //TODO send threadId
-      .post('api/portal/comments', { comment: this.state.content , fromUser: auth.getUserId(), commentThread: 1 })
-      .then((response) => {
-        
-        console.log(response)
-      }) 
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+
 
   postingCommentThread() {
     console.log({ initialComment: this.state.content , fromUser: auth.getUserId(), commentType: 1 })
@@ -44,7 +27,10 @@ class GetHelp extends React.Component {
     //TODO send threadId
       .post('api/portal/commentthread', { initialComment: this.state.content , fromUser: auth.getUserId(), commentType: 1 })
       .then((response) => {
-        
+        this.getCommentsThreads()
+        this.setState({ content: '' })
+        this.mainContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
         console.log(response)
       }) 
       .catch((error) => {
@@ -69,6 +55,7 @@ class GetHelp extends React.Component {
 
   componentDidMount(){
     this.getCommentsThreads()
+    
     // this.handleSubmit()
   }
 
@@ -76,21 +63,18 @@ class GetHelp extends React.Component {
     event.preventDefault()
     console.log('set state')
 
-    this.postingComment()
-    //this.postingCommentThread()
+    // this.postingComment()
+    this.postingCommentThread()
     // this.setState({ content: this.state.content })
   }
   
-  handleEditorChange(content, editor) {
+  handleEditorChange(content) {
     console.log('tes')
     this.setState({ content })
   }
 
   
-  createMarkup(comment) {
-    return { __html: comment }
-  }
-
+ 
 
 
 
@@ -101,21 +85,26 @@ class GetHelp extends React.Component {
 
     const { comments } = this.state
     console.log('render')
+    console.log(comments)
 
-    console.log(this.state.comments)
+    console.log(this.state.content)
+    
 
 
     return <>
-    <div className="main-container">
+    <div className="main-container" ref={this.mainContainerRef} >
+      <div className="comment-line"></div>
       <section className="header">
         <div className="ask-question">
-          <button id="question ">Ask Question</button> </div>
+          {/* <button id="question ">Ask Question</button> 
+           */}
+        </div>
       </section>
       <div className="main-section">
         {comments.map(comment => {
           // console.log(comment)
           return <section key={comment.id} className="section-comment">
-            <div className="subject-section" dangerouslySetInnerHTML={this.createMarkup(comment.initialComment)}>
+            <div className="subject-section" dangerouslySetInnerHTML={util.createMarkup(comment.initialComment)}>
             </div>
             <div className="reply-border"></div>
             <div className="reply-date-section">
@@ -129,6 +118,8 @@ class GetHelp extends React.Component {
 
         <section className="section-comment">
           <div className="subject-section">Subject 1<br/>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error reprehenderit tempore atque iusto quidem laborum. Distinctio ut quod, cupiditate natus veniam vitae facere tempore ipsum aut vero quisquam eum rerum saepe nobis beatae deserunt quo doloribus est doloremque suscipit tempora temporibus neque sit inventore. Reiciendis inventore error omnis, dolorem quaerat rerum vitae molestiae at eveniet, enim aperiam similique voluptatibus quidem praesentium facere officiis earum id molestias dolor modi numquam esse. Veritatis soluta modi esse, sed fuga praesentium porro nostrum aperiam beatae eos blanditiis quas dignissimos. Adipisci fugiat, labore, eum vitae alias atque officiis distinctio accusantium, ex culpa est! Minima, distinctio!
+          Id culpa impedit esse molestias tenetur voluptas aut pariatur voluptatum, necessitatibus illum, porro soluta inventore dolorem eveniet, modi a saepe dolores! Fugiat mollitia sed eum quisquam explicabo ut molestias!
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolorum ad inventore asperiores! Officiis quis molestias voluptate atque excepturi illum vero vitae expedita sunt adipisci ut facilis amet nihil dicta assumenda fugit, cum nisi, hic iusto delectus. Aut, nobis.</div>
           <div className="reply-border"></div>
           <div className="reply-date-section">
@@ -150,7 +141,9 @@ class GetHelp extends React.Component {
       </div>
       
     </div>
-    <form>
+
+    
+    <form id="form" >
       <Editor
         apiKey="8hj12ov6utkverot2eh2mkkcs06rrt03n0x4ez55s2m6z1fd"
         plugins="wordcount"
@@ -160,16 +153,13 @@ class GetHelp extends React.Component {
      
       
     </form>
-    <div >
+    <div className="submit-btn" >
       <button type="button" onClick={(e) => {
         this.handleSubmit(e)
       }} >Comment</button>
     </div>
-    <br/>
 
-    <div height="100px">
-      nscbbc
-    </div>
+  
   </>
   }
 }

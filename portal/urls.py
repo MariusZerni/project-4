@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SkillsListView, SkillDetailView, MentorProfilesListView, MentorProfileDetailView, RolesListView, RoleDetailView, TopVotesListView, UsersListView, UserDetailView, CommentDetailView, CommentsListView, UserRelationshipListView, CommentThreadView, CommentThreadDetailView
+from .views import SkillsListView, SkillDetailView, MentorProfilesListView, MentorProfileDetailView, RolesListView, RoleDetailView, TopVotesListView, UsersListView, UserDetailView, CommentDetailView, CommentsListView, UserRelationshipListView, CommentThreadView, CommentThreadDetailView,FileUploadView
 
 
 
@@ -34,7 +34,7 @@ urlpatterns = [
   path('roles/<int:pk>/', RoleDetailView.as_view()),
   # path('mentorrelationship/<int:pk>/', MentorRelationshipDetailView.as_view()),
   
-  # path('uploadimage/', FileUploadView.as_view())
+  path('uploadimage/', FileUploadView.as_view())
 
   
 

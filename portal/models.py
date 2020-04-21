@@ -168,7 +168,7 @@ class Comment(models.Model):
 #     return relationships
 
 class MentorProfile(models.Model):
-  photo = models.ImageField(upload_to='profile_photo', blank=True)
+  photo = models.ImageField(upload_to='profile_photo', blank=False, null=False)
   shortDescription = models.CharField(max_length=150)
   fullDescription = models.CharField(max_length=3000)
   # client = models.OneToOneField(Client, related_name='mentor_profile', on_delete=models.CASCADE)

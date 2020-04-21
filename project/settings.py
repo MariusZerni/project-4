@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,6 +142,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-MEDIA_URL =  'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "profile_photo")
+MEDIA_URL =  '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 print(MEDIA_ROOT)

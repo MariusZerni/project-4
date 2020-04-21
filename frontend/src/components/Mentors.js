@@ -60,7 +60,7 @@ class Mentors extends React.Component {
         
         {this.state.mentors.filter(mentor => {
           
-          return mentor.id !== currentUserId 
+          return mentor.id !== currentUserId  && mentor.user_profile !== null
           // && !mentor.mentees.includes(currentUserId)
         })
           .map((mentor) => {
