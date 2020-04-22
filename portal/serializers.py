@@ -12,21 +12,10 @@ class SkillSerializer(serializers.ModelSerializer):
     fields = ('id', 'name')
 
 
-# class ClientSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = Client
-#     fields = ('id', 'role', 'mentor_skills', 'user')
-
-
 class UserRelationshipSerializer(serializers.ModelSerializer):
   class Meta:
     model = UserRelationship
     fields = '__all__'
-
-# class MentorRelationshipDetailSerializer(serializers.ModelSerializer):
-#   class Meta:
-#     model = MentorRelationship
-#     fields =  ('mentees','votesCount')
 
 
 class MentorProfileSerializer(serializers.ModelSerializer):
@@ -42,37 +31,10 @@ class MentorProfileSerializer(serializers.ModelSerializer):
             return obj.photo.url
 
 
-class CommentsSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Comment
-    fields = '__all__'
-
-class CommentThreadSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = CommentThread
-    fields = '__all__'
-
-
-
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = MentorProfile
         fields = "__all__"
-
-
-# class PopulateClientSerializer(serializers.ModelSerializer):
-
-#   role_names = serializers.ReadOnlyField()
-#   mentor_skills_names = serializers.ReadOnlyField()
-#   votes = serializers.ReadOnlyField()
-#   mentor_profile = MentorProfileSerializer(read_only=True)
-
-
-#   class Meta:
-#     model = Client
-#     fields = ('id', 'role_names','mentor_skills_names', 'mentor_profile', 'mentees','votes')
-
-
 
 
 class PopulateUserSerializer(serializers.ModelSerializer):
@@ -91,4 +53,29 @@ class PopulateUserSerializer(serializers.ModelSerializer):
 
 
 
+class CommentsSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Comment
+    fields = "__all__"
+
+class CommentThreadSerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = CommentThread
+    fields = "__all__"
+
+class CommentThreadDetailSerializer(serializers.ModelSerializer):
+
+  # comments = CommentsSerializer(many=True)
+  comments = serializers.SerializerMethodField()
+  
+  
+
+  class Meta:
+    model = CommentThread
+    fields = ('id', 'commentType','initialComment','fromUser','startDate','subject','comments')
+
+  def get_comments(self, instance):
+        comments = instance.comments.all().order_by('-date')
+        return CommentsSerializer(comments, many=True).data
 

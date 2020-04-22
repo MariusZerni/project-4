@@ -150,11 +150,11 @@ class Home extends React.Component {
                <div className="photo-rated">
                  <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000/media/' + (element.photo)})` }} heigth='150px' >
                  </div>
-                 <div className="rated">Top Rated</div>
+                 <div className="rated">Top Rated: {element.topVotes}</div>
                </div>
                <figure className="effect-marley">
-                 <h4 id="h2">Sweet Marley</h4>
-                 <p>Marley tried to convince her but she was not interested.</p>
+                 <h4 id="h2">{element.name}h</h4>
+                 <p>Marley tried to convince her but she was not interested.{element.shortDescription}</p>
                </figure>
              </div>
            })}

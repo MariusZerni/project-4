@@ -16,19 +16,15 @@ class ReplyToThread extends React.Component {
       content: ''
       
     }
+    this.mainContainerRef = React.createRef()
     this.handleEditorChange = this.handleEditorChange.bind(this)
   }
 
   componentDidMount() {
     console.log('comp')
     const params = queryString.parse(this.props.location.search)
-    console.log(params)
-
     const threadId = parseInt(params.id)
-
-    // console.log(threadId)
     this.setState({ threadId: threadId })
-
     this.getCommentsThreads(threadId)
   }
 
@@ -50,7 +46,9 @@ class ReplyToThread extends React.Component {
   postingComment() {
     axios.post('api/portal/comments', { comment: this.state.content , fromUser: auth.getUserId(), commentThread: this.state.threadId, commentType: 1 })
       .then((response) => {
-        
+        this.getCommentsThreads()
+        this.setState({ content: '' })
+        this.mainContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
         console.log(response)
       }) 
       .catch((error) => {
@@ -59,7 +57,9 @@ class ReplyToThread extends React.Component {
   }
 
 
-  getCommentsThreads(threadId) {
+
+
+  getCommentsThreads(threadId = this.state.threadId) {
     console.log(this.state)
 
     axios
@@ -76,64 +76,44 @@ class ReplyToThread extends React.Component {
   }
 
 
-
+  
   
 
 
   render() {
     console.log('render threads')
+    console.log()
 
     if (!this.state.thread){
       return null
     }
-    console.log(this.state.thred)
-
+    console.log(this.state.comments)
+    
     const { thread } = this.state
+    const comments  =  thread.comments
 
-    return  <div className="main-container">
+    return  <div className="main-container" ref={this.mainContainerRef}>
 
       <div className="main-section">
-        
+       
         <section key={thread.id} className="section-comment">
-          <div className="subject-section" dangerouslySetInnerHTML={util.createMarkup(thread.initialComment)}>
+          <div className="subject-section" >
           </div>
           <div className="reply-border"></div>
           <div className="reply-date-section">
             <div className="date-section">{thread.startDate}</div>
           </div>
         </section>
-        <section  className="section-comment" id="reply-thread">
-          <div className="subject-section" >
-          </div>
-          <div className="reply-border"></div>
-          <div className="reply-date-section">
-            <div className="date-section">Date</div>
-          </div>
-        </section>
-        <section  className="section-comment" id="reply-thread">
-          <div className="subject-section" >
-          </div>
-          <div className="reply-border"></div>
-          <div className="reply-date-section">
-            <div className="date-section">Date</div>
-          </div>
-        </section>
-        <section  className="section-comment" id="reply-thread">
-          <div className="subject-section" >
-          </div>
-          <div className="reply-border"></div>
-          <div className="reply-date-section">
-            <div className="date-section">Date</div>
-          </div>
-        </section>
-        <section  className="section-comment" id="reply-thread">
-          <div className="subject-section" >
-          </div>
-          <div className="reply-border"></div>
-          <div className="reply-date-section">
-            <div className="date-section">Date</div>
-          </div>
-        </section>
+        {comments.map((comment) => {
+          return <section  key={comment.id} className="section-comment" id="reply-thread">
+            <div className="subject-section" dangerouslySetInnerHTML={util.createMarkup(comment.comment)}>
+            </div>
+            <div className="reply-border"></div>
+            <div className="reply-date-section">
+              <div className="date-section">Date</div>
+            </div>
+          </section>
+        })}
       </div>
       <form id="form" >
         <Editor

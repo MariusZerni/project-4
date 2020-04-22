@@ -109,11 +109,10 @@ class CommentThread(models.Model):
 
 
 
-
 class Comment(models.Model):
   fromUser = models.ForeignKey(User, related_name='comment_from_user', on_delete=models.CASCADE)
   toUser = models.ForeignKey(User, related_name='comment_to_user', on_delete=models.CASCADE, blank=True, null=True)
-  commentThread = models.ForeignKey(CommentThread, related_name='comment_thread', on_delete=models.CASCADE) 
+  commentThread = models.ForeignKey(CommentThread, related_name='comments', on_delete=models.CASCADE) 
   comment = models.CharField(max_length=300)
   
   date = models.DateTimeField(default=timezone.now)

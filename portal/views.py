@@ -25,7 +25,7 @@ from .models import Role, Person, Comment
 from .serializers import RoleSerializer
 from .models import UserRelationship, CommentThread
 from .serializers import PopulateUserSerializer, UserRelationshipSerializer
-from .serializers import CommentsSerializer,CommentThreadSerializer, FileSerializer
+from .serializers import CommentsSerializer,CommentThreadSerializer, FileSerializer, CommentThreadDetailSerializer
 
 
 
@@ -50,16 +50,16 @@ class UsersListView(ListCreateAPIView):
     return Response(serializer.data)
 
 class CommentsListView(ListCreateAPIView):
-  queryset = Comment.objects.all()
+  queryset = Comment.objects.all().order_by('-startDate')
   serializer_class = CommentsSerializer
 
   def get(self, request):
-    fromUser = request.GET.get('fromUser','')
+    # fromUser = request.GET.get('fromUser','')
 
-    if (fromUser):
-      queryset = Comment.objects.filter(fromUser=fromUser)
-    else:
-      queryset = Comment.objects.all()
+    # if (fromUser):
+    #   queryset = Comment.objects.filter(fromUser=fromUser)
+    # else:
+    #   queryset = Comment.objects.all()
     
     serializer = CommentsSerializer(queryset, many=True)
 
@@ -77,7 +77,26 @@ class CommentDetailView(RetrieveUpdateDestroyAPIView):
     serializer = CommentsSerializer(queryset, many=True)
 
     return Response(serializer.data)
-  
+
+class CommentThreadView(ListCreateAPIView):
+  queryset = CommentThread.objects.all().order_by('-startDate')
+  serializer_class = CommentThreadSerializer
+  # permission_classes = (IsOwnerOrReadOnly, )
+
+class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
+  queryset = CommentThread.objects.all()
+  serializer_class = CommentThreadDetailSerializer
+  # permission_classes = (IsOwnerOrReadOnly, )
+
+  def get(self, request, pk):
+    print('ola')
+    thread = CommentThread.objects.get(pk=pk)
+    # todo check client not null
+    # self.check_object_permissions(request, thread)
+    serializer = CommentThreadDetailSerializer(thread)
+
+    return Response(serializer.data)
+    
     
 
 class SkillsListView(ListCreateAPIView):
@@ -135,25 +154,6 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     return Response(serializer.data)
 
 
-class CommentThreadView(ListCreateAPIView):
-  queryset = CommentThread.objects.all().order_by('-startDate')
-  serializer_class = CommentThreadSerializer
-  # permission_classes = (IsOwnerOrReadOnly, )
-
-class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = CommentThread.objects.all()
-  serializer_class = CommentThreadSerializer
-  # permission_classes = (IsOwnerOrReadOnly, )
-
-  def get(self, request, pk):
-    print('ola')
-    thread = CommentThread.objects.get(pk=pk)
-    # todo check client not null
-    # self.check_object_permissions(request, thread)
-    serializer = CommentThreadSerializer(thread)
-
-    return Response(serializer.data)
-
 
 class SkillDetailView(RetrieveUpdateDestroyAPIView):
   queryset = Skill.objects.all()
@@ -170,6 +170,10 @@ class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
     serializer = MentorProfileSerializer(queryset, many=True)
 
     return Response(serializer.data)
+  
+  def put(self, request, *args, **kwargs):
+    print("put")
+    return self.update(request, *args, **kwargs)
 
 
 

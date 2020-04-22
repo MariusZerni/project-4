@@ -14,8 +14,9 @@ import Mentors from '../src/components/Mentors'
 import GetHelp from '../src/components/GetHelp'
 import SideBar from '../src/components/SideBar'
 import ReplyToThread from '../src/components/ReplyToThread'
-import MentorProfile from '../src/components/MentorProfile'
-import RegisterMentorForm from '../src/components/RegisterMentorForm'
+import UserProfile from './components/UserProfile'
+import CreateProfileForm from './components/CreateProfileForm'
+import EditProfile from './components/EditProfile'
 // import SideBar from '../src/components/SideBar'
 
 const App = () => {
@@ -28,8 +29,9 @@ const App = () => {
       <Route path="/mentors" component={Mentors} />
       <Route exact path="/gethelp" component={GetHelp} />
       <Route exact path="/thread" component={ReplyToThread} />
-      <Route exact path="/mentorprofile" component={MentorProfile} />
-      <Route exact path="/profile" component={RegisterMentorForm} />
+      <Route exact path="/mentorprofile" component={UserProfile} />
+      <Route exact path="/profile" component={CreateProfileForm} />
+      <Route exact path="/mentorprofile/:id/edit" component={EditProfile} />
       <Route path="/register-login" component={Register} />
       
       

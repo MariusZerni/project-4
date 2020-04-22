@@ -69,8 +69,10 @@ class Register extends React.Component {
 
 
         console.log(token)
+
+        // this.props.handleChange(true)
       
-        this.props.history.push({ pathname: '/mentors', state: res.data.user })
+        this.props.history.push({ pathname: '/', state: res.data.user })
       })
       .catch(err => {
         console.log(err.response.data)
