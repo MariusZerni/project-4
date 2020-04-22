@@ -9,6 +9,7 @@ class EditProfile extends React.Component {
     super()
     this.state = {
       // data: {
+      profile: {},
       photo: null,
       shortDescription: '',
       fullDescription: ''
@@ -29,7 +30,11 @@ class EditProfile extends React.Component {
     axios.get(`api/portal/mentorprofiles/${userId}`)
       .then((response) => {
         console.log(response.data)
-        this.setState({ profile: response.data[0] })
+        const profile = response.data[0] 
+        this.setState({ profile })
+        this.setState({ shortDescription: profile.shortDescription })
+        this.setState({ fullDescription: profile.fullDescription })
+        // this.setState({ shortDescription: profile.shortDescription })
       })
       .catch((error) => { 
         console.log(error)

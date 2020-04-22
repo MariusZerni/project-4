@@ -120,6 +120,29 @@ class MentorProfilesListView(ListCreateAPIView):
     else:
         return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
+  queryset = MentorProfile.objects.all()
+  serializer_class = MentorProfileSerializer
+
+  def get(self, request, pk):
+    queryset = MentorProfile.objects.filter(user=pk)
+    
+    serializer = MentorProfileSerializer(queryset, many=True)
+
+    return Response(serializer.data)
+  
+  # def put(self, request, *args, **kwargs):
+  #   file_serializer = FileSerializer(data=request.data)
+
+  #   if file_serializer.is_valid():
+  #       file_serializer.save()
+  #       return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+  #   else:
+  #       return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+  #   print("puttttt")
+  #   return self.update(request, *args, **kwargs)
+
 
 class RolesListView(ListCreateAPIView):
   queryset = Role.objects.all()
@@ -159,21 +182,6 @@ class SkillDetailView(RetrieveUpdateDestroyAPIView):
   queryset = Skill.objects.all()
   serializer_class = SkillSerializer
 
-
-class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = MentorProfile.objects.all()
-  serializer_class = MentorProfileSerializer
-
-  def get(self, request, pk):
-    queryset = MentorProfile.objects.filter(user=pk)
-    
-    serializer = MentorProfileSerializer(queryset, many=True)
-
-    return Response(serializer.data)
-  
-  def put(self, request, *args, **kwargs):
-    print("put")
-    return self.update(request, *args, **kwargs)
 
 
 
