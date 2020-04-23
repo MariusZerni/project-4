@@ -4,6 +4,7 @@ import axios from 'axios'
 // import queryString from 'query-string'
 import auth from '../lib/auth'
 import { Link } from 'react-router-dom'
+import util from '../lib/util'
 
 
 class UserProfile extends React.Component {
@@ -18,8 +19,15 @@ class UserProfile extends React.Component {
 
 
   getProfile() {
-    const userId = auth.getUserId()
+    const id = this.props.match.params.id
+
+    console.log('id' + id)
+ 
+
+    const userId = (id && id !== 'mentorprofile') ? id : auth.getUserId()
     console.log(userId)
+
+
     axios.get(`api/portal/mentorprofiles/${userId}`)
       .then((response) => {
         console.log(response.data)
@@ -35,13 +43,20 @@ class UserProfile extends React.Component {
     this.getProfile()
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (this.props.match.params.id !== prevProps.match.params.id ) {
+      this.getProfile()
+    }
+  }
+
 
   render() {
 
     if (!this.state.profile) {
       return null
     }
-    const userId = auth.getUserId()
+    const id = this.props.match.params.id
+    const userId = (id && id !== 'mentorprofile') ? id : auth.getUserId()
     const profile = this.state.profile[0]
     console.log(this.state.profile[0].shortDescription)
     return <div id="container-mentor-profile"  >
@@ -56,13 +71,13 @@ class UserProfile extends React.Component {
 
           <div className="right-content">
             
-            <h3>{profile.shortDescription} Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, ratione.</h3>
+            <h2 dangerouslySetInnerHTML={util.createMarkup(profile.shortDescription)}>
+            </h2>
             
 
-            <p>{profile.fullDescription} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum sunt quaerat eum quia modi corrupti eveniet esse accusantium nobis dolor.
-              <br/>               
+            <div dangerouslySetInnerHTML={util.createMarkup(profile.fullDescription)}> 
             
-            </p>
+            </div>
               
             
             

@@ -14,7 +14,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  // font-family: 'Arapey', serif;
   line-height: 1.4;
 }
 
@@ -61,17 +61,24 @@ body {
 
         &:active {
           transform: scale(0.95);
+          
         }
         
         &:focus {
           outline: none;
         }
+
+        
     
     
     .link {
       text-decoration: none;
       color: white;
       font-size: 1rem;
+    }
+
+    .link:hover {
+      color: black;
     }
   }
 }
@@ -90,7 +97,7 @@ body {
   }
 
   .brief-description {
-    width: 60%;
+    width: 50%;
     height: 300px;
     margin-top: 200px;
 
@@ -101,8 +108,12 @@ body {
     }
     
     p {
+      font-weight: bold;
+      line-height: 1.5;
+      font-size: 1.2em;
       margin-top: 2rem;
       color: white;
+      font-style: italic;
     }
   }
 }
@@ -113,13 +124,19 @@ body {
 }
 
 .how-it-works {
-  width: 80%;
+  width: 60%;
   height: 300px;
   padding-top: 80px;
   justify-content: center;
 
   h2 {
+    font-size: 2em;
+    margin-left: 100px;
     text-align: start;
+  }
+
+  p {
+    font-size: 1em;
   }
 
   .columns {
@@ -326,6 +343,7 @@ body {
           cursor: pointer;
         }
 
+
         button:active {
           transform: scale(0.95);
         }
@@ -333,6 +351,8 @@ body {
         button:focus {
           outline: none;
         }
+
+        
 
         h3 {
           margin-top: 40px;
@@ -537,7 +557,7 @@ body {
     // align-items: center;
     // background-color: #fff;
     width: 70vw;
-    height: 90vh;
+    // height: 90vh;
 
     .edit-profile {
       position: absolute;
@@ -600,7 +620,7 @@ body {
       // border: 0.5px solid black;
       padding: 20px;
       margin-left: 50px;
-      width: 50%;
+      width: 65%;
       margin-top: 100px;
       display: flex;
       flex-direction: column;

@@ -35,12 +35,12 @@ class SideBar extends React.Component {
                   <Link className='link' to="/">Home</Link>
                 </li>
                 <li>
-                  <Link className='link' to="mentors">Mentors</Link>
+                  <Link className='link' to="/mentors">Mentors</Link>
                 </li>
                 <li>
-                  <Link className='link' to="gethelp">Get Help</Link>
+                  <Link className='link' to="/gethelp">Get Help</Link>
                 </li>
-                <li><Link className='link' to="mentorprofile">My Profile</Link></li>
+                <li><Link className='link' to="/userprofile">My Profile</Link></li>
                 {!isLoggedIn && (<li>
                   <Link className='link' to="register-login">Register</Link>
                 </li>)}

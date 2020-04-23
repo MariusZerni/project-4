@@ -169,7 +169,7 @@ class Comment(models.Model):
 class MentorProfile(models.Model):
   photo = models.ImageField(upload_to='profile_photo', blank=False, null=False)
   shortDescription = models.CharField(max_length=150)
-  fullDescription = models.CharField(max_length=3000)
+  fullDescription = models.TextField()
   # client = models.OneToOneField(Client, related_name='mentor_profile', on_delete=models.CASCADE)
   user = models.OneToOneField(Person, related_name='user_profile', on_delete=models.CASCADE)
 

@@ -2,14 +2,16 @@ import React from 'react'
 // import SideBar from '../components/SideBar'
 import axios from 'axios'
 import auth from '../lib/auth'
+import { Link } from 'react-router-dom'
+import util from '../lib/util'
 
 class Mentors extends React.Component {
   constructor() {
     super()
     this.state = {
 
-      mentors: [],
-      newlyRegisteredMentees: []
+      mentors: []
+ 
     }
   }
 
@@ -53,6 +55,8 @@ class Mentors extends React.Component {
       return null
     }
 
+    console.log(this.state.mentors)
+
     const currentUserId = auth.getUserId()
     return (<>
     
@@ -64,6 +68,9 @@ class Mentors extends React.Component {
           // && !mentor.mentees.includes(currentUserId)
         })
           .map((mentor) => {
+            console.log(mentor.user_profile.fullDescription)
+
+            let description=mentor.user_profile.fullDescription.slice(0, 1500) + '[....]'
             return <div key={mentor.id} className="content-mentor">
               <div className="left-container">
 
@@ -74,16 +81,9 @@ class Mentors extends React.Component {
               <div className="right-content">
                 
                 <h3>{mentor.first_name}</h3>
-                <p>Long description <br />
-                  {mentor.user_profile.fullDescription} <br/>               
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestias, similique. Quidem possimus aliquid animi hic.
-                  Reprehenderit, impedit. Sed deserunt recusandae fuga pariatur
-                  dolores possimus id perspiciatis quam commodi, dolorum harum
-                  voluptatibus voluptatem esse quidem at cum provident inventore
-                  consectetur consequuntur laudantium reprehenderit cumque
-                  molestiae delectus eius? Excepturi aliquam odio veniam.
+                <p dangerouslySetInnerHTML={util.createMarkup(description)}>
                 </p>
+                <Link to={`/mentorprofile/${mentor.user_profile.user}`}>View more</Link> 
                 <div className="skill"> <h4>Skills:</h4>  
                   {mentor.skills.map((skill, i) => {
                     console.log(skill)

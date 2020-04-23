@@ -92,11 +92,8 @@ class Home extends React.Component {
       </div>
       <div className="home-content color-one">
         <div className="brief-description">
-          <h2>Brief description <br/>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-            Non aspernatur iusto nesciunt est reprehenderit? 
-            Quod explicabo aut officiis provident quas quo pariatur odit reprehenderit tenetur, 
-            quidem earum soluta fugit tempora sequi rem, culpa iusto alias!</p>
+          <h2>The Unlock Portal <br/> &quot;The Only Person You Are Destined <br/>To Become Is The Person You Decide To Be&quot; <br/> &quot;Ralph Waldo Emerson&quot;</h2>
+          <p>Is a mentoring platform where you can find engaging stories about people who embarked on a journey to change their careers. Deciding to embrace a new career journey can be challenging but with the right support from people who have already overcome their fears this can be one step closer to fulfilling your dream. Get inspired by the stories shared here and join a community of people who have unlocked their potential. </p>
         </div>
         
       </div>
@@ -105,13 +102,13 @@ class Home extends React.Component {
     </div>
        <div className="home-content color-two">
          <div className="how-it-works">
-           <h2>How it Works <br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, iste?</h2>
+           <h2>How it Works</h2>
            <div className="columns">
              <div className="column-one">
-               <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita, eveniet.</p>
+               <p>For Mentors <br/> You need to register to have access to the platform. In order to share your story and become a mentor you need to create a profile with an inspiring story. <br/> Helping people to succeed and follow their dreams is a rewarding experience.    </p>
              </div>
              <div className="column-two">
-               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, ut.</p>
+               <p>For Users <br/> If you need support in changing your career you can create a profile and register with a mentor to get full access to their materials and personal advice.</p>
              </div>
            </div>
          </div>
@@ -154,7 +151,7 @@ class Home extends React.Component {
                </div>
                <figure className="effect-marley">
                  <h4 id="h2">{element.name}h</h4>
-                 <p>Marley tried to convince her but she was not interested.{element.shortDescription}</p>
+                 <p>{element.shortDescription}</p>
                </figure>
              </div>
            })}
