@@ -4,6 +4,7 @@ import axios from 'axios'
 import util from '../lib/util'
 import { Editor } from '@tinymce/tinymce-react'
 import auth from '../lib/auth'
+import Moment from 'react-moment'
 
 
 
@@ -38,6 +39,7 @@ class ReplyToThread extends React.Component {
 
 
   handleEditorChange(content) {
+
     console.log('tes')
     this.setState({ content })
   }
@@ -45,11 +47,11 @@ class ReplyToThread extends React.Component {
 
   postingComment() {
     axios.post('api/portal/comments', { comment: this.state.content , fromUser: auth.getUserId(), commentThread: this.state.threadId, commentType: 1 })
-      .then((response) => {
+      .then(() => {
         this.getCommentsThreads()
         this.setState({ content: '' })
         this.mainContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        console.log(response)
+        // console.log(response)
       }) 
       .catch((error) => {
         console.log(error)
@@ -68,7 +70,7 @@ class ReplyToThread extends React.Component {
       .get(`api/portal/commentthread/${threadId}`)
       .then((response) => {
         this.setState({ thread: response.data })
-        console.log(response)
+        // console.log(response)
       }) 
       .catch((error) => {
         console.log(error)
@@ -82,35 +84,49 @@ class ReplyToThread extends React.Component {
 
   render() {
     console.log('render threads')
-    console.log()
+    console.log(this.state.thread)
+    // console.log(this.state.comments)
 
     if (!this.state.thread){
       return null
     }
-    console.log(this.state.comments)
+    // console.log(this.state.comments)
     
     const { thread } = this.state
     const comments  =  thread.comments
+    console.log(comments)
+    console.log(thread)
+
+    console.log(thread.initialComment)
 
     return  <div className="main-container" ref={this.mainContainerRef}>
 
       <div className="main-section">
        
         <section key={thread.id} className="section-comment">
-          <div className="subject-section" >
+          <div className="subject-section" 
+            dangerouslySetInnerHTML={util.createMarkup(thread.initialComment)}>
           </div>
           <div className="reply-border"></div>
           <div className="reply-date-section">
-            <div className="date-section">{thread.startDate}</div>
+            <div className="date-section"><span>Commented on: </span>
+              <span><Moment format="YYYY/MM/DD HH:MM:SS">
+                {thread.startDate}
+              </Moment></span></div>
           </div>
         </section>
+
+
         {comments.map((comment) => {
           return <section  key={comment.id} className="section-comment" id="reply-thread">
             <div className="subject-section" dangerouslySetInnerHTML={util.createMarkup(comment.comment)}>
             </div>
             <div className="reply-border"></div>
             <div className="reply-date-section">
-              <div className="date-section">Date</div>
+              <div className="date-section"><span>Commented on: </span>
+                <span><Moment format="YYYY/MM/DD HH:MM:SS">
+                  {comment.startDate}
+                </Moment></span></div>
             </div>
           </section>
         })}

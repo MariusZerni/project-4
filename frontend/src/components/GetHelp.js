@@ -56,7 +56,19 @@ class GetHelp extends React.Component {
         console.log(error)
       })
   }
+  /// NOT FINISHED
+  handleDelete() {
+    const id = this.props.match.params.id
+    console.log(id + 'feleting')
+    axios.delete(`api/portal/commentthresd/${id}`,
+      { headers: { Authorization: `Bearer ${auth.getToken()}` } })
+      .then(() => this.props.history.push('/commentthread'))
+      .catch(error => console.log(error))
+  }
 
+  isOwner() {
+    return auth.getUserId() === this.state.comments.user.id
+  }
 
   componentDidMount(){
     this.getCommentsThreads()
@@ -94,7 +106,7 @@ class GetHelp extends React.Component {
     // console.log('render')
     // console.log(comments)
 
-    console.log(this.state.content)
+    console.log(comments.fromUser)
     
 
 
@@ -136,7 +148,7 @@ class GetHelp extends React.Component {
         plugins="wordcount"
         value={this.state.content}
         onEditorChange={this.handleEditorChange}/>
-
+        
      
       
     </form>

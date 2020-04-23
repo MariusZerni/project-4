@@ -51,7 +51,12 @@ class CreateProfileForm extends React.Component {
     const url = 'api/portal/mentorprofiles'
    
     axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then((res) => console.log(res))
+      .then((res) => {
+        this.props.history.push('/userprofile')
+        console.log(res)
+        auth.setHasProfile(true)
+        
+      })
       .catch(err => console.error(err))
     
   }

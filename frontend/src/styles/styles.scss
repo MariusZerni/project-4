@@ -25,9 +25,10 @@ body {
 
 .tox-tinymce {
   align-self: flex-start;
-  margin-left: 10%;
-  min-width: 800px;
-  width: 65%;
+  margin-left: 12%;
+  // color: black;
+  // width: 600px;
+  width: 57%;
   height: 300px !important;
 }
 
@@ -309,7 +310,7 @@ body {
 
       .left-container {
         // padding-top: 50px;
-        width: 100vw;
+        width: 20vw;
         display: flex;
         flex-direction: column;
         // justify-content: center;
@@ -333,13 +334,19 @@ body {
       }
 
       .right-content {
+        margin-top: 60px;
         display: flex;
         flex-direction: column;
+        // position: relative;
+        // width: 100%;
 
         button {
+          position: absolute;
           align-self: center;
           margin-bottom: 20px;
-          // width: 35%;
+          bottom: 40px;
+          right: 20%;
+          // width: 100%;
           cursor: pointer;
         }
 
@@ -355,12 +362,14 @@ body {
         
 
         h3 {
-          margin-top: 40px;
+          margin: 10px 0 0 40px;
+          font-size: 24px;
           // padding-bottom: 20px;
           
         }
 
         p {
+          margin-right: 30px;
           flex-grow: 1;
         }
 
@@ -368,6 +377,7 @@ body {
           height: 100px;
           display: flex;
           align-items: center;
+          margin-bottom: 40px;
           // padding: 10px;
 
 
@@ -429,7 +439,7 @@ body {
 
 
   .main-section {
-    min-height: 100vh;
+    // min-height: 100vh;
     padding-bottom: 50px;
     padding-left: 15%;
     padding-top: 50px;
@@ -578,7 +588,7 @@ body {
 
 
     .left-container {
-      background-color: rgba(231, 243, 67, 0.5);
+      background-color: var(--secondary-color);
       padding-top: 50px;
       width: 20%;
       display: flex;
@@ -616,12 +626,12 @@ body {
   
     }
 
-    .right-content {
+    .right-content-user {
       // border: 0.5px solid black;
       padding: 20px;
       margin-left: 50px;
       width: 65%;
-      margin-top: 100px;
+      margin-top: 30px;
       display: flex;
       flex-direction: column;
 
@@ -662,8 +672,9 @@ body {
 .create-profile {
   display: flex;
   justify-content: center;
-  height: 90vh;
-  margin-top: 10vh;
+  height: 100vh;
+  padding-top: 10vh;
+  background-color: var(--secondary-color);
   // align-items: flex-end;;
 
   .container-create-profile {

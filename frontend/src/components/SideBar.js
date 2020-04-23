@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import auth from '../lib/auth'
 
+
 class SideBar extends React.Component {
   constructor() {
     super()
@@ -27,7 +28,8 @@ class SideBar extends React.Component {
         <div className="hamburger">
           <div></div>
         </div>
-        <div className="menu">
+      
+        <div className="menu" >
           <div>
             <div>
               <ul>
@@ -51,6 +53,7 @@ class SideBar extends React.Component {
             </div>
           </div>
         </div>
+      
       </div>
     )
   }

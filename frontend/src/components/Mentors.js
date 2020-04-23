@@ -68,9 +68,9 @@ class Mentors extends React.Component {
           // && !mentor.mentees.includes(currentUserId)
         })
           .map((mentor) => {
-            console.log(mentor.user_profile.fullDescription)
+            console.log(mentor.first_name)
 
-            let description=mentor.user_profile.fullDescription.slice(0, 1500) + '[....]'
+            const description = mentor.user_profile.fullDescription.slice(0, 600) + '[....]'
             return <div key={mentor.id} className="content-mentor">
               <div className="left-container">
 

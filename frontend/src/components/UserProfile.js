@@ -28,10 +28,10 @@ class UserProfile extends React.Component {
     console.log(userId)
 
 
-    axios.get(`api/portal/mentorprofiles/${userId}`)
+    axios.get(`api/portal/users/${userId}`)
       .then((response) => {
         console.log(response.data)
-        this.setState({ profile: response.data })
+        this.setState({ mentor: response.data })
       })
       .catch((error) => { 
         console.log(error)
@@ -52,30 +52,34 @@ class UserProfile extends React.Component {
 
   render() {
 
-    if (!this.state.profile) {
+    if (!this.state.mentor) {
       return null
     }
+ 
     const id = this.props.match.params.id
     const userId = (id && id !== 'mentorprofile') ? id : auth.getUserId()
-    const profile = this.state.profile[0]
-    console.log(this.state.profile[0].shortDescription)
+    
     return <div id="container-mentor-profile"  >
       <div className="img-background"  style={{ backgroundImage: `url(${image})` }}></div>
       <div className="opacity">
         <div id="content-mentor-profile">
+          {userId === auth.getUserId() && 
           <div className="edit-profile"> <Link to={`/mentorprofile/${userId}/edit`}>Edit</Link> </div>
+          }
           <div className="left-container">
-            <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (profile.photo) })` }} >Photo</div>
+            <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000' + (this.state.mentor.user_profile.photo) })` }} ></div>
             <div className="votes"></div>
           </div>
 
-          <div className="right-content">
+          <div className="right-content-user">
+            <h3>{this.state.mentor.first_name}</h3>
             
-            <h2 dangerouslySetInnerHTML={util.createMarkup(profile.shortDescription)}>
-            </h2>
+            <h3 dangerouslySetInnerHTML={util.createMarkup(this.state.mentor.user_profile.shortDescription)}>
+              
+            </h3>
             
 
-            <div dangerouslySetInnerHTML={util.createMarkup(profile.fullDescription)}> 
+            <div dangerouslySetInnerHTML={util.createMarkup(this.state.mentor.user_profile.fullDescription)}> 
             
             </div>
               

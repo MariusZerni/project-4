@@ -4,6 +4,20 @@ function setToken(token, userId) {
   
 }
 
+function setHasProfile(hasProfile){
+
+  console.log('Setting profile ' + hasProfile )
+
+  localStorage.setItem('hasProfile', hasProfile)
+ 
+}
+
+function getHasProfile(){
+
+  return localStorage.getItem('hasProfile')
+ 
+}
+
 function isLoggedIn() {
   const isLoggedIn = !!localStorage.getItem('token')
   console.log('logged in' + isLoggedIn + ' ' + localStorage.getItem('token'))
@@ -12,6 +26,9 @@ function isLoggedIn() {
 
 function logout() {
   localStorage.removeItem('token')
+  localStorage.removeItem('userId')
+  
+  
 }
 
 function getToken() {
@@ -34,5 +51,7 @@ export default {
   isLoggedIn,
   logout,
   getToken,
-  getUserId
+  getUserId,
+  setHasProfile,
+  getHasProfile
 }

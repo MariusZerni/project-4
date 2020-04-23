@@ -11,26 +11,31 @@ class Home extends React.Component {
   constructor() {
     super()
     this.state = {
+      checkedProfile: false,
       topRated: []
     }
   }
 
 
-  // fetchClients(clientIds) {
-  //   clientIds.forEach((id) => {
-  //     axios
-  //       .get(`api/portal/users/${id}`)
-  //       .then(res => {
-  //         console.log(res)
+  fetchUser() {
+    const userId = auth.getUserId()
+    console.log(userId)
+    axios
+      .get(`api/portal/users/${userId}`)
+      .then((res) => {
+        //this.setState({ mentors: res.data })
+        console.log(res.data)
 
-  //         this.setState({ topRated: [...this.state.topRated, res.data] })
+        const hasProfile = (res.data.user_profile) ? true : false
 
-  //         // console.log(this.state)
-  //       })
-  //       .catch(error => console.error(error))
-  //   })
+        auth.setHasProfile(hasProfile)
+        console.log('hasProfile' + auth.getHasProfile())
+        this.setState({ checkedProfile: true })
+      })
 
-  // }
+      .catch((error) => console.error(error))
+  }
+
 
 
 
@@ -39,13 +44,8 @@ class Home extends React.Component {
       .get('api/portal/topvotes')
       .then(res => {
         this.setState({ topRated: res.data })
-        // const clientIds = res.data.map((elem) => {
-        //   // console.log(elem.mentor)
-        //   return elem.mentor
-        // })
 
-        // this.fetchClients(clientIds)
-
+        
       })
       .catch(error => console.error(error))
   }
@@ -55,6 +55,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.fetchTopRated()
+    //this.fetchUser()
   }
 
   handleLogout() {
@@ -62,13 +63,18 @@ class Home extends React.Component {
   }
 
   staticContent() {
+    // if (!this.state.checkedProfile){
+    //   return null
+    // }
+
     const isLoggedIn = auth.isLoggedIn()
     return <>
     <div className="home-container">
       {/* <SideBar /> */}
       <div className="login-logout-register">
+        
         <div className="home-links">
-          <Link className="link" to="/profile">Create profile</Link>
+          <Link className="link" to="/profile">Create mentor profile</Link>
         </div>
         {!isLoggedIn && (
           <div className="home-links">

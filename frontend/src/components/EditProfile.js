@@ -81,8 +81,9 @@ class EditProfile extends React.Component {
     const url = `api/portal/mentorprofiles/${this.state.profile.id}/`
   
     axios.put(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(() => 
-        this.props.history.push('/userprofile'))
+      .then(() => {
+        this.props.history.push('/userprofile')
+      })
       .catch(err => console.error(err))
   } 
 

@@ -113,58 +113,12 @@ class Comment(models.Model):
   fromUser = models.ForeignKey(User, related_name='comment_from_user', on_delete=models.CASCADE)
   toUser = models.ForeignKey(User, related_name='comment_to_user', on_delete=models.CASCADE, blank=True, null=True)
   commentThread = models.ForeignKey(CommentThread, related_name='comments', on_delete=models.CASCADE) 
-  comment = models.CharField(max_length=300)
+  comment = models.CharField(max_length=3000)
   
   date = models.DateTimeField(default=timezone.now)
 
   def __str__(self):
     return 'from: ' + self.fromUser.username + ' to ' + self.toUser.username +": "+ self.commentThread.subject
-
-
-
-
-
-# class Client(models.Model):
-#   user = models.ForeignKey(User, related_name='clients', on_delete=models.CASCADE)
-
-#   role = models.ManyToManyField(Role, related_name='users', blank=True)
-#   mentor_skills = models.ManyToManyField(Skill, related_name='mentor_skills', blank=True)
-#   # mentee_skills = models.ManyToManyField(Skill, related_name='mentee_skills',blank=True)
-
-#   mentor_relationship = models.ManyToManyField('self', through='MentorRelationship', symmetrical=False)
-#   # mentor_profile = models.OneToOneField(MentorProfile, related_name='mentor_profile', on_delete=models.CASCADE)
-
-#   def __str__(self):
-#     return self.user.username
-  
-#   @property
-#   def role_names(self):
-#     return self.role.values_list('name', flat=True)
-
-#   @property
-#   def mentor_skills_names(self):
-#     return self.mentor_skills.values_list('name', flat=True)
-
-#   @property
-#   def mentee_skills_names(self):
-#     return self.mentee_skills.values_list('name', flat=True)
-
-#   @property
-#   def mentees(self):
-#     # return self.mentor_relationship.values_list('from_mentor', flat=True)
-#     return MentorRelationship.objects.filter(mentor=self.id).values_list('mentee', flat=True)
-
-
-#   @property
-#   def votes(self):
-#     c = MentorRelationship.objects.filter(mentor=self.id).aggregate(sumVotes=Sum('votes'))
-#     return c.get('sumVotes')
-
-
-#   @property
-#   def topVotes(self):
-#     relationships= MentorRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5] 
-#     return relationships
 
 class MentorProfile(models.Model):
   photo = models.ImageField(upload_to='profile_photo', blank=False, null=False)
@@ -175,26 +129,6 @@ class MentorProfile(models.Model):
 
   def __str__(self):
     return self.user.username
-
-
-
-
-# class MentorRelationship(models.Model):
- 
-#   mentor = models.ForeignKey(Client, related_name='mentor', on_delete=models.CASCADE)
-#   mentee = models.ForeignKey(Client, related_name='mentee', on_delete=models.CASCADE)
-
-#   votes = models.IntegerField(blank=True, null=True)
-  
-#   @property
-#   def votesCount(self):
-#     c = MentorRelationship.objects.filter(mentor=self.mentor).aggregate(sumVotes=Sum('votes'))
-#     return c.get("sumVotes")
-  
- 
-    
-#   class Meta:
-#     unique_together = ('mentor', 'mentee')
 
 
 
