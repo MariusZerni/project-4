@@ -11,10 +11,10 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('auth', '0015_auto_20200418_1102'),
-    ]
+    # dependencies = [
+    #     migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    #     ('auth', '0015_auto_20200418_1102'),
+    # ]
 
     operations = [
         migrations.CreateModel(
