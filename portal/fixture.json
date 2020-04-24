@@ -1,0 +1,308 @@
+[
+{
+  "model": "portal.role",
+  "pk": 1,
+  "fields": {
+    "name": "mentor"
+  }
+},
+{
+  "model": "portal.role",
+  "pk": 2,
+  "fields": {
+    "name": "mentee"
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 2,
+  "fields": {
+    "user": 13,
+    "role": 1
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 3,
+  "fields": {
+    "user": 12,
+    "role": 1
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 4,
+  "fields": {
+    "user": 11,
+    "role": 1
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 5,
+  "fields": {
+    "user": 9,
+    "role": 1
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 6,
+  "fields": {
+    "user": 10,
+    "role": 2
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 7,
+  "fields": {
+    "user": 1,
+    "role": 2
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 8,
+  "fields": {
+    "user": 13,
+    "role": 2
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 9,
+  "fields": {
+    "user": 12,
+    "role": 2
+  }
+},
+{
+  "model": "portal.user_role",
+  "pk": 10,
+  "fields": {
+    "user": 11,
+    "role": 2
+  }
+},
+{
+  "model": "portal.userrelationship",
+  "pk": 25,
+  "fields": {
+    "mentor": 9,
+    "mentee": 1,
+    "votes": 6
+  }
+},
+{
+  "model": "portal.userrelationship",
+  "pk": 30,
+  "fields": {
+    "mentor": 10,
+    "mentee": 1,
+    "votes": 7
+  }
+},
+{
+  "model": "portal.userrelationship",
+  "pk": 31,
+  "fields": {
+    "mentor": 11,
+    "mentee": 1,
+    "votes": 8
+  }
+},
+{
+  "model": "portal.userrelationship",
+  "pk": 32,
+  "fields": {
+    "mentor": 12,
+    "mentee": 1,
+    "votes": 6
+  }
+},
+{
+  "model": "portal.userrelationship",
+  "pk": 33,
+  "fields": {
+    "mentor": 13,
+    "mentee": 1,
+    "votes": 5
+  }
+},
+{
+  "model": "portal.commenttype",
+  "pk": 1,
+  "fields": {
+    "comment_type": "public"
+  }
+},
+{
+  "model": "portal.commentthread",
+  "pk": 22,
+  "fields": {
+    "commentType": 1,
+    "initialComment": "<p><strong style=\"box-sizing: inherit; line-height: inherit; color: #222222; font-family: 'Source Sans Pro', Arial, sans-serif; font-size: 18px; background-color: #ffffff;\">How memory is managed in Python?</strong></p>",
+    "fromUser": 13,
+    "startDate": "2020-04-23T11:23:34.469Z",
+    "subject": ""
+  }
+},
+{
+  "model": "portal.commentthread",
+  "pk": 23,
+  "fields": {
+    "commentType": 1,
+    "initialComment": "<p><strong style=\"box-sizing: inherit; line-height: inherit; color: #222222; font-family: 'Source Sans Pro', Arial, sans-serif; font-size: 18px; background-color: #ffffff;\">&nbsp;What are the tools that help to find bugs or perform static analysis?</strong></p>",
+    "fromUser": 13,
+    "startDate": "2020-04-23T11:32:05.363Z",
+    "subject": ""
+  }
+},
+{
+  "model": "portal.commentthread",
+  "pk": 24,
+  "fields": {
+    "commentType": 1,
+    "initialComment": "<p><strong style=\"box-sizing: inherit; line-height: inherit; color: #222222; font-family: 'Source Sans Pro', Arial, sans-serif; font-size: 18px; background-color: #ffffff;\">What is the difference between list and tuple?</strong></p>\n<p>&nbsp;</p>",
+    "fromUser": 13,
+    "startDate": "2020-04-23T11:34:06.746Z",
+    "subject": ""
+  }
+},
+{
+  "model": "portal.commentthread",
+  "pk": 25,
+  "fields": {
+    "commentType": 1,
+    "initialComment": "<p><strong style=\"box-sizing: inherit; line-height: inherit; color: #222222; font-family: 'Source Sans Pro', Arial, sans-serif; font-size: 18px; background-color: #ffffff;\">How are arguments passed by value or by reference?</strong></p>",
+    "fromUser": 13,
+    "startDate": "2020-04-23T12:32:30.449Z",
+    "subject": ""
+  }
+},
+{
+  "model": "portal.commentthread",
+  "pk": 26,
+  "fields": {
+    "commentType": 1,
+    "initialComment": "<p>how are. you?</p>\n<p>&nbsp;</p>",
+    "fromUser": 16,
+    "startDate": "2020-04-23T16:54:01.374Z",
+    "subject": ""
+  }
+},
+{
+  "model": "portal.comment",
+  "pk": 45,
+  "fields": {
+    "fromUser": 13,
+    "toUser": null,
+    "commentThread": 24,
+    "comment": "<p><span style=\"color: #222222; font-family: 'Source Sans Pro', Arial, sans-serif; font-size: 18px; background-color: #ffffff;\">The difference between list and tuple is that list is mutable while tuple is not. Tuple can be hashed for e.g as a key for dictionaries.</span></p>",
+    "date": "2020-04-23T12:30:19.903Z"
+  }
+},
+{
+  "model": "portal.comment",
+  "pk": 48,
+  "fields": {
+    "fromUser": 13,
+    "toUser": null,
+    "commentThread": 25,
+    "comment": "<p><span style=\"color: #222222; font-family: 'Source Sans Pro', Arial, sans-serif; font-size: 18px; background-color: #ffffff;\">Everything in Python is an object and all variables hold references to the objects. The references values are according to the functions; as a result you cannot change the value of the references. However, you can change the objects if it is mutable.</span></p>",
+    "date": "2020-04-23T12:44:19.393Z"
+  }
+},
+{
+  "model": "portal.comment",
+  "pk": 49,
+  "fields": {
+    "fromUser": 16,
+    "toUser": null,
+    "commentThread": 26,
+    "comment": "<p>fine</p>",
+    "date": "2020-04-23T16:54:10.016Z"
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 30,
+  "fields": {
+    "photo": "profile_photo/bob.jpg",
+    "shortDescription": "It take courage to grow up and become who you really are.",
+    "fullDescription": "<h5>Mornings, Nights, and Weekends: How I Changed Careers and Became a Programmer</h5>\n\n\n<br>\nChange is hard. Changing careers while holding a 9\u20135 can feel down right impossible at times. It requires a great amount of discipline, motivation, inspiration, and most importantly, courage.\n\n<br>\nIt also requires a great deal of time. Despite the current microwave culture of success, changing careers and improving one\u2019s well-being doesn\u2019t happen over night. My journey from Sales and Marketing in the music industry to programming began back in October 2014 in Brooklyn. It took 10 months and ~1400 hours of self teaching to get my first full-time developer gig in Philly.</p>\n\n<br>\n I firmly believe that anyone, no matter their background, can do this.\n<br>\n\nBy telling my story, I hope to encourage those currently in the trenches of change moving from one career to another, and also inspire those that have crossed over to share their stories. Sharing is caring after all, right?\n\n<b>Why do you want to Change? </b>\n\nBegin with the end in mind.\n\nI wanted to learn to code and change careers because I wanted to improve my financial situation and build solutions to problems. Economic mobility and being able to solve a problem for anyone anywhere in the world were the primary catalysts of change.\n\nClearly defining why you want to make a big move is incredibly important to help keep yourself motivated on a long journey.\n\nAlso, as a word of caution, if you\u2019ve got a stable job that isn\u2019t toxic and you ultimately want to work for yourself, becoming a programmer and working for another company won\u2019t make you much happier than you are now.\n\nAt the end of the day, a job is a job. If you don\u2019t like the employer/employee dynamic now, that won\u2019t change simply because you\u2019re a programmer. If you\u2019re interested in lifestyle design, controlling your schedule, when/where you work, just know that there are less opportunities available.\n\nThere are thriving communities of Indie Hackers that are trying to \u201cGet Out\u201d by building their own businesses and revenue-generating products.\n\nOne path is not better than the other. Just know what you want out of your new career and make a conscious decision.\n\n<b>My Background</b>\nIf you were terrible at math in high school, struggled to process complex topics quickly, and don\u2019t have a college degree, you\u2019re not alone.\n\nI almost flunked just about every math class in high school but somehow graduated on time. I studied music composition in college and dropped out for financial reasons, so nope, no degree.\n\nDon\u2019t put yourself in a box or become discouraged just because you\u2019re background doesn\u2019t fit a certain mold. Stay the course. Finish the race.\n\n<b>Tools and Curriculum</b>\nThe only thing I spent money on besides subscriptions and books was a computer. I purchased a Macbook Pro for ~ $1200 and still have it almost four years later. Macs are expensive, but you get your money\u2019s worth. However, they definitely are not a prerequisite for learning how to code.\n\nCloud IDEs and Chromebooks are a great way to get started.\n\nMy First Job\nI remember listening to the Code Newbie podcast one day and hearing about someone that had participated in an Apprenticeship program. This got my wheels turning, and after days of research I discovered a design agency in Philadelphia that had a similar program.\n\nWhat was interesting is that the company\u2019s main marketing website had no mention of the program. Apparently I had found a dormant standalone page.\n\nI figured it wouldn\u2019t hurt to reach out, even if the program no longer existed. I sent a cold email to the founder expressing my interest in the company, my passion for programming, and desire to learn and contribute however I could. I came down for an informal meeting and I interviewed about a month later.\n\nAfter an intense day-long interview, a few weeks later I got the job in August of 2015. This opportunity never would have came if I didn\u2019t reach out, despite there not being an open position.\n\nThis was an unconventional approach but it paid off. I would also encourage those looking for work to apply for positions even if they\u2019re looking for someone with more experience. You never know, you just might get a shot.\n\n<b>Mistakes</b>\nOf course I have made several mistakes along the way.\n\nSome lessons learned:\n\nDon\u2019t learn alone or in secret.\nDon\u2019t be afraid to say \u201cI Don\u2019t Know\u201d \u2014 you\u2019re not an expert yet.\nAsk questions when someone uses a word or acronym that you\u2019re unfamiliar with, like SCP or SSH.\nTeach someone who knows less than you, even if all you have in your toolbox is console.log(\"Hello World\")\nWrite about what you\u2019re learning\nDon\u2019t try to boil the ocean and learn it all in year one\nBuild and break things, then write about it\nYou can even learn with just a phone.\n\nHere are the resources I used and what I got out of each one.\n\nCodecademy (HTML, CSS, jQuery, JavaScript)\nCodeschool (JavaScript & jQuery)\nTreehouse (Git & Github, Ruby, Dev Tools, REST, Networking, Agile)\nThinkful (Mentorship, Portfolio, Interview Prep)\nEloquent JavaScript (Algorithms, Functional Programming, Node)\nCoderbyte (Programming Challenges)",
+    "user": 9
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 32,
+  "fields": {
+    "photo": "profile_photo/serghei.jpeg",
+    "shortDescription": "My journey to becoming a web developer from scratch without a CS degree (and what I learned from\u2026",
+    "fullDescription": "by Sergei Garcia\n\nFirst, let me introduce myself. My name is Sergei Garcia, and I\u2019m a full-time front end developer with 2 years experience. In that time, I\u2019ve worked as a front-end developer for both a Forbes 500 consulting firm and a small company.\n\nThis may not sound like a lot of experience, but finishing my second year as a developer has been a huge milestone for me. This is because I had no real experience doing web development \u2014 and not much programming experience in general beyond some basic C# and Java training I got from a few online courses. I also didn\u2019t have a computer science degree since I graduated with a degree in IT project management.\n\nI\u2019d never written about my experience despite all the help I\u2019ve received from wonderful resources like Medium, Stack Overflow, and Reddit\u2019s programming subreddits. So today, I decided to change that. Today I\u2019m going to fill you in on what went right, and what didn\u2019t, so that if you\u2019re embarking on this journey, you\u2019ll have better luck than I did.\n\nI know that there are a lot of articles like this, but not very many of them discuss the process with the benefit of an extra two years of hindsight.\n\nI\u2019ll start off with my journey, including what went wrong along the way. If you just care about what my suggestions for the shortest possible route to becoming a web developer from scratch are, feel free to skip to the last section: The shortest route.\n\nSo, without any further ado, Let\u2019s get started!\n\nGetting the Basics\nAfter deciding I wanted to get into web development the first question on my mind was \u201cWhat do I learn?\u201d After doing some research, I ended up making my learning path based on what most entry-level web developer positions asked for, which was:\n\nJavaScript\nHTML & CSS\nCSS Preprocessors (Less & Sass)\nResponsive Design\nAngularJS\nDesign Patterns\nGit\nNodeJS\nTask Runners\nHere\u2019s how it went.\n\nJavascript\nI began my Journey learning JavaScript through CodeSchool (paid) and Codecademy (free). If you don\u2019t know about these, they\u2019re great websites that allow you to learn to code by coding inside the browser.\n\nI found learning resources like this were the best when you are just getting started. Just be advised that this method of learning gets tiring quickly once you get into more advanced stuff, since their algorithms for checking whether you solved the code example correctly have some accuracy issues. Both of their introductory courses to JavaScript were outstanding and I highly recommend them.\n\nOnce I got the basics out of the way, I proceeded to get a stronger JavaScript foundation by reading the Eloquent Javascript: A Modern Introduction to Programming book by Haverbeke (free).\n\nThis book was recommended to me by a lot of people in the JavaScript forums as a must read, and for good reason. That book was tough \u2014 especially if you\u2019re just learning programming like I was back then. But I\u2019m glad I didn\u2019t give up and kept at it. It was phenomenal due to the vast scope of programming concepts it covers, even if it was a bit ruthless at times. Whatever you do, don\u2019t skip the code challenges. Once you finish this book, then you can finally say with confidence that you have a good grasp on JavaScript.\n\nYou can also optionally learn jQuery (though I really don\u2019t recommend learning it yet \u2014 more on this later). You can learn it through CodeSchool\u2019s Try jQuery course.\n\nHTML & CSS\nAfter learning JavaScript, I proceeded to learn the fundamentals of HTML & CSS and web design through CodeSchool\u2019s HTML & CSS learning path. These courses are still my favorites today, since the pacing is great, and the overall scope of what they cover allowed me to acquire a stronger foundation to this.\n\nYou could also switch this out easily for something like Codecademy\u2019s HTML & CSS course and still get similar results. Or if you are up for a challenge, Udacity\u2019s course Intro to HTML and CSS is far more complete, and slightly more challenging.\n\nBonus: If you can get your hands on Jon Duckett\u2019s HTML and CSS: Design and Build Websites book, it\u2019s also a rock solid starting point for learning HTML & CSS (with a sprinkle of web design). It\u2019s highly rated (4.7/5 on Amazon), offers a solid introduction to the world of web development. It\u2019s a beautiful book thanks to it\u2019s clean design with big letters and colorful pages. I often come back to it just to admire it.\n\nLess / Sass\nFor those unfamiliar, Less & Sass are CSS transpilers that allow you to write CSS in a more elegant manner. This lets you do things that aren\u2019t normally supported, like nesting CSS rules. Once finished, these CSS transpilers \u201ccompile\u201d your code and convert it to normal CSS.\n\nThere are 2 major CSS transpilers right now: Less and Sass. Sass is the more popular one, but I found learning Less first to be easier, mainly because using Sass on your computer requires also installing Ruby, which I wasn\u2019t fond of.\n\nYou can get a quick, yet complete overview of Less using WinLess\u2019s Online Less Compiler and it\u2019s code examples to see how your Less code would turn into CSS. You can also try Sass online using SassMeister (though this doesn\u2019t include code examples).\n\nIt doesn\u2019t matter whether you learn Less or Sass first. They\u2019re extremely similar, so once you know one, you pretty much know the other. You can find a great quick comparison between Less and Sass on Shelby Moulden\u2019s article Comparison between LESS & SASS.\n\nResponsive Design\nI originally learned about responsive design and Bootstrap using Codeschool\u2019s HTML & CSS path, but I recently found Udacity\u2019s course by Google on Responsive Web Design Fundamentals to be fantastic at covering the basics and beyond in a far more complete manner than Codeschool did.\n\nYou can do responsive design without any additional framework, but it\u2019s far easier with the help of a responsive framework like Bootstrap. Bootstrap\u2019s official documentation is very well made so you should have no problem at getting started with it.\n\nIf you are having trouble grasping it\u2019s basic principles, read Froont\u2019s blog post on 9 basic principles of responsive web design. It has beautiful clean & simple animations that help illustrate visually the principles of responsive web design.\n\nAngularJS\nI didn\u2019t really know what exactly AngularJS was back then, but I knew everyone was talking about it, and that if I wanted to become a web developer I needed to learn it. I found Google Developer\u2019s Design Decisions in AngularJS to provide the best general overview of what AngularJS was and how it improved making web applications.\n\nI first thought of learning AngularJS through their official documentation, but this turned out to be a terrible idea. The documentation wasn\u2019t very easy on beginners, and the cluttered formatting made it hard to read and understand.\n\nI then proceeded to learn AngularJS through Codeschool. With my positive experience on the JavaScript and CSS courses also from there, I expected nothing less than a great course. I was wrong. The course was a disaster from the get go, since the algorithm used to check if you got the code example right sometimes didn\u2019t work right and marked your clearly right solution as incorrect. There were even times where all it took to fix the broken validation system was a page refresh. As for the course\u2019s content, it wasn\u2019t great either. It did an ok job at explaining the basic components of an AngularJS application, but it did a terrible job at integrating these into a real application, leaving me with far more questions than I started with.\n\nAfter some searching around forums, I stumbled upon Egghead.io (free / paid) where I had much better luck. Their course material was a lot cleaner, more concise, and more complete, making for a far better experience. Not to mention that apart from their courses, they have bite-sized 2\u20135 minute lessons that cover important topics. (For example: What is a controller? What is a filter? What is $scope?) These make it really easy to understand the basics. They also have some videos that require payment, but they are usually the ones covering more advanced angular topics you will not need until later on. I took their AngularJS Fundamentals course and I was fully satisfied with the results (and also became a big fan of Egghead.io\u2019s courses in the process).",
+    "user": 10
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 33,
+  "fields": {
+    "photo": "profile_photo/laura.jpeg",
+    "shortDescription": "How I went from mopping floors at a tanning salon to becoming a Software Developer",
+    "fullDescription": "The other day someone emailed me asking advice to learn how to program. He said he was planning to use \u201cLearn Python the Hard Way\u201d, which I understand is an excellent tutorial. I don\u2019t generally like giving advice, because I think it\u2019s way too easy to generalize your own experience into advice and do it wrong.\n\nBut then I found I had something to say! I thought a little bit about this blog, and how it might look like I sprang from the womb being excited about strace or thinking about how to build an operating system, or whatever. But in fact I spent about 10 years learning to program before going to Hacker School, mostly at fairly low speeds.\nYou should not try to conclude very much from this graph, but some events include:\n\nI started learning to program in 2004, because my math teacher gave me a TI-83 calculator and then I wrote BASIC programs in math class.\nA guy I added on MSN for some reasons I don\u2019t totally remember told me to install Gentoo and use this new browser Firebird and I never tried Gentoo but I did install a few Linux distributions!\nnow I\u2019ve been using Linux continuously for 11 years so that was a pretty great decision I guess.\nMy dad bought me Learning Perl and I was amazed to find out you could write subroutines and define your own variable names because on the TI-83 you only have about 26 variables (A-Z) and there are for loops but no named functions\nI went to university in 2006 and somehow was given the root password to a lab with 4 Linux and 3 Windows computers and wrote some terrible perl scripts to do some user management and uh yeah\nI finish university, with degrees in math/computer science. At this point (2011) I still basically don\u2019t believe I\u2019m any good at programming. I do not in any way consider applying to fancy jobs at Google or Microsoft or whatever.\nI get a first job and a second job and coding 40 hours a week teaches me a lot about the software engineering side of programming\nSo, I went back the other day to some of the older code I\u2019d written, thinking it would be terrible. Here, I put it on Github: julias-first-programs.\n\nNotably missing is the perl script that I wrote in 2005 to convert the digits of pi to midi music to write to a cd to give as a gift (?!). I couldn\u2019t find it.\n\nAnd, sure, it\u2019s not great code, but that\u2019s not what was the most surprising to me. What was the most surprising was how little of it I found. It turns out that in the first years I was learning to program, I was also in school full-time, not studying computer science, and I didn\u2019t necessarily write a lot of programs!\n\nMost of what I found was little scripts like grepstuff.pl. And, sure, it\u2019s not well-indented or anything. But the scope for most of these was so small (I was the only person writing or running most of them!) that it didn\u2019t really matter if they weren\u2019t well-engineered.\n\nAnyway, this is mostly to say \u2013 if you\u2019re programming and just starting out, and worrying that people say you can learn to program in 24 hours or 12 weeks\u2026 whatever. It\u2019s taken me 11 years so far, and I\u2019m not done :)\n\nIf you know how to program, and wrote your own version of this blog post, I would be interested to read it!",
+    "user": 11
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 34,
+  "fields": {
+    "photo": "profile_photo/laura2.jpeg",
+    "shortDescription": "From Secretary to Software Developer: the hard way",
+    "fullDescription": "Everyone is quite surprised when I tell them that I once was a secretary. So I decided to write down my story for those who want switch careers and get into the software development business. I was a secretary who did a lot of MS VBA coding, started to study and ended up being an ABAP developer. Currently I am a Swift/SAPUI5/JavaScript developer at SAP in Germany.\nTeenager years: secretary apprenticeship -> got hooked with coding\nAs a teenager I really enjoyed sitting at the computer. I wrote a story about me and my friends being a famous girl band in Word, calculated all things in Excel, drew in MS Paint and played a lot of games. We had a subscription for a computer magazine where they taught you everything about computers. For me it was crystal clear: I want a job with computers! Selling computers, installing things and configure them was my dream job. Unfortunately my parents were not as excited as I was, so we made a compromise. I started my apprenticeship as a secretary. There I could at least work with computers all day long!\nI really liked my job, I was a real pro computer user! Due to my job I tapped into website creation. I really liked it and I took the opportunity to maintain the homepage of our Karate club. At our financial department I had the opportunity to \u201cconvert\u201d some MS DOS programs into MS Excel. Those programs did not work anymore because of the Euro introduction. I really hate it when you have to do repetitive, boring tasks over and over again. Can I automate those things? Yes I can \u2014 MS VBA for Excel FTW! I really loved it! Writing my own computer programs! I drew them down on paper and visualised the program flow. Gorgeous!\nDuring the school part of the apprenticeship I stumbled about a series in a computer magazine: Delphi programming. They started with teaching you the basics of programming and GUI development. I bought some books on that topic and I was hooked! During the included school time of the apprenticeship I coded several small Delphi programs \u2014 because doing small calculations in MS Excel is boring. At the end of the six month series there was a developer competition: writing an editor with multiple tabs. And guess who won! Me winning a developer competition, who would have ever thought that? The first ten prizes were a full Delphi 7 professional license including all the CD-Roms. Ha, now I can get myself a developer job! But wait, studying the job offers \u2014 oh well, no one writes code in Delphi\u2026 :\u2019(\nEarly 20s: secretary + general qualification for university entrance\nAfter my apprenticeship was over I stayed at the company and continued to work as a secretary. I automated everything within my MS Excel spreadsheets. I was fascinated by the work a colleague did with all those networking stuff in our company. I got to know some cool people who did a lot of computer stuff at home and one off them working in IT. If only I got a formal education to work in such a job\u2026\nWith my best friend I had a deal: whenever one of us wants to do the \u201cgeneral qualification for university entrance\u201d evening course \u2014 we will do it together! So we both started with this course in the same year we finished our apprenticeship. I was able to skip one year because of my advanced English skills and I did not need to attend the IT course. For my IT project I chose a MS Access database \u2014 and as you might have guessed \u2014 yes I automated it with MS VBA for MS Access ;-)\nAll the other people built a website with frames \u2014 boring, I\u2019ve done that several times. At the end of this course it came to my mind: hm with this qualification I would be able to study Computer Science \u2014 so that I could finally get my formal education and get a new job! Brilliant idea! I attended some events which were exclusively for girls and tech. At those events you visited universities, had some guest lectures and you were able to talk to girls who are studying Computer Science. Wow, awesome stuff \u2014 exactly what I want!",
+    "user": 12
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 35,
+  "fields": {
+    "photo": "profile_photo/colby.jpeg",
+    "shortDescription": "MY JOURNEY FROM ZERO TO DEVELOPER",
+    "fullDescription": "Oct 9, 2015  recap\nI often get asked what caused me to give up being a \u201cYoutube celebrity\u201d and a life of playing video games for a living to go work at IBM.\n\nWell, discussing reasoning behind some of my life decisions could be a conversation of it\u2019s own, but for now I\u2019d love to share the story of my journey from having no idea what I was doing to landing one of the most amazing jobs I could ever ask for.\n\nTable of Contents\nRecap\nResarch / Exploration Phase\nLearning Strategy\nFully Commit\nCommunity\nJob Hunt\nGot a Job!\n\nRecap:\nI\u2019ll spare you the life story, but I have to start somewhere so I\u2019ll just say that when I made the decision to jump into learning web development\u2026I was at a point where I had no idea what I wanted to do in life.\n\nWhy did I make the decision? My sister had begun her CS degree (she is 10 years younger) and I really wanted to help her, so I skimmed a Java book and went through all of her homework projects with her during that first semester.\n\nI was overjoyed with remembering how awesome building things from scratch and solving complex problems can be that I just had a lightbulb moment. I knew what I wanted to be doing with my life going forward.\n\nResearch / Exploration phase\nI had coded flash games back in 2007, but I knew NOTHING about how the web worked, since all I\u2019ve done since then is play video games.\n\nAll I knew is that I wanted to make apps that would be viewable on my phone or the web. For a while, I thought I was going to have to learn Java\u2026until I realized that was only used in extremely outdated enterprise software.\n\nMy first month was chaotic learning. I kept seeing information pointing me in 5 different directions. I read an entire book on Java, then switched to Python for a week and read through a book on that.\n\nI signed up for courses to learn \u201cBig Data\u201d, and algorithms, and AI, and all kinds of crap. I really had no idea what I was doing or what I needed to learn.\n\nThe one thing I am most grateful for, is that I made the decision to install Linux so that I could learn the Bash command line, and I did some tutorials on using Vim.",
+    "user": 13
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 36,
+  "fields": {
+    "photo": "profile_photo/mountain_NvmK48g.jpeg",
+    "shortDescription": "How I Became a Developer in 8 Months",
+    "fullDescription": "So you want to become a developer but don\u2019t know where to begin. Changing careers or finding an entry-level job can be a daunting task (trust me, I know). That\u2019s why I\u2019d like to give you some thorough advice on what it takes to get out of the stink-hole you might currently find yourself in, and onto greener pastures.\nA bit of background: Ever since the 5th grade I thought I wanted to be a broadcast journalist. At the tender age of ten, I participated as a lead anchor in PBS\u2019 Super School News \u2014 a television segment that showcased various schools in Colorado \u2014 one of them being mine. From that moment on I was sold on the glamour of, \u201clights, camera, action!\u201d\nFlash forward to college: I enrolled at East Carolina University (ECU) pursuing a broadcast journalism degree, go figure. So far it was going well, until I landed an internship at WSOCTV in Charlotte. Their internship program was extremely thorough \u2014 they really showed us interns the ins-and-outs of what it takes to become a news anchor. In fact, their program was so thorough, it completely shattered my idealism of broadcast journalism. Turns out it wasn\u2019t my passion, nor would it ever be. But hey, that\u2019s what internships are for right?\nI ended up graduating ECU in 2014 with a degree in Public Relations (talk about your typical college experience). I had zero-clue what I wanted to do now that I was in the \u2018real world\u2019. I went to a couple of college fairs and landed in the profession of Technical Recruiting.\nThe job of a technical recruiter is to be able to identify/screen/qualify candidates for IT positions; the recruiter also reviews, reformats and presents resumes to hiring managers.*\nI was living in Charlotte, working uptown, and enjoying this post-college transition. However, as time went by, my work slowly became monotonous. This wasn\u2019t something I saw a future in long-term\u2026so what exactly did I want to do? It was time to do some inward reflecting.\nThe harder it was for me to recruit people in IT, the more I realized how low the supply and high the demand was for programmers in the US. In addition, according to the Bureau of Labor Statistics, women held just 25% of professional computing occupations in 2015. And more than 90% of those women were white. Just 5% were Asian, 3% African American and 1% Hispanic. These results astounded me.\nOut of all the roles I had recruited for, front end developers (FEDs) seemed to be the most interesting. Being a FED meant that I could create web pages and applications utilizing color, creativity, icons and fonts, user interactions, and more \u2014 pretty neat. From my time recruiting I also knew that most managers didn\u2019t really care if you had a degree in Computer Science. Sure, it was always preferred, but they\u2019d take any type of college degree as long as you had a programming background. Heck, even if you didn\u2019t have a college degree and you were a baller programmer, managers would still consider hiring you. With all of this data in front of me, my decision to become a front end developer was made.",
+    "user": 14
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 37,
+  "fields": {
+    "photo": "profile_photo/mountain_68xNP8h.jpeg",
+    "shortDescription": "Encouragement for all those learning to code: my story",
+    "fullDescription": "If you would have told me 4 months ago that I would be programming C, Swift and Perl this last week, I wouldn't have believed you. I'm no pro by any means, but here's my story.\n\n \n\nAbout 4 years ago I started the Python course on Codecademy because a colleague suggested learning Python when I mentioned I wanted to learn how to program. Codecademy was very frustrating and I felt lost often. I tried a Coursera course about Python, but it used its own customized library, and I couldn't differentiate \"real\" Python from the library. I found this confusing and frustrated. I didn't finish the rock, paper scissors project or course. I rarely touched programming for next couple of years, feeling extremely discouraged.\n\n \n\nWhile applying for jobs at the beginning of 2015 I decided I wanted to upgrade my technical skillset. Having worked at help desks in the past, and building my own computers and such for many years, I decided I wanted to learn how to program - seriously this time.\n\n \n\nAt first this year, I wanted to actually learn how to create websites. I knew HTML from my time on the web, but not CSS. I didn't understand how CSS worked at all. I started Codecademy again. After starting to understand that the frustration I felt while programming Python was somewhat normal when learning, the frustration began to fade, and learning began to set in. I finished the Python course.\n\n \n\nFrom March to July of 2015 I was working a crappy job that I hated. I was hired because \"JavaScript\" was on my resume. I knew how to do JavaScript Injections and Console.log(\"Hello, world\"); and I put it on my resume. I explained to my employer how much I knew, and they hired me as a JavaScript developer in training. They wanted someone who hadn't learned \"bad habits yet\". I looked at the code and had no idea what was going on. I was sitting on a help desk answering phones and I was supposed to study the code base at home. Something smelled fishy.\n\n \n\nI completed the JavaScript course on Codecademy while taking phone calls at work. The job was getting old.\n\n \n\nUnsure of how to REALLY combine JavaScript with HTML and CSS, I swallowed my pride and bought a \"HTML5 & CSS3 for Dummies\" book by Andy Harris. Boy, did I underestimate what these Dummies books were all about. This book wasn't just HTML5 and CSS3. It was about 1000 pages. It started with HTML5 then CSS3. That was the first 200 pages or less. Next was JavaScript. Then I learned PHP. I completed the Codecademy PHP course. The book told me about this thing I had heard about called \"MySQL\". I found free web hosting at 000webhost.com and Freehostia.com - Freehostia blew 000webhost away as far as a free service - other than having to have a not .tk or other Freenom domain name on Freehostia. For like $3 I bought a domain name and started writing live PHP in my HTML with CSS. I read this book during my downtime at work and built sites at work as well. I now look to Dummies books every time I want to learn something.\n\n \n\nI decided to go back to college. I got CompTIA A+ certified and started school. I learned WordPress at work and built a few sites. When I noticed that WordPress templates were written with PHP, I felt good about having learned PHP already.\n\n \n\nI completed the jQuery Codecademy course at the office.\n\n \n\nA few more weeks at the crappy help desk and I began to find that it was a waste of time. I could spend my time programming and studying instead, graduate quickly and find a job I love. I discovered The Odin Project. I became Network+ certified. Having talked with my partner, we both decided that if my side of the finances were in order, quitting my full-time job to study programming and graduate was in the cards. I left work one day and never went back.\n\n \n\nI continued with school. I had to take a Python programming course. Good thing I already knew Python. I just got Security+ certified and I'm well on my way to graduating. I'm currently finishing my Java course.",
+    "user": 15
+  }
+},
+{
+  "model": "portal.mentorprofile",
+  "pk": 38,
+  "fields": {
+    "photo": "profile_photo/mountain_gPvi1o9.jpeg",
+    "shortDescription": "hjasdkal",
+    "fullDescription": "gdjwhqkbqn,s.m",
+    "user": 16
+  }
+}
+]
