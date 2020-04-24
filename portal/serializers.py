@@ -66,7 +66,6 @@ class CommentThreadSerializer(serializers.ModelSerializer):
 
 class CommentThreadDetailSerializer(serializers.ModelSerializer):
 
-  # comments = CommentsSerializer(many=True)
   comments = serializers.SerializerMethodField()
   
   

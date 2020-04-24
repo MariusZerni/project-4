@@ -2,9 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import auth from '../lib/auth'
-
-
-// import SideBar from '../components/SideBar'
 import Footer from '../components/Footer'
 
 class Home extends React.Component {
@@ -19,24 +16,15 @@ class Home extends React.Component {
 
   fetchUser() {
     const userId = auth.getUserId()
-    console.log(userId)
     axios
       .get(`api/portal/users/${userId}`)
       .then((res) => {
-        //this.setState({ mentors: res.data })
-        console.log(res.data)
-
         const hasProfile = (res.data.user_profile) ? true : false
-
         auth.setHasProfile(hasProfile)
-        console.log('hasProfile' + auth.getHasProfile())
         this.setState({ checkedProfile: true })
       })
-
       .catch((error) => console.error(error))
   }
-
-
 
 
   fetchTopRated() {
@@ -51,11 +39,8 @@ class Home extends React.Component {
   }
 
 
-
-
   componentDidMount() {
     this.fetchTopRated()
-    //this.fetchUser()
   }
 
   handleLogout() {
@@ -70,7 +55,6 @@ class Home extends React.Component {
     const isLoggedIn = auth.isLoggedIn()
     return <>
     <div className="home-container">
-      {/* <SideBar /> */}
       <div className="login-logout-register">
         
         <div className="home-links">
@@ -118,37 +102,25 @@ class Home extends React.Component {
              </div>
            </div>
          </div>
-       </div>
-       
+       </div>    
        </>
   }
   
 
   render() {
-    // return null
-
     if (!this.state.topRated || this.state.topRated.length === 0) {
       return this.staticContent()
     }
    
     console.log(this.state.topRated)
     const { topRated } = this.state
-    
 
-    console.log(topRated)
-    return (<>
-     
-      
-      
+    return (<>   
      {this.staticContent()}
        <div id="home-content" className="color-three">
-         <h2>Top Rated</h2>
-         
+         <h2>Top Rated</h2>        
          <section className="section">
-           
-
            {topRated.map((element,i) => {
-
              return <div key={i} className="mentor-container">
                <div className="photo-rated">
                  <div className="photo" style={{ backgroundImage: `url(${'http://localhost:4000/media/' + (element.photo)})` }} heigth='150px' >
@@ -160,10 +132,8 @@ class Home extends React.Component {
                  <p>{element.shortDescription}</p>
                </figure>
              </div>
-           })}
-           
-         </section>
-         
+           })}          
+         </section>        
        </div>
        <Footer />
      </>

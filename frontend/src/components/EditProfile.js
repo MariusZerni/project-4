@@ -8,15 +8,11 @@ class EditProfile extends React.Component {
   constructor() {
     super()
     this.state = {
-      // data: {
       profile: {},
       photo: null,
       shortDescription: '',
       fullDescription: ''
-      // }
     }
-
-
   }
 
 
@@ -24,17 +20,15 @@ class EditProfile extends React.Component {
     this.getProfile()
   }
 
+
   getProfile() {
     const userId = auth.getUserId()
-    console.log(userId)
     axios.get(`api/portal/mentorprofiles/${userId}`)
       .then((response) => {
-        console.log(response.data)
         const profile = response.data[0] 
         this.setState({ profile })
         this.setState({ shortDescription: profile.shortDescription })
         this.setState({ fullDescription: profile.fullDescription })
-        // this.setState({ shortDescription: profile.shortDescription })
       })
       .catch((error) => { 
         console.log(error)
@@ -43,22 +37,17 @@ class EditProfile extends React.Component {
 
 
 
-
-
   handleChange = (e) => {
     e.preventDefault()
-    console.log({ [e.target.id]: e.target.value })
     this.setState({
       [e.target.id]: e.target.value
-    }
-    )
+    })
   }
 
   
 
   handleImageChange = (e) => {
     e.preventDefault()
-
     this.setState({
       photo: e.target.files[0]
     })
@@ -67,19 +56,11 @@ class EditProfile extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    
-
     const formData = new FormData()
-
-    // if (this.state.photo){
-    //   formData.append('photo', this.state.photo)
-    // }
     formData.append('shortDescription', this.state.shortDescription)
     formData.append('fullDescription', this.state.fullDescription)
     formData.append('user', auth.getUserId())
-
     const url = `api/portal/mentorprofiles/${this.state.profile.id}/`
-  
     axios.put(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(() => {
         this.props.history.push('/userprofile')
@@ -88,22 +69,13 @@ class EditProfile extends React.Component {
   } 
 
 
-  // componentDidMount(
-  //   this.handleSubmit()
-  // )
-
-
-
-
-
 
   render() {
     console.log('state')
     console.log(this.state)
     return <section className="create-profile">
       <div className="container-create-profile">
-        <form  
-          
+        <form   
           className="profile-form" 
           encType='mutipart/form-data' 
           onSubmit={this.handleSubmit}>
@@ -123,7 +95,6 @@ class EditProfile extends React.Component {
               id='fullDescription' 
               value={this.state.fullDescription} 
               onChange={this.handleChange} />
-
           </p>
           <p className="input-create-profile"  >
             <input type="file"

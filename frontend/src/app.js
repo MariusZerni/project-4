@@ -1,5 +1,5 @@
 import React from 'react'
-// import React, { useState, useEffect } from 'react'
+
 import ReactDOM from 'react-dom'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ import ReplyToThread from '../src/components/ReplyToThread'
 import UserProfile from './components/UserProfile'
 import CreateProfileForm from './components/CreateProfileForm'
 import EditProfile from './components/EditProfile'
-// import SideBar from '../src/components/SideBar'
+
 
 const App = () => {
   

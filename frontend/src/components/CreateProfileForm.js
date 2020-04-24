@@ -1,5 +1,4 @@
 import React from 'react'
-// import queryString from 'query-string'
 import axios from 'axios'
 import auth from '../lib/auth'
 
@@ -8,15 +7,12 @@ class CreateProfileForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      // createProfile: '',
       photo: null,
       shortDescription: '',
       fullDescription: ''
     }
   }
 
-
-  
 
   handleChange = (e) => {
     e.preventDefault()
@@ -33,8 +29,7 @@ class CreateProfileForm extends React.Component {
 
     this.setState({
       photo: e.target.files[0]
-    })
-    
+    })   
   }
 
   handleSubmit = (e) => {
@@ -61,16 +56,9 @@ class CreateProfileForm extends React.Component {
     
   }
     
-    
-  
-
-
-
 
   render() {
     
-
-
     return <section className="create-profile">
       <div className="container-create-profile">
         <form  className="profile-form" encType='mutipart/form-data' onSubmit={this.handleSubmit}>

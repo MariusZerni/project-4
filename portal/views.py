@@ -15,8 +15,7 @@ import json
 
 from django.http import HttpResponse
 from django.db.models import Avg
-# from .models import Client
-# from .serializers import ClientSerializer, PopulateClientSerializer
+
 from .models import Skill
 from .serializers import SkillSerializer
 from .models import MentorProfile
@@ -54,12 +53,7 @@ class CommentsListView(ListCreateAPIView):
   serializer_class = CommentsSerializer
 
   def get(self, request):
-    # fromUser = request.GET.get('fromUser','')
 
-    # if (fromUser):
-    #   queryset = Comment.objects.filter(fromUser=fromUser)
-    # else:
-    #   queryset = Comment.objects.all()
     
     serializer = CommentsSerializer(queryset, many=True)
 
@@ -81,18 +75,17 @@ class CommentDetailView(RetrieveUpdateDestroyAPIView):
 class CommentThreadView(ListCreateAPIView):
   queryset = CommentThread.objects.all().order_by('-startDate')
   serializer_class = CommentThreadSerializer
-  # permission_classes = (IsOwnerOrReadOnly, )
+
 
 class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
   queryset = CommentThread.objects.all()
   serializer_class = CommentThreadDetailSerializer
-  # permission_classes = (IsOwnerOrReadOnly, )
+
 
   def get(self, request, pk):
     print('ola')
     thread = CommentThread.objects.get(pk=pk)
-    # todo check client not null
-    # self.check_object_permissions(request, thread)
+
     serializer = CommentThreadDetailSerializer(thread)
 
     return Response(serializer.data)
@@ -108,7 +101,6 @@ class MentorProfilesListView(ListCreateAPIView):
   queryset = MentorProfile.objects.all()
   serializer_class = MentorProfileSerializer
 
-  # parser_class = (FileUploadParser,)
 
   def post(self, request, *args, **kwargs):
 

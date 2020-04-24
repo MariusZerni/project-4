@@ -42,36 +42,22 @@ class Register extends React.Component {
 
 
   handleSubmitRegister(event) {
-    // console.log('register')
-    // console.log(this.state)
     event.preventDefault()
     axios
       .post('/api/register', this.state.register)
       .then( () => this.setState({ isLoginActive: !this.state.isLoginActive }))
       .catch(err => { 
-        // console.log('error')
-        // console.log(err.response.data)
         this.setState({ errors: err.response.data })
       })
   }
 
   handleSubmitLogIn(event) {
-    // console.log(this.state.login)
     event.preventDefault()
-    axios
-      .post('/api/login', this.state.logIn)
+    axios.post('/api/login', this.state.logIn)
       .then(res => {
         const token = res.data.token
-        const userId = res.data.user
-        
+        const userId = res.data.user       
         auth.setToken(token, userId)
-
-
-
-        console.log(token)
-
-        // this.props.handleChange(true)
-      
         this.props.history.push({ pathname: '/', state: res.data.user })
       })
       .catch(err => {
@@ -81,9 +67,6 @@ class Register extends React.Component {
   }
 
 
-
-
-
   handleClick(e) {
     e.preventDefault()
     this.setState({ isLoginActive: !this.state.isLoginActive, errors: {} })
@@ -91,7 +74,6 @@ class Register extends React.Component {
 
   componentDidMount(){
     const params = queryString.parse(this.props.location.search)
-    // console.log(params.current)
     this.setState({ isLoginActive: params.current === 'register' ? false : true })
   }
 
@@ -175,8 +157,6 @@ class Register extends React.Component {
     </div>
 
   }
-
-
 }
 
 

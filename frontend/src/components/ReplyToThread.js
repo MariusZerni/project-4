@@ -22,7 +22,6 @@ class ReplyToThread extends React.Component {
   }
 
   componentDidMount() {
-    console.log('comp')
     const params = queryString.parse(this.props.location.search)
     const threadId = parseInt(params.id)
     this.setState({ threadId: threadId })
@@ -32,15 +31,12 @@ class ReplyToThread extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-
     this.postingComment()
 
   }
 
 
   handleEditorChange(content) {
-
-    console.log('tes')
     this.setState({ content })
   }
 
@@ -51,26 +47,18 @@ class ReplyToThread extends React.Component {
         this.getCommentsThreads()
         this.setState({ content: '' })
         this.mainContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        // console.log(response)
       }) 
       .catch((error) => {
         console.log(error)
       })
   }
-
 
 
 
   getCommentsThreads(threadId = this.state.threadId) {
-    console.log(this.state)
-
-    axios
-    //TODO send threadId
-  
-      .get(`api/portal/commentthread/${threadId}`)
+    axios.get(`api/portal/commentthread/${threadId}`)
       .then((response) => {
         this.setState({ thread: response.data })
-        // console.log(response)
       }) 
       .catch((error) => {
         console.log(error)
@@ -78,26 +66,14 @@ class ReplyToThread extends React.Component {
   }
 
 
-  
-  
-
-
   render() {
-    console.log('render threads')
-    console.log(this.state.thread)
-    // console.log(this.state.comments)
 
     if (!this.state.thread){
       return null
     }
-    // console.log(this.state.comments)
     
     const { thread } = this.state
     const comments  =  thread.comments
-    console.log(comments)
-    console.log(thread)
-
-    console.log(thread.initialComment)
 
     return  <div className="main-container" ref={this.mainContainerRef}>
 
@@ -115,8 +91,6 @@ class ReplyToThread extends React.Component {
               </Moment></span></div>
           </div>
         </section>
-
-
         {comments.map((comment) => {
           return <section  key={comment.id} className="section-comment" id="reply-thread">
             <div className="subject-section" dangerouslySetInnerHTML={util.createMarkup(comment.comment)}>
@@ -136,10 +110,7 @@ class ReplyToThread extends React.Component {
           apiKey="8hj12ov6utkverot2eh2mkkcs06rrt03n0x4ez55s2m6z1fd"
           plugins="wordcount"
           value={this.state.content}
-          onEditorChange={this.handleEditorChange}/>
-
-      
-        
+          onEditorChange={this.handleEditorChange}/>    
       </form>
       <div className="submit-btn" >
         <button type="button" onClick={(e) => {
@@ -148,8 +119,6 @@ class ReplyToThread extends React.Component {
       </div>
     </div>
   }
-
-
 }
 
 
