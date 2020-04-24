@@ -6,6 +6,7 @@ class RoleSerializer(serializers.ModelSerializer):
     model = Role
     fields = ('id', 'name')
 
+
 class SkillSerializer(serializers.ModelSerializer):
   class Meta:
     model = Skill
@@ -19,9 +20,7 @@ class UserRelationshipSerializer(serializers.ModelSerializer):
 
 
 class MentorProfileSerializer(serializers.ModelSerializer):
-
   photo = serializers.SerializerMethodField()
-
   class Meta:
     model = MentorProfile
     fields = '__all__'
@@ -38,12 +37,10 @@ class FileSerializer(serializers.ModelSerializer):
 
 
 class PopulateUserSerializer(serializers.ModelSerializer):
-
   roles = serializers.ReadOnlyField()
   skills = serializers.ReadOnlyField()
   mentees = serializers.ReadOnlyField()
-  mentors = serializers.ReadOnlyField()
-  
+  mentors = serializers.ReadOnlyField() 
   votes = serializers.ReadOnlyField()
   user_profile = MentorProfileSerializer(read_only=True)
   
@@ -53,10 +50,12 @@ class PopulateUserSerializer(serializers.ModelSerializer):
 
 
 
+
 class CommentsSerializer(serializers.ModelSerializer):
   class Meta:
     model = Comment
     fields = "__all__"
+
 
 class CommentThreadSerializer(serializers.ModelSerializer):
 
@@ -64,12 +63,10 @@ class CommentThreadSerializer(serializers.ModelSerializer):
     model = CommentThread
     fields = "__all__"
 
-class CommentThreadDetailSerializer(serializers.ModelSerializer):
 
+class CommentThreadDetailSerializer(serializers.ModelSerializer):
   comments = serializers.SerializerMethodField()
   
-  
-
   class Meta:
     model = CommentThread
     fields = ('id', 'commentType','initialComment','fromUser','startDate','subject','comments')

@@ -20,12 +20,9 @@ class Person(User):
   def roles(self):
     return User_Role.objects.filter(user=self.id).values_list('role__name', flat=True)
 
-
-
   @property
   def skills(self):
     return User_Skill.objects.filter(user=self.id).values_list('skill__name', flat=True)
-
 
   @property
   def mentees(self):
@@ -35,11 +32,9 @@ class Person(User):
   def mentors(self):
     return UserRelationship.objects.filter(mentee=self.id).values_list('mentor', flat=True)
 
-
   @property
   def votes(self):
     return UserRelationship.objects.filter(mentor=self.id).aggregate(sumVotes=Sum('votes')).get('sumVotes')
-
 
   @property
   def topVotes(self):
