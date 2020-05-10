@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'frontend',
     'portal',
+    'portal2',
     # 'portal.apps.PortalConfig',
     
     
