@@ -8,14 +8,14 @@ from django.conf import settings
 
 # Create your models here.
 
-# User = get_user_model()
+User = get_user_model()
 
 
-class Person(AbstractUser):
+class Person(User):
   
 
-  # class Meta:
-  #   proxy = True
+  class Meta:
+    proxy = True
     
   @property
   def roles(self):

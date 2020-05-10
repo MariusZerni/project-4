@@ -4,7 +4,7 @@ from .models import Role, Person, Skill, MentorProfile, User_Role, User_Skill, U
 
 admin.site.register(Role)
 
-admin.site.register(Person)
+# admin.site.register(Person)
 admin.site.register(Skill)
 # admin.site.register(Client)
 admin.site.register(MentorProfile)
