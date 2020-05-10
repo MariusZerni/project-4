@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# AUTH_USER_MODEL = portal.Person
+
 
 # Application definition
 
@@ -41,8 +43,8 @@ INSTALLED_APPS = [
     'jwt_auth',
     'rest_framework',
     'frontend',
-    # 'portal',
-    'portal.apps.PortalConfig',
+    'portal',
+    # 'portal.apps.PortalConfig',
     
     
 ]
@@ -146,4 +148,8 @@ MEDIA_URL =  '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 print(MEDIA_ROOT)
 
+AUTH_USER_MODEL = 'portal.Person'
+
 django_heroku.settings(locals())
+
+

@@ -1,20 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db.models import F, Sum,Max, Count
 import django
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.conf import settings
 
 # Create your models here.
 
-User = get_user_model()
+# User = get_user_model()
 
 
-class Person(User):
+class Person(AbstractUser):
   
 
-  class Meta:
-    proxy = True
+  # class Meta:
+  #   proxy = True
     
   @property
   def roles(self):
@@ -56,22 +57,22 @@ class Skill(models.Model):
 
 
 class User_Role(models.Model):
-  user = models.ForeignKey(User, related_name='user_role_user', on_delete=models.CASCADE)
+  user = models.ForeignKey(Person, related_name='user_role_user', on_delete=models.CASCADE)
   role = models.ForeignKey(Role, related_name='user_role_role', on_delete=models.CASCADE)
 
   class Meta:
     unique_together = (('user', 'role',))
 
 class User_Skill(models.Model):
-  user = models.ForeignKey(User, related_name='user_skills_user', on_delete=models.CASCADE)
+  user = models.ForeignKey(Person, related_name='user_skills_user', on_delete=models.CASCADE)
   skill = models.ForeignKey(Skill, related_name='user_skills_skill', on_delete=models.CASCADE)
 
   class Meta:
     unique_together = (('user', 'skill',))
 
 class UserRelationship(models.Model):
-    mentor = models.ForeignKey(User, related_name='mentor', on_delete=models.CASCADE)
-    mentee = models.ForeignKey(User, related_name='mentee', on_delete=models.CASCADE)
+    mentor = models.ForeignKey(Person, related_name='mentor', on_delete=models.CASCADE)
+    mentee = models.ForeignKey(Person, related_name='mentee', on_delete=models.CASCADE)
 
     votes = models.IntegerField(blank=True, null=True, default=0)
   
@@ -95,7 +96,7 @@ class CommentType(models.Model):
 class CommentThread(models.Model):
   commentType = models.ForeignKey(CommentType, related_name='comment_commentType', on_delete=models.CASCADE) 
   initialComment=models.CharField(max_length=300)
-  fromUser = models.ForeignKey(User, related_name='commentthread_from_user', on_delete=models.CASCADE)
+  fromUser = models.ForeignKey(Person, related_name='commentthread_from_user', on_delete=models.CASCADE)
   startDate = models.DateTimeField(default=timezone.now)
   subject = models.CharField(max_length=150, blank=True)
 
@@ -105,8 +106,8 @@ class CommentThread(models.Model):
 
 
 class Comment(models.Model):
-  fromUser = models.ForeignKey(User, related_name='comment_from_user', on_delete=models.CASCADE)
-  toUser = models.ForeignKey(User, related_name='comment_to_user', on_delete=models.CASCADE, blank=True, null=True)
+  fromUser = models.ForeignKey(Person, related_name='comment_from_user', on_delete=models.CASCADE)
+  toUser = models.ForeignKey(Person, related_name='comment_to_user', on_delete=models.CASCADE, blank=True, null=True)
   commentThread = models.ForeignKey(CommentThread, related_name='comments', on_delete=models.CASCADE) 
   comment = models.CharField(max_length=3000)
   
