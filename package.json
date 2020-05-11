@@ -40,7 +40,7 @@
     "react-router-dom": "^5.1.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.4",
-    "tinymce": "^5.2.1",
+    "tinymce": "^5.2.2",
     "url-loader": "^4.1.0"
   }
 }
