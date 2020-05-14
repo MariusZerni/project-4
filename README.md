@@ -4,27 +4,29 @@
 
 ## Overview
 
-Unlock was my fourth project, with General Assembly and the most complex project I've developed during the software engineering immersive course. 
+Unlock was my last project with General Assembly and the most complex project I developed during the Software Engineering Immersive course. 
 
-For this project I decided to create a platform where people can find help, support and advice on following their dream in career changing. First you have to create a profile. If you decied that you want to help other members you can create a mentor profile where you can motivate, share external documentation, offering guidance, chat via the platform.  
+For this project I decided to create a platform where people can find support and advice on following their dream career. 
+The platform allows members to create a mentor or a mentee profile and share a personal story page. 
+A mentor can share external documentation, offer guidance through a chat system via the platform.  
 
-On this platform you can:
+Main functionalities:
 
-- register
-- create a profile (adding profile picture, motto, description)
-- create a mentor profile, where members can subscribe
-- vote mentors
-- find mentors
-- ask questions
-- reply to questions
+- user register/login
+- creating a profile as a mentor or mentee (adding a profile picture, motto, personal story)
+- mentees can subscribe to one or more mentors
+- rating mentors
+- searching for mentors
+- asking questions (creating a chat thread)
+- replying to a chat thread
 
 
 
 ## Brief
-- Build a full-stack application by making your own backend and your own front-end
-- Use a Python Django API using Django REST Framework to serve your data from a Postgres database
-- Create a front-end built with React
-- Be deployed online and accesible to the public
+- Build a full-stack application by making your own back end and your own front end
+- Use a Python Django API to serve your data from a Postgres database
+- Create a front end built with React
+- Deploy the app with Heroku
 
 
 ## Technologies Used
@@ -38,79 +40,35 @@ On this platform you can:
 - CSS, SCSS
 - Axios
 - Webpack
-- Git and GitHub
+- Git/GitHub
 - Moment
 - Heroku
 
 
 ## Approach
 
-### Back End
-
-### Setting Up
-First I had to set up the Django app. I've followed some instructions where Django created a project directory with files like: settings, urls. 
-Once I had the Django all set up I had to create a PostgreSQL Database that I called it 'portal'. In this directory Django created most of the files that I used in order to have a functional back end application. 
-
-- Also I had to link my app to the project urls:
-
-```py
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/portal/', include('portal.urls')),
-    path('api/', include('jwt_auth.urls')),
-    path('', include('frontend.urls'))
-
-]
-if settings.DEBUG:
-  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-```
-
-- And in settings:
-```py
-INSTALLED_APPS = [  
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'jwt_auth',
-    'rest_framework',
-    'frontend',
-    'portal',    
-]
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'portal',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
-}
-```
-
+## Back End
 
 ## Models
-An important step it was setting the models right from the beginning. I knew from start that this is going to take some time, planning and testing the schema in Django Admin's UI and in Insomnia. 
-This part it was time consuming but crucial to the structure of my app. I had to get the schema right from the start to be able to use the data as needed. Of course, that didn't go as planned, but not so bad either. I had to make some small changes while building, but over all it did work as I planned. 
+After configuring Django, I created a PostgreSQL database and the main entities for the model.
+Creating the models is the core part of the application, so I allocated time for designing and testing the schema in Django Admin's UI and in Insomnia. 
+
+This step was time consuming but crucial to the development of the app. 
+I wanted to get the schema right as this was the backbone of the application. I had to make some more changes as well while building the back end logic, but luckily the changes did not impact the delivery of the project.
 
 ## JWT.AUTH
-Django provided us with a basic User. 
-Here I'm making the email to be unique and required.
+I created a separate Django module for authentication.
+The snippet below shows enhancement to the Django User model to have the email as a unique and mandatory field.
+
 ```py
 from django.contrib.auth.models import User
 User._meta.get_field('email')._unique = True
 User._meta.get_field('email').blank = False
 ```
 
+In order to model the User relationship with the other entities and also to create some methods to retrieve related user information (from child tables), I had to extend it by creating a Person class (proxy to the Django User).
 
-Because the models are related with the User I had to extend it with the Person model. Here I'm adding all the fields that I use when fetching data, in order to make less calls to the database.
+I created methods that are used in the Person serializer in order to retrieve related user information (user roles, skills, metees, mentors, votes)
 
 ```py
 class Person(User):
@@ -136,10 +94,6 @@ class Person(User):
   @property
   def votes(self):
     return UserRelationship.objects.filter(mentor=self.id).aggregate(sumVotes=Sum('votes')).get('sumVotes')
-
-  @property
-  def topVotes(self):
-    return UserRelationship.objects.values('mentor').annotate(topVotes=Sum("votes")).order_by("-topVotes")[:5] 
     
 
 class Role(models.Model):
@@ -154,7 +108,8 @@ class Skill(models.Model):
     return self.name
 ```
 
-Here we have all the relationships between the tables:
+User_Role is creating a many-to-many relationship between a Person and a Role, a person can have many roles and a role can belong to many persons:
+
 ```py
 class User_Role(models.Model):
   user = models.ForeignKey(Person, related_name='user_role_user', on_delete=models.CASCADE)
@@ -162,7 +117,12 @@ class User_Role(models.Model):
 
   class Meta:
     unique_together = (('user', 'role',))
+```
 
+User_Skill is  similar to User_Role, creating a many-to-many relationship between a Person and a Skill
+
+
+```py
 class User_Skill(models.Model):
   user = models.ForeignKey(Person, related_name='user_skills_user', on_delete=models.CASCADE)
   skill = models.ForeignKey(Skill, related_name='user_skills_skill', on_delete=models.CASCADE)
@@ -170,6 +130,11 @@ class User_Skill(models.Model):
   class Meta:
     unique_together = (('user', 'skill',))
 
+```
+
+UserRelationship is creating a many-to-many relation between mentors and mentees (self-referencing since we are using the same entity -- Person). One mentor can have many mentees, one mentee can have many mentors. I created an attribute 'votes', to capture the vote of a mentee for a particular mentor.
+
+```py
 class UserRelationship(models.Model):
     mentor = models.ForeignKey(Person, related_name='mentor', on_delete=models.CASCADE)
     mentee = models.ForeignKey(Person, related_name='mentee', on_delete=models.CASCADE)
@@ -180,12 +145,21 @@ class UserRelationship(models.Model):
       return UserRelationship.objects.filter(mentor=self.mentor).aggregate(sumVotes=Sum('votes')).get("sumVotes")   
     class Meta:
       unique_together = (('mentor', 'mentee',))
+```
 
+The entity CommentType is used to store the types of comments supported by the platform: public/private.This static table which will only be populated from a fixture file at the project setup:
+
+```py
 class CommentType(models.Model):
   comment_type = models.CharField(max_length=30)
   def __str__(self):
     return self.comment_type
+```
 
+The CommentThread entity models message threads that can be created on the platform, allowing to specify the thread type ('commentType'),
+the first message on the thread ('initialComment'), the user the created the thread ('fromUser'), thread date ('startDate') and the subject of the thread ('subject'):
+
+```py
 class CommentThread(models.Model):
   commentType = models.ForeignKey(CommentType, related_name='comment_commentType', on_delete=models.CASCADE) 
   initialComment=models.CharField(max_length=300)
@@ -194,7 +168,11 @@ class CommentThread(models.Model):
   subject = models.CharField(max_length=150, blank=True)
   def __str__(self):
     return self.subject
+```
 
+The Comment entity models comments that can be added to a thread (a comment thread can have many comments, a comment can belong to only one comment thread):
+
+```py
 class Comment(models.Model):
   fromUser = models.ForeignKey(Person, related_name='comment_from_user', on_delete=models.CASCADE)
   toUser = models.ForeignKey(Person, related_name='comment_to_user', on_delete=models.CASCADE, blank=True, null=True)
@@ -203,7 +181,11 @@ class Comment(models.Model):
   date = models.DateTimeField(default=timezone.now)
   def __str__(self):
     return 'from: ' + self.fromUser.username + ' to ' + self.toUser.username +": "+ self.commentThread.subject
+```
 
+The MentorProfile table stores the profile information for a user (photo, shortDescription, fullDescription):
+
+```py
 class MentorProfile(models.Model):
   photo = models.ImageField(upload_to='profile_photo', blank=False, null=False)
   shortDescription = models.CharField(max_length=150)
@@ -216,15 +198,12 @@ class MentorProfile(models.Model):
 
 ## Serializers
 
-Serialises the data and turns it into a JSON string after the model has retrieved the data from the database.
+Django requires creating serializers to serialize the data retrieved from the database and convert it into a JSON object.
 
 ## JWT_AUTH
 ## User serializer
-I've created a user serializer that will check if the password and password_confirmation fields match, if they do not match, the user is getting a validation error.
-
-Further on I use validate_password method that checks the strength of the password. It ensures that passwords aren't too weak.
-
-The password is hashed by using Django's built-in make_password function and I store it on the data object.
+I created a user serializer that checks if the password and password_confirmation fields match. If they do not match a validation error is returned. The validate_password method checks the strength of the password and it ensures that the passwords aren't too weak.
+The password is hashed using Django's built-in make_password function and it is stored on the data object.
 
 ```py
 class UserSerializer(serializers.ModelSerializer):
@@ -247,25 +226,23 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password', 'password_confirmation','first_name')
 ```
 
-Here I have rest of the serialised data
+I created serializers for the other entities, most of them are using a standard way of defining the fields to be serialized:
+
 ```py
 class RoleSerializer(serializers.ModelSerializer):
   class Meta: 
     model = Role
     fields = ('id', 'name')
 
-
 class SkillSerializer(serializers.ModelSerializer):
   class Meta:
     model = Skill
     fields = ('id', 'name')
 
-
 class UserRelationshipSerializer(serializers.ModelSerializer):
   class Meta:
     model = UserRelationship
     fields = '__all__'
-
 
 class MentorProfileSerializer(serializers.ModelSerializer):
   photo = serializers.SerializerMethodField()
@@ -277,13 +254,15 @@ class MentorProfileSerializer(serializers.ModelSerializer):
         if obj.photo:
             return obj.photo.url
 
-
 class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = MentorProfile
         fields = "__all__"
+```
 
+The User serializer is a custom serializer and it is using the ReadOnlyField class for most of the fields because I am serializing values from the corresponding methods from the model. For example the roles field will contain the values retrieved by calling the roles() method on the User(Person) model.
 
+```py
 class PopulateUserSerializer(serializers.ModelSerializer):
   roles = serializers.ReadOnlyField()
   skills = serializers.ReadOnlyField()
@@ -295,23 +274,23 @@ class PopulateUserSerializer(serializers.ModelSerializer):
   class Meta:
     model = Person
     fields = ('id', 'first_name', 'roles','skills','mentees','mentors','votes','user_profile')
-
-
-
-
+```
+```py
 class CommentsSerializer(serializers.ModelSerializer):
   class Meta:
     model = Comment
     fields = "__all__"
-
 
 class CommentThreadSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = CommentThread
     fields = "__all__"
+```
 
+The CommentThreadDetailSerializer contains some custom code in order to retrieve the corresponding comments:
 
+```py
 class CommentThreadDetailSerializer(serializers.ModelSerializer):
   comments = serializers.SerializerMethodField()
   
@@ -327,13 +306,12 @@ class CommentThreadDetailSerializer(serializers.ModelSerializer):
 
 ## Views
 
-In order to be able to use the data base operations (CRUD) Django has its own built-in called 'generic views', which you can also overwrite them.
+- In order to expose the API endpoints for managing the entities, Django has its own built-in 'generic views', which can be extended.
 
-- Register has only a post end-point, where the data is posted to the database. 
-I'm checking if the data is valid and I'm sending back a response message.
+- The Register view has only a POST endpoint, for creating a User in the database. I implemented user validation and the endpoint is sending a message if the validation was not successful:
+
 ```py
 class RegisterView(APIView):
-
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -343,7 +321,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=422)
 ```
 
-- Login has a get and a post end-point where the user's login information is received, checked and if valid a JWT token is returned as response. To encode the password I'm using an algorithm provided by Django.
+- The Login view has a GET endpoint to retrieve a user based on the email and a POST endpoint to validate the user login information (returns a JWT token if the login information is valid). To encode the password I'm using an algorithm provided by Django.
 ```py
 class LoginView(APIView):
     def get_user(self, email):
@@ -351,6 +329,7 @@ class LoginView(APIView):
             return User.objects.get(email=email)
         except User.DoesNotExist:
             raise PermissionDenied({'message': 'Invalid credentials'})
+
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -361,22 +340,10 @@ class LoginView(APIView):
         return Response({'token': token, 'user': user.id})
 ```
 
-- End points for Login and Register
-```py
-urlpatterns = [
-    path('register', RegisterView.as_view()),
-    path('login', LoginView.as_view())
-]
-```
 
+- UsersListView allows retrieving all users:
 
-- All the views used in my app
 ```py
-class IsOwnerOrReadOnly(BasePermission):
-  def has_object_permission(self, request, view, obj):
-    if request.method in permissions.SAFE_METHODS:
-      return True
-    return request.user == obj.user
 
 class UsersListView(ListCreateAPIView):
   queryset = Person.objects.all()
@@ -386,14 +353,11 @@ class UsersListView(ListCreateAPIView):
     users = Person.objects.all()
     serializer = PopulateUserSerializer(users, many=True)
     return Response(serializer.data)
+```
 
-class CommentsListView(ListCreateAPIView):
-  queryset = Comment.objects.all().order_by('-startDate')
-  serializer_class = CommentsSerializer
-  def get(self, request):    
-    serializer = CommentsSerializer(queryset, many=True)
-    return Response(serializer.data)
-    
+- CommentDetailView endpoint allows retrieving a comment by id:
+
+```py
 class CommentDetailView(RetrieveUpdateDestroyAPIView):
   queryset = Comment.objects.all()
   serializer_class = CommentsSerializer
@@ -401,11 +365,20 @@ class CommentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.filter(pk=pk)
     serializer = CommentsSerializer(queryset, many=True)
     return Response(serializer.data)
+```
 
+- CommentThreadView endpoint exposes a list of comment threads ordered by startDate:
+
+```py
 class CommentThreadView(ListCreateAPIView):
   queryset = CommentThread.objects.all().order_by('-startDate')
   serializer_class = CommentThreadSerializer
 
+```
+
+- CommentThreadDetailView can be used in order to retrieve a CommentThread by id:
+
+```py
 class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
   queryset = CommentThread.objects.all()
   serializer_class = CommentThreadDetailSerializer
@@ -413,22 +386,9 @@ class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
     thread = CommentThread.objects.get(pk=pk)
     serializer = CommentThreadDetailSerializer(thread)
     return Response(serializer.data)
-    
-class SkillsListView(ListCreateAPIView):
-  queryset = Skill.objects.all()
-  serializer_class = SkillSerializer
+```
 
-class MentorProfilesListView(ListCreateAPIView):
-  queryset = MentorProfile.objects.all()
-  serializer_class = MentorProfileSerializer
-  def post(self, request, *args, **kwargs):
-    file_serializer = FileSerializer(data=request.data)
-    if file_serializer.is_valid():
-        file_serializer.save()
-        return Response(file_serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+```py
 class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
   queryset = MentorProfile.objects.all()
   serializer_class = MentorProfileSerializer
@@ -436,49 +396,11 @@ class MentorProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = MentorProfile.objects.filter(user=pk)
     serializer = MentorProfileSerializer(queryset, many=True)
     return Response(serializer.data)
-  
-class RolesListView(ListCreateAPIView):
-  queryset = Role.objects.all()
-  serializer_class = RoleSerializer
-
-class UserRelationshipListView(ListCreateAPIView):
-  queryset = UserRelationship.objects.all()
-  serializer_class = UserRelationshipSerializer
-def TopVotesListView(request):
-    rels=(UserRelationship.objects.values('mentor').annotate(topVotes=Avg("votes")).order_by("-topVotes")[:5]).annotate(name=F('mentor__first_name'), photo=F('mentor__user_profile__photo'), shortDescription=F('mentor__user_profile__shortDescription')).values('mentor','name','photo','shortDescription','topVotes')
-    data=json.dumps(list(rels))
-    return HttpResponse(data, content_type='application/json')
-
-class UserDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = Person.objects.all()
-  serializer_class = PopulateUserSerializer
-  def get(self, request, pk):
-    person = Person.objects.get(pk=pk)
-    self.check_object_permissions(request, person)
-    serializer = PopulateUserSerializer(person)
-    return Response(serializer.data)
-
-class SkillDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = Skill.objects.all()
-  serializer_class = SkillSerializer
-
-class RoleDetailView(RetrieveUpdateDestroyAPIView):
-  queryset = Role.objects.all()
-  serializer_class = RoleSerializer
-
-class FileUploadView(APIView):
-    parser_class = (FileUploadParser,)
-    def post(self, request, *args, **kwargs):
-      file_serializer = FileSerializer(data=request.data)
-      if file_serializer.is_valid():
-          file_serializer.save()
-          return Response(file_serializer.data, status=status.HTTP_201_CREATED)
-      else:
-          return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
 
 
-- All the end-points used in my app, 'detailedView' and 'listView':
+- All the available endpoints exposed by the API:
+
 ```py
 urlpatterns = [
   path('', UsersListView.as_view()),
@@ -502,15 +424,16 @@ urlpatterns = [
 
 ## Front End
 
-Now the back end all set up, now it is time to design the platform from the UX perspective.
-My plan was from the beginning to have a simple and clean Interface to make the user experience as much as simple I can. Having that in mind I've started to design the pages. 
+After setting up the backend and testing the exposed API endpoints for all the entities, I started to design the platform from the UX perspective.
+My plan was to have a simple and clean UI to make the user experience as smooth as possible.
 
 ### Homepage Structure
-- When the page it gets loaded you'll see a quot.
+- Top header: motivational quote, a motto of the app.
 
-- When scrolled down you'll find a section describing how it works.
+- Middle section describing how the platform works.
 
-- Also the top five voted mentors which is giving me from the backend:
+- Section displaying the top five voted mentors, fetched by invoking a custom back end API:
+
 ```js
   fetchTopRated() {
     axios
@@ -522,7 +445,7 @@ My plan was from the beginning to have a simple and clean Interface to make the 
   }
 ```
 
-- Back End code with all the fields: 
+- Back End code with all the fields that exposes the /topvotes endpoint: 
 ```py
 def TopVotesListView(request):
 
@@ -534,10 +457,10 @@ def TopVotesListView(request):
 ```
 
 ### Side Bar
-- I've created a side bar where you can find the main links of the platform in order to navigate quicker and easier. The design is built with SCSS.
+- I created a side bar displaying the main links of the platform which makes the navigation quicker and easier. The design is customly built with SCSS.
 
 ### Register and Log in
-- The state with all the fields that need to be send to the data base, setted as empty strings. 
+- The state with all the fields: 
 ```js
     this.state = {
       register: {
@@ -558,7 +481,7 @@ def TopVotesListView(request):
       isLoginActive: true
     }
 ```
-- This code is updating the state values for register and log in properties:
+- The following snippet shows the updating of the state values for register and login:
 ```js
   handleChangeRegister(event) {
     const { name, value } = event.target
@@ -572,7 +495,8 @@ def TopVotesListView(request):
     this.setState({ logIn })
   }
 ```
-- Here is sending the data to the data base with post methods:
+- Registering a user:
+
 ```js
  handleSubmitRegister(event) {
     event.preventDefault()
@@ -600,7 +524,8 @@ def TopVotesListView(request):
   }
 ```
 
-- Becouse I'm using the register and log in form on the same page I had to develop the logic for when the user is clicking the register button to direct him on the register form, same with the log in:
+- Since I'm using the register and login forms on the same url, I had to develop the logic to direct the user either on the register form or the login form, depending on the user selection:
+
 ```js
   handleClick(e) {
     e.preventDefault()
@@ -615,12 +540,10 @@ def TopVotesListView(request):
 
 
 ### Create Profile Form
-- While you're still on the home page you can find in the top right hand corner a button that directs you to a form to create a profile.
-This component is developed for getting the data from the UI and sending it to the data base.
-- Here the form is rendered on the page:
+- On the home page I created a quick access button to create a profile.
 
 
-- State initialised with null and empty string values:
+- State initialisation:
 ```js
     this.state = {
       photo: null,
@@ -629,7 +552,7 @@ This component is developed for getting the data from the UI and sending it to t
     }
 ```
 
-- This arrow function getting the value and storing it into the state: 
+- This arrow function  is updating the state based on the field values that were changed: 
 ```js
   handleChange = (e) => {
     e.preventDefault()
@@ -639,7 +562,7 @@ This component is developed for getting the data from the UI and sending it to t
   }
 ```
 
-- Becouse we're dealing with multi-media I had to wright an extra function:
+- For multi-media I had to write a custom function for handling the images from the form:
 ```js
   handleImageChange =(e) => {
     e.preventDefault()
@@ -650,7 +573,7 @@ This component is developed for getting the data from the UI and sending it to t
   }
 ``` 
 
-- And finaly I'm sending the data to the data base:
+- On submit, a POST endpoint is invoked to save the profile:
 ```js
   handleSubmit = (e) => {
     e.preventDefault()
@@ -672,20 +595,32 @@ This component is developed for getting the data from the UI and sending it to t
   }
 ```
 ### Edit Profile
-- At some point users will decide that they want another photo, or update information about them. For that I've created an edit form.
-- The logic is simmilar with the one from above, from (create profile form), except this time I'm not using 'post' method for posting data to the data base, instead I'm using 'put' method, which allows to edit the data.
+- The platform allows users to change their photo or update their personal story.
+- The logic is similar to the create profile page, except this time I'm using a PUT method, which allows to edit the data.
+
 ```js
-  getProfile() {
-    const userId = auth.getUserId()
-    axios.get(`api/portal/mentorprofiles/${userId}`)
-      .then((response) => {
-        const profile = response.data[0] 
-        this.setState({ profile })
-        this.setState({ shortDescription: profile.shortDescription })
-        this.setState({ fullDescription: profile.fullDescription })
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const formData = new FormData()
+    formData.append('shortDescription', this.state.shortDescription)
+    formData.append('fullDescription', this.state.fullDescription)
+    formData.append('user', auth.getUserId())
+    const url = `api/portal/mentorprofiles/${this.state.profile.id}/`
+    axios.put(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(() => {
+        this.props.history.push('/userprofile')
       })
-      .catch((error) => { 
-        console.log(error)
-      })
-  }
+      .catch(err => console.error(err))
+  } 
 ```
+## Challenges
+(To be added)
+
+## Victories
+(To be added)
+
+## Potential future features
+(To be added)
+
+## Lessons learned
+(To be added)

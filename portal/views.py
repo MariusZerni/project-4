@@ -83,7 +83,6 @@ class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
 
 
   def get(self, request, pk):
-    print('ola')
     thread = CommentThread.objects.get(pk=pk)
 
     serializer = CommentThreadDetailSerializer(thread)
