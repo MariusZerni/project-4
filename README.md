@@ -614,13 +614,17 @@ def TopVotesListView(request):
   } 
 ```
 ## Challenges
-(To be added)
+Creating a database with Django framework can be a bit challenging, especially if you're new to Django, like I was. My biggest challenge was to get all the relationships between tables right from the start. Having no previous experience with Django, I ran into some issues with the relationships between models. Because of this learning curve, I was forced to rework some of the models and recreate a database content which was time consumming. 
 
-## Victories
-(To be added)
+## Wins
+My challenge was also my win. Spending time on writing the models I had to do a lot of documentation and experiment different ways of setting up the models and the relationships between them. That helped me get a better understanding on how Django is designed and how to implement table models. 
 
 ## Potential future features
-(To be added)
+Adding more features like:
+- implementing websockets.
+- adding a searchbar for searching mentors
+- immprove the design
 
 ## Lessons learned
-(To be added)
+- Spending more time at the biggening to structure the database and get the models right from the beggining. It is crucial to have that tested and running before moving on to the next phase.
+- Create a fixture file early on, allowing you to restore the database.
