@@ -6,7 +6,7 @@
 
 Unlock was my last project with General Assembly and the most complex project I developed during the Software Engineering Immersive course. 
 
-For this project I decided to create a platform where people can find support and advice on following their dream career. 
+For this project, I decided to create a platform where people can find support and advice on following their dream career. 
 The platform allows members to create a mentor or a mentee profile and share a personal story page. 
 A mentor can share external documentation, offer guidance through a chat system via the platform.  
 
@@ -23,10 +23,10 @@ Main functionalities:
 
 
 ## Brief
-- Build a full-stack application by making your own back end and your own front end
-- Use a Python Django API to serve your data from a Postgres database
-- Create a front end built with React
-- Deploy the app with Heroku
+- Build a full-stack application by making a back end and a front end
+- Using a Python Django API to serve data from a Postgres database
+- Creating a front end built with React
+- Deploying the app with Heroku
 
 
 ## Technologies Used
@@ -66,9 +66,9 @@ User._meta.get_field('email')._unique = True
 User._meta.get_field('email').blank = False
 ```
 
-In order to model the User relationship with the other entities and also to create some methods to retrieve related user information (from child tables), I had to extend it by creating a Person class (proxy to the Django User).
+In order to model the User relationship with the other entities, and also to create some methods to retrieve related user information (from child tables), I had to extend it by creating a Person class (proxy to the Django User).
 
-I created methods that are used in the Person serializer in order to retrieve related user information (user roles, skills, metees, mentors, votes)
+I created methods that are used in the Person serializer in order to retrieve related user information (user roles, skills, metees, mentors, votes).
 
 ```py
 class Person(User):
@@ -108,7 +108,7 @@ class Skill(models.Model):
     return self.name
 ```
 
-User_Role is creating a many-to-many relationship between a Person and a Role, a person can have many roles and a role can belong to many persons:
+User_Role is creating a many-to-many relationship between a Person and a Role; a person can have many roles and a role can belong to many persons:
 
 ```py
 class User_Role(models.Model):
@@ -119,7 +119,7 @@ class User_Role(models.Model):
     unique_together = (('user', 'role',))
 ```
 
-User_Skill is  similar to User_Role, creating a many-to-many relationship between a Person and a Skill
+User_Skill is  similar to User_Role, creating a many-to-many relationship between a Person and a Skill:
 
 
 ```py
@@ -132,7 +132,7 @@ class User_Skill(models.Model):
 
 ```
 
-UserRelationship is creating a many-to-many relation between mentors and mentees (self-referencing since we are using the same entity -- Person). One mentor can have many mentees, one mentee can have many mentors. I created an attribute 'votes', to capture the vote of a mentee for a particular mentor.
+UserRelationship creates a many-to-many relation between mentors and mentees (self-referencing since we are using the same entity -- Person). One mentor can have many mentees, and one mentee can have many mentors. I created an attribute 'votes' to capture the vote of a mentee for a particular mentor.
 
 ```py
 class UserRelationship(models.Model):
@@ -147,7 +147,7 @@ class UserRelationship(models.Model):
       unique_together = (('mentor', 'mentee',))
 ```
 
-The entity CommentType is used to store the types of comments supported by the platform: public/private.This static table which will only be populated from a fixture file at the project setup:
+The entity CommentType is used to store the types of comments supported by the platform: public/private. This static table will be populated from a fixture file at the project setup:
 
 ```py
 class CommentType(models.Model):
@@ -202,7 +202,7 @@ Django requires creating serializers to serialize the data retrieved from the da
 
 ## JWT_AUTH
 ## User serializer
-I created a user serializer that checks if the password and password_confirmation fields match. If they do not match a validation error is returned. The validate_password method checks the strength of the password and it ensures that the passwords aren't too weak.
+I created a user serializer that checks if the password and password_confirmation fields match. If they do not match, a validation error is returned. The validate_password method checks the strength of the password and it ensures that the passwords aren't too weak.
 The password is hashed using Django's built-in make_password function and it is stored on the data object.
 
 ```py
@@ -260,7 +260,7 @@ class FileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 ```
 
-The User serializer is a custom serializer and it is using the ReadOnlyField class for most of the fields because I am serializing values from the corresponding methods from the model. For example the roles field will contain the values retrieved by calling the roles() method on the User(Person) model.
+The User serializer is a custom serializer and uses the ReadOnlyField class for most of the fields because I am serializing values from the corresponding methods from the model. For example, the roles field will contain the values retrieved by calling the roles() method on the User(Person) model.
 
 ```py
 class PopulateUserSerializer(serializers.ModelSerializer):
@@ -321,7 +321,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=422)
 ```
 
-- The Login view has a GET endpoint to retrieve a user based on the email and a POST endpoint to validate the user login information (returns a JWT token if the login information is valid). To encode the password I'm using an algorithm provided by Django.
+- The Login view has a GET endpoint to retrieve a user based on the email and a POST endpoint to validate the user login information (returns a JWT token if the login information is valid). To encode the password, I'm using an algorithm provided by Django.
 ```py
 class LoginView(APIView):
     def get_user(self, email):
@@ -355,7 +355,7 @@ class UsersListView(ListCreateAPIView):
     return Response(serializer.data)
 ```
 
-- CommentDetailView endpoint allows retrieving a comment by id:
+- CommentDetailView endpoint allows retrieving a comment by ID:
 
 ```py
 class CommentDetailView(RetrieveUpdateDestroyAPIView):
@@ -376,7 +376,7 @@ class CommentThreadView(ListCreateAPIView):
 
 ```
 
-- CommentThreadDetailView can be used in order to retrieve a CommentThread by id:
+- CommentThreadDetailView can be used in order to retrieve a CommentThread by ID:
 
 ```py
 class CommentThreadDetailView(RetrieveUpdateDestroyAPIView):
@@ -445,7 +445,7 @@ My plan was to have a simple and clean UI to make the user experience as smooth 
   }
 ```
 
-- Back End code with all the fields that exposes the /topvotes endpoint: 
+- Back-end code with all the fields that exposes the "/topvotes" endpoint: 
 ```py
 def TopVotesListView(request):
 
@@ -457,10 +457,10 @@ def TopVotesListView(request):
 ```
 
 ### Side Bar
-- I created a side bar displaying the main links of the platform which makes the navigation quicker and easier. The design is customly built with SCSS.
+- I created a side bar displaying the main links of the platform which makes the navigation quicker and easier. The design is specifically built with SCSS.
 
-### Register and Log in
-- The state with all the fields: 
+### Register and Login
+- Fields for register and login: 
 ```js
     this.state = {
       register: {
@@ -540,7 +540,7 @@ def TopVotesListView(request):
 
 
 ### Create Profile Form
-- On the home page I created a quick access button to create a profile.
+- On the home page, I created a quick access button to create a profile.
 
 
 - State initialisation:
@@ -562,7 +562,7 @@ def TopVotesListView(request):
   }
 ```
 
-- For multi-media I had to write a custom function for handling the images from the form:
+- For multi-media, I had to write a custom function for handling the images from the form:
 ```js
   handleImageChange =(e) => {
     e.preventDefault()
@@ -617,14 +617,14 @@ def TopVotesListView(request):
 Creating a database with Django framework can be a bit challenging, especially if you're new to Django, like I was. My biggest challenge was to get all the relationships between tables right from the start. Having no previous experience with Django, I ran into some issues with the relationships between models. Because of this learning curve, I was forced to rework some of the models and recreate a database content which was time consumming. 
 
 ## Wins
-My challenge was also my win. Spending time on writing the models I had to do a lot of documentation and experiment different ways of setting up the models and the relationships between them. That helped me get a better understanding on how Django is designed and how to implement table models. 
+My challenge was also my win. Spending time on writing the models, I had to do a lot of documentation and experimented different ways of setting up the models and the relationships between them. That helped me get a better understanding on how Django is designed and how to implement table models. 
 
 ## Potential future features
 Adding more features like:
-- implementing websockets.
-- adding a searchbar for searching mentors
-- immprove the design
+- implementing websockets
+- adding a searchbar to search mentors
+- improve the design
 
 ## Lessons learned
-- Spending more time at the biggening to structure the database and get the models right from the beggining. It is crucial to have that tested and running before moving on to the next phase.
+- Spending more time at the beginning to structure the database and get the models right from the beginning. It is crucial to have that tested and running before moving on to the next phase.
 - Create a fixture file early on, allowing you to restore the database.
