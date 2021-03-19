@@ -7,7 +7,7 @@ verify_ssl = true
 rope = "*"
 
 [packages]
-django = "==2.2.12"
+django = "==2.2.18"
 djangorestframework = "*"
 psycopg2-binary = "*"
 pyjwt = "*"
